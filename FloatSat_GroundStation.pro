@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        groundstation.cpp
+        groundstation.cpp \
+    udptest.cpp
 
-HEADERS  += groundstation.h
+HEADERS  += groundstation.h \
+    udptest.h
 
 FORMS    += groundstation.ui
