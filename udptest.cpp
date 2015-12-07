@@ -1,13 +1,21 @@
 #include "udptest.h"
 
-UDPTestRead::UDPTestRead(QObject *parent) : QObject(parent)
+UDPTest::UDPTest(QObject *parent) : QObject(parent)
 {
-    socket.bind(31337);
-    connect(&socket, SIGNAL(readyRead()), this, SLOT(print()));
+    if(socket.bind(31337)){
+        qDebug() << "Bound!\n";
+    }else{
+        qDebug() << "Didn't bind!\n";
+    }
+    connect(&socket, SIGNAL(readyRead()), this, SLOT(read()));
 }
 
-void UDPTestRead::print(){
+void UDPTest::print(){
     char buffer[1024];
     socket.readDatagram(buffer, 1023);
     qDebug() << buffer << "\n";
+}
+
+void UDPTest::write(QByteArray data){
+    socket.write(data);
 }

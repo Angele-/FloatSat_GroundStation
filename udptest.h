@@ -3,7 +3,7 @@
 
 #include <QUdpSocket>
 
-class UDPTestRead : public QObject
+class UDPTest : public QObject
 {
     Q_OBJECT
 
@@ -13,9 +13,9 @@ private slots:
     void print();
 
 public:
-    explicit UDPTestRead(QObject *parent = 0);
+    explicit UDPTest(QObject *parent = 0);
+    void write(QByteArray str);
 
 public slots:
 };
-
 #endif // UDPTEST_H
