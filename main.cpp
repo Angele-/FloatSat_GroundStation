@@ -1,10 +1,7 @@
-//#include "groundstation.h"
-//#include <QApplication>
+#include "groundstation.h"
+#include <QApplication>
 
-//#include "udptest.h"
-
-#include <iostream>
-#include <string>
+#include "udptest.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +9,7 @@ int main(int argc, char *argv[])
     //GroundStation w;
     //w.show();
 
-    UDPTest x(UDP_READ);
+    UDPTest x(UDP_WRITE);
     x.executeIfWriteMode();
     return a.exec();
 
