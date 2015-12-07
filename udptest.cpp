@@ -1,13 +1,21 @@
 #include "udptest.h"
 
-UDPTest::UDPTest(QObject *parent) : QObject(parent)
+UDPTest::UDPTest(UDPMode mode, QObject *parent) : QObject(parent), mode(mode), address("127.0.0.1"), port(31337)
 {
-    if(socket.bind(31337)){
-        qDebug() << "Bound!\n";
-    }else{
-        qDebug() << "Didn't bind!\n";
+    switch(mode){
+    case UDP_READ:
+        qDebug() << "Read mode. Binding to port 31337.\n";
+        if(socket.bind(QHostAddress::Any, 31337)){
+            qDebug() << "Bind successful!\n";
+        }else{
+            qDebug() << "Bind unsuccessful!\n";
+        }
+        connect(&socket, SIGNAL(readyRead()), this, SLOT(print()));
+        break;
+    case UDP_WRITE:
+        qDebug() << "Write mode. IP addres, port 31337.";
+        break;
     }
-    connect(&socket, SIGNAL(readyRead()), this, SLOT(read()));
 }
 
 void UDPTest::print(){
@@ -16,6 +24,10 @@ void UDPTest::print(){
     qDebug() << buffer << "\n";
 }
 
-void UDPTest::write(QByteArray data){
-    socket.write(data);
+void UDPTest::executeIfWriteMode(){
+    if(mode != UDP_WRITE)
+        return;
+
+    QTextStream in(stdin);
+    while(true) qDebug() << "Written " << socket.writeDatagram(in.readLine().toUtf8(), address, port) << " bytes\n";
 }

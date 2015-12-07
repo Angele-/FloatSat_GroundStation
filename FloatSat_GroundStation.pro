@@ -20,3 +20,5 @@ HEADERS  += groundstation.h \
     udptest.h
 
 FORMS    += groundstation.ui
+
+CONFIG += console

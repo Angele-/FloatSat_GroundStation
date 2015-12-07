@@ -1,8 +1,10 @@
-#include "groundstation.h"
-#include <QApplication>
-#include <QTextStream>
+//#include "groundstation.h"
+//#include <QApplication>
 
-#include "udptest.h"
+//#include "udptest.h"
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char *argv[])
 {
@@ -10,10 +12,9 @@ int main(int argc, char *argv[])
     //GroundStation w;
     //w.show();
 
-    UDPTest x;
-    QTextStream s(stdin);
-    while(true){
-       x. write(s.readLine().toUtf8());
-    }
+    UDPTest x(UDP_READ);
+    x.executeIfWriteMode();
     return a.exec();
+
+    return 0;
 }
