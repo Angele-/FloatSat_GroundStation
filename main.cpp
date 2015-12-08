@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     //GroundStation w;
     //w.show();
 
-    UDPTest x(UDP_WRITE);
+    UDPTest x(UDP_READ);
     x.executeIfWriteMode();
     return a.exec();
 

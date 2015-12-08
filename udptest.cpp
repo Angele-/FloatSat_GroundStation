@@ -1,14 +1,21 @@
 #include "udptest.h"
 
-UDPTest::UDPTest(UDPMode mode, QObject *parent) : QObject(parent), mode(mode), address("127.0.0.1"), port(31337)
+UDPTest::UDPTest(UDPMode mode, QObject *parent) : QObject(parent), mode(mode), address("239.192.4.4"), port(31337)
 {
     switch(mode){
     case UDP_READ:
         qDebug() << "Read mode. Binding to port 31337.\n";
-        if(socket.bind(QHostAddress::Any, 31337)){
+        if(socket.bind(QHostAddress::AnyIPv4, 31337)){
             qDebug() << "Bind successful!\n";
         }else{
             qDebug() << "Bind unsuccessful!\n";
+            return;
+        }
+        if(socket.joinMulticastGroup(address)){
+            qDebug() << "Multicase join successful!\n";
+        }else{
+            qDebug() << "Multicase join unsuccessful!\n";
+            return;
         }
         connect(&socket, SIGNAL(readyRead()), this, SLOT(print()));
         break;
