@@ -62,7 +62,7 @@
       <x>10</x>
       <y>160</y>
       <width>201</width>
-      <height>751</height>
+      <height>521</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -928,6 +928,374 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="layoutWidget_19">
+    <property name="geometry">
+     <rect>
+      <x>1640</x>
+      <y>330</y>
+      <width>66</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_22">
+     <item>
+      <widget class="QLCDNumber" name="lcdNumber_18"/>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcdNumber_20"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_73">
+    <property name="geometry">
+     <rect>
+      <x>1557</x>
+      <y>300</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Sitka Subheading</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>Batteries</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_20">
+    <property name="geometry">
+     <rect>
+      <x>1570</x>
+      <y>330</y>
+      <width>71</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_23">
+     <item>
+      <widget class="QLabel" name="label_71">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Current</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_74">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Voltage</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_75">
+    <property name="geometry">
+     <rect>
+      <x>1557</x>
+      <y>430</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Sitka Subheading</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>Pulse-Width Mod.</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_22">
+    <property name="geometry">
+     <rect>
+      <x>1570</x>
+      <y>460</y>
+      <width>83</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_25">
+     <item>
+      <widget class="QLabel" name="label_76">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Duty cycle</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_21">
+    <property name="geometry">
+     <rect>
+      <x>1653</x>
+      <y>460</y>
+      <width>71</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_21">
+    <property name="geometry">
+     <rect>
+      <x>1710</x>
+      <y>200</y>
+      <width>20</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_24">
+     <item>
+      <widget class="QLabel" name="label_77">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>A</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_78">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>V</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_23">
+    <property name="geometry">
+     <rect>
+      <x>1710</x>
+      <y>330</y>
+      <width>20</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_26">
+     <item>
+      <widget class="QLabel" name="label_79">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>A</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_80">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>V</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_81">
+    <property name="geometry">
+     <rect>
+      <x>1730</x>
+      <y>460</y>
+      <width>18</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>%</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_24">
+    <property name="geometry">
+     <rect>
+      <x>1623</x>
+      <y>540</y>
+      <width>71</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_27">
+     <item>
+      <widget class="QLCDNumber" name="lcdNumber_22"/>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcdNumber_23">
+       <property name="intValue" stdset="0">
+        <number>42</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcdNumber_24"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_82">
+    <property name="geometry">
+     <rect>
+      <x>1563</x>
+      <y>510</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Sitka Subheading</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>Controller</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_25">
+    <property name="geometry">
+     <rect>
+      <x>1706</x>
+      <y>540</y>
+      <width>23</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_28">
+     <item>
+      <widget class="QLabel" name="label_21">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>dB</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_83">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>dB</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_84">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>dB</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_26">
+    <property name="geometry">
+     <rect>
+      <x>1580</x>
+      <y>540</y>
+      <width>53</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_29">
+     <item>
+      <widget class="QLabel" name="label_85">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>P gain</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_86">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>I gain</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_87">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>D gain</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
    <zorder>label_43</zorder>
    <zorder>label_42</zorder>
    <zorder>layoutWidget_2</zorder>
@@ -944,10 +1312,6 @@
    <zorder>graphicsView_2</zorder>
    <zorder>layoutWidget_10</zorder>
    <zorder>label</zorder>
-   <zorder>label_48</zorder>
-   <zorder>label_48</zorder>
-   <zorder>label_14</zorder>
-   <zorder>label_15</zorder>
    <zorder>layoutWidget_11</zorder>
    <zorder>layoutWidget_7</zorder>
    <zorder>layoutWidget_12</zorder>
@@ -962,6 +1326,20 @@
    <zorder>layoutWidget_18</zorder>
    <zorder>label_72</zorder>
    <zorder>layoutWidget_9</zorder>
+   <zorder>layoutWidget_19</zorder>
+   <zorder>label_73</zorder>
+   <zorder>layoutWidget_20</zorder>
+   <zorder>label_75</zorder>
+   <zorder>layoutWidget_22</zorder>
+   <zorder>lcdNumber_21</zorder>
+   <zorder>layoutWidget_21</zorder>
+   <zorder>layoutWidget_23</zorder>
+   <zorder>label_81</zorder>
+   <zorder>layoutWidget_24</zorder>
+   <zorder>label_82</zorder>
+   <zorder>layoutWidget_25</zorder>
+   <zorder>layoutWidget_26</zorder>
+   <zorder>label_77</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
