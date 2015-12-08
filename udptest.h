@@ -12,7 +12,8 @@ class UDPTest : public QObject
     Q_OBJECT
 
     UDPMode mode;
-    QHostAddress address;
+    QHostAddress localAddress;
+    QHostAddress multiAddress;
     quint16 port;
     QUdpSocket socket;
 
