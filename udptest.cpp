@@ -1,18 +1,18 @@
 #include "udptest.h"
 #include <QNetworkInterface>
 
-UDPTest::UDPTest(UDPMode mode, QObject *parent) : QObject(parent), mode(mode), address("239.255.43.21"), port(31337)
+UDPTest::UDPTest(UDPMode mode, QObject *parent) : QObject(parent), mode(mode), localAddress("0.0.0.0"), multiAddress("239.192.4.4"), port(31337)
 {
     switch(mode){
     case UDP_READ:
         qDebug() << "Read mode. Binding to port 31337.\n";
-        if(socket.bind(QHostAddress::AnyIPv4, 31337, QUdpSocket::ShareAddress)){
+        if(socket.bind(localAddress, 31337, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint)){
             qDebug() << "Bind successful!\n";
         }else{
             qDebug() << "Bind unsuccessful!\n";
             return;
         }
-        if(socket.joinMulticastGroup(address)){
+        if(socket.joinMulticastGroup(multiAddress)){
             qDebug() << "Multicast join successful!\n";
         }else{
             qDebug() << "Multicast join unsuccessful!\n";
@@ -37,5 +37,5 @@ void UDPTest::executeIfWriteMode(){
         return;
 
     QTextStream in(stdin);
-    while(true) qDebug() << "Written " << socket.writeDatagram(in.readLine().toUtf8(), address, port) << " bytes\n";
+    while(true) qDebug() << "Written " << socket.writeDatagram(in.readLine().toUtf8(), multiAddress, port) << " bytes\n";
 }
