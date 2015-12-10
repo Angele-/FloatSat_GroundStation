@@ -6,11 +6,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //GroundStation w;
-    //w.show();
+    GroundStation w;
+    w.show();
 
-    UDPTest x(UDP_READ);
-    x.executeIfWriteMode();
+//    UDPTest x(UDP_READ);
+//    x.executeIfWriteMode();
     return a.exec();
 
     return 0;
