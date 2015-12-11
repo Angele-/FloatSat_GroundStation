@@ -1,5 +1,6 @@
 #include "satellitelink.h"
 #include <QNetworkInterface>
+#include <QDateTime>
 
 SatelliteLink::SatelliteLink(QObject *parent) : QObject(parent), localAddress("0.0.0.0"), remoteAddress("192.168.1.255"), port(12345), socket(this), bound(false){
     qDebug() << "Binding to IP" << localAddress.toString() << "and port" << port << "\n";
@@ -50,20 +51,20 @@ void SatelliteLink::readFromSocket(){
 }
 
 
-bool SatelliteLink::write(SatellitePayload payload){
+bool SatelliteLink::write(quint32 topicId, QByteArray &data){
     QByteArray buffer(1023, 0x00);
 
-    *((quint32*)(buffer.data() + 2)) = payload.senderNode;
-    *((quint64*)(buffer.data() + 6)) = payload.timestamp;
-    *((quint32*)(buffer.data() + 14)) = payload.senderThread;
-    *((quint32*)(buffer.data() + 18)) = payload.topic;
-    *((quint16*)(buffer.data() + 22)) = payload.ttl;
-    *((quint16*)(buffer.data() + 24)) = payload.userDataLen;
-    memcpy(buffer.data() + 26, payload.userData, payload.userDataLen);
-    *(buffer.data() + 26 + payload.userDataLen) = 0x00;
+    *((quint32*)(buffer.data() + 2)) = 0;// TODO payload.senderNode;
+    *((quint64*)(buffer.data() + 6)) = QDateTime::currentDateTime().toMSecsSinceEpoch() * 1000000;
+    *((quint32*)(buffer.data() + 14)) = 0;
+    *((quint32*)(buffer.data() + 18)) = topicId;
+    *((quint16*)(buffer.data() + 22)) = 64;
+    *((quint16*)(buffer.data() + 24)) = data.length();
+    memcpy(buffer.data() + 26, data.constData(), data.length());
+    *(buffer.data() + 26 + data.length()) = 0x00;
 
     quint16 checksum = 0;
-    for(int i = 2; i < 26 + payload.userDataLen; ++i){
+    for(int i = 2; i < 26 + data.length(); ++i){
         bool lowestBit = checksum & 1;
         checksum >>= 1;
         if(lowestBit)
@@ -74,14 +75,14 @@ bool SatelliteLink::write(SatellitePayload payload){
     *((quint16*)(buffer.data() + 0)) = checksum;
 
     int extra = 0;
-    for(int i = 0; i < 26 + payload.userDataLen + extra; ++i){
+    for(int i = 0; i < 26 + data.length() + extra; ++i){
         if(buffer[i] == (char)0xFF){
             buffer.insert(i+1, 0x7E);
             ++i;
             ++extra;
         }
     }
-    buffer.resize(26 + payload.userDataLen + extra);
+    buffer.resize(26 + data.length() + extra);
 
     return socket.writeDatagram(buffer.constData(), remoteAddress, port);
 }
