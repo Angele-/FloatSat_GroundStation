@@ -2,6 +2,7 @@
 #define GROUNDSTATION_H
 
 #include <QMainWindow>
+#include "satellitelink.h"
 
 namespace Ui {
 class GroundStation;
@@ -10,6 +11,10 @@ class GroundStation;
 class GroundStation : public QMainWindow
 {
     Q_OBJECT
+    SatelliteLink link;
+
+private slots:
+    void readFromLink();
 
 public:
     explicit GroundStation(QWidget *parent = 0);
