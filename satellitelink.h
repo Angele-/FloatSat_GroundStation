@@ -3,17 +3,8 @@
 
 #include <QUdpSocket>
 #include <QQueue>
-
-struct SatellitePayload{
-    quint16 checksum;
-    quint32 senderNode;
-    quint64 timestamp;
-    quint32 senderThread;
-    quint32 topic;
-    quint16 ttl;
-    quint16 userDataLen;
-    quint8 userData[998];
-};
+#include <QSet>
+#include "payload.h"
 
 class SatelliteLink : public QObject
 {
@@ -24,7 +15,9 @@ class SatelliteLink : public QObject
     quint16 port;
     QUdpSocket socket;
     bool bound;
-    QQueue<SatellitePayload> payloads;
+    bool checkChecksum;
+    QSet<quint32> topics;
+    QQueue<PayloadSatellite> payloads;
 
 signals:
     void readReady();
@@ -33,9 +26,10 @@ private slots:
     void readFromSocket();
 
 public:
-    explicit SatelliteLink(QObject *parent = 0);
-    bool write(quint32 topicId, QByteArray &data);
-    SatellitePayload read();
+    explicit SatelliteLink(QObject *parent = 0, bool checkChecksum = false);
+    void addTopic(PayloadType);
+    int write(quint32 topicId, QByteArray &data);
+    PayloadSatellite read();
     bool isBound();
     bool isReadReady();
 };

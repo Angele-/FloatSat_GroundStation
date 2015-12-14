@@ -1,8 +1,9 @@
 #include "satellitelink.h"
 #include <QNetworkInterface>
 #include <QDateTime>
+#include <QtEndian>
 
-SatelliteLink::SatelliteLink(QObject *parent) : QObject(parent), localAddress("0.0.0.0"), remoteAddress("192.168.1.255"), port(12345), socket(this), bound(false){
+SatelliteLink::SatelliteLink(QObject *parent, bool checkChecksum) : QObject(parent), localAddress("0.0.0.0"), remoteAddress("192.168.1.255"), port(12345), socket(this), bound(false), checkChecksum(checkChecksum){
     qDebug() << "Binding to IP" << localAddress.toString() << "and port" << port << "\n";
     if(socket.bind(localAddress, port)){
         qDebug() << "Bind successful!\n";
@@ -11,26 +12,26 @@ SatelliteLink::SatelliteLink(QObject *parent) : QObject(parent), localAddress("0
         qDebug() << "Bind unsuccessful!\n";
         return;
     }
-    connect(&socket, SIGNAL(readyRead()), this, SLOT(read()));
+    connect(&socket, SIGNAL(readyRead()), this, SLOT(readFromSocket()));
 }
 
 void SatelliteLink::readFromSocket(){
     QByteArray buffer(1023, 0x00);
     socket.readDatagram(buffer.data(), buffer.size());
 
-    for(int i = 0; i < buffer.size(); ++i){
-        if(buffer[i] == (char)0xFF)
-            buffer.remove(i+1, 1);
-    }
+//    for(int i = 0; i < buffer.size(); ++i){
+//        if(buffer[i] == (char)0xFF)
+//            buffer.remove(i+1, 1);
+//    }
 
-    SatellitePayload payload;
-    payload.checksum = *((quint16*)(buffer.constData() + 0));
-    payload.senderNode = *((quint32*)(buffer.constData() + 2));
-    payload.timestamp = *((quint64*)(buffer.constData() + 6));
-    payload.senderThread = *((quint32*)(buffer.constData() + 14));
-    payload.topic = *((quint32*)(buffer.constData() + 18));
-    payload.ttl = *((quint16*)(buffer.constData() + 22));
-    payload.userDataLen = *((quint16*)(buffer.constData() + 24));
+    PayloadSatellite payload;
+    payload.checksum = qFromBigEndian(*((quint16*)(buffer.constData() + 0)));
+    payload.senderNode = qFromBigEndian(*((quint32*)(buffer.constData() + 2)));
+    payload.timestamp = qFromBigEndian(*((quint64*)(buffer.constData() + 6)));
+    payload.senderThread = qFromBigEndian(*((quint32*)(buffer.constData() + 14)));
+    payload.topic = qFromBigEndian(*((quint32*)(buffer.constData() + 18)));
+    payload.ttl = qFromBigEndian(*((quint16*)(buffer.constData() + 22)));
+    payload.userDataLen = qFromBigEndian(*((quint16*)(buffer.constData() + 24)));
     memcpy(payload.userData, buffer.constData() + 26, payload.userDataLen);
     payload.userData[payload.userDataLen] = 0x00;
 
@@ -44,14 +45,25 @@ void SatelliteLink::readFromSocket(){
         checksum += buffer[i];
     }
 
-    if(checksum == payload.checksum){
+    if((!checkChecksum || checksum == payload.checksum) && topics.contains(payload.topic)){
         payloads.enqueue(payload);
         emit readReady();
     }
+    if(payload.topic == PayloadSensorDataType){
+        PayloadSensorData psd(payload);
+        QString roll, pitch, yaw;
+        roll.sprintf("%+06.2f", psd.roll);
+        pitch.sprintf("%+06.2f", psd.pitch);
+        yaw.sprintf("%+06.2f", psd.yaw);
+        qDebug() << qSetRealNumberPrecision(2) << "Roll:" << roll << "Pith:" << pitch << "Yaw:" << yaw;
+    }
 }
 
+void SatelliteLink::addTopic(PayloadType topicId){
+    topics.insert(topicId);
+}
 
-bool SatelliteLink::write(quint32 topicId, QByteArray &data){
+int SatelliteLink::write(quint32 topicId, QByteArray &data){
     QByteArray buffer(1023, 0x00);
 
     *((quint32*)(buffer.data() + 2)) = 0;// TODO payload.senderNode;
@@ -87,9 +99,9 @@ bool SatelliteLink::write(quint32 topicId, QByteArray &data){
     return socket.writeDatagram(buffer.constData(), remoteAddress, port);
 }
 
-SatellitePayload SatelliteLink::read(){
+PayloadSatellite SatelliteLink::read(){
     if(!payloads.size())
-        return SatellitePayload();
+        return PayloadSatellite();
 
     return payloads.dequeue();
 }

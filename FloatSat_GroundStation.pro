@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         groundstation.cpp \
-    satellitelink.cpp
+    satellitelink.cpp \
+    payload.cpp
 
 HEADERS  += groundstation.h \
-    satellitelink.h
+    satellitelink.h \
+    payload.h
 
 FORMS    += groundstation.ui
 
