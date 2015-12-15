@@ -31,6 +31,24 @@ PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(-q
     yaw = *(float*)(payload.userData + 2 * sizeof(float));
 }
 
+PayloadSensorGyro::PayloadSensorGyro(const PayloadSatellite payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
+    if(payload.userDataLen != sizeof(PayloadSensorGyro) || payload.topic != PayloadSensorGyroType)
+        return;
+
+    roll = *(float*)(payload.userData + 0 * sizeof(float));
+    pitch = *(float*)(payload.userData + 1 * sizeof(float));
+    yaw = *(float*)(payload.userData + 2 * sizeof(float));
+}
+
+PayloadSensorXM::PayloadSensorXM(const PayloadSatellite payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
+    if(payload.userDataLen != sizeof(PayloadSensorXM) || payload.topic != PayloadSensorXMType)
+        return;
+
+    roll = *(float*)(payload.userData + 0 * sizeof(float));
+    pitch = *(float*)(payload.userData + 1 * sizeof(float));
+    yaw = *(float*)(payload.userData + 2 * sizeof(float));
+}
+
 PayloadSensor1::PayloadSensor1(const PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
     if(payload.userDataLen != sizeof(PayloadSensor1) || payload.topic != PayloadSensor1Type)
         return;

@@ -21,6 +21,20 @@ void GroundStation::readFromLink(){
         this->findChild<QLCDNumber*>("lcdNumber_10")->display(psd.yaw * 180.0f / M_PI);
         break;
     }
+    case PayloadSensorGyroType:{
+        PayloadSensorGyro psg(payload);
+        this->findChild<QLCDNumber*>("lcdNumber_29")->display(psg.roll * 180.0f / M_PI);
+        this->findChild<QLCDNumber*>("lcdNumber_30")->display(psg.pitch * 180.0f / M_PI);
+        this->findChild<QLCDNumber*>("lcdNumber_31")->display(psg.yaw * 180.0f / M_PI);
+        break;
+    }
+    case PayloadSensorXMType:{
+        PayloadSensorXM psx(payload);
+        this->findChild<QLCDNumber*>("lcdNumber_5")->display(psx.roll * 180.0f / M_PI);
+        this->findChild<QLCDNumber*>("lcdNumber_7")->display(psx.pitch * 180.0f / M_PI);
+        this->findChild<QLCDNumber*>("lcdNumber_9")->display(psx.yaw * 180.0f / M_PI);
+        break;
+    }
     case PayloadSensor1Type:{
         PayloadSensor1 ps(payload);
         break;

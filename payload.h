@@ -7,6 +7,8 @@ enum PayloadType{
     PayloadCounterType = 1,
     PayloadSensorFusionType = 1001,
     PayloadLightType = 1002,
+    PayloadSensorGyroType = 1003,
+    PayloadSensorXMType = 1004,
     PayloadSensor1Type = 1011,
     PayloadSensor2Type = 1012,
     PayloadSensor3Type = 1013,
@@ -41,6 +43,20 @@ struct PayloadSensorFusion{
     float pitch;
     float yaw;
     PayloadSensorFusion(const PayloadSatellite payload);
+};
+
+struct PayloadSensorGyro{
+    float roll;
+    float pitch;
+    float yaw;
+    PayloadSensorGyro(const PayloadSatellite payload);
+};
+
+struct PayloadSensorXM{
+    float roll;
+    float pitch;
+    float yaw;
+    PayloadSensorXM(const PayloadSatellite payload);
 };
 
 struct PayloadSensor1{
