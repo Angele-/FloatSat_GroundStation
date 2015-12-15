@@ -49,6 +49,7 @@ void GroundStation::readFromLink(){
     }
     case PayloadLightType:{
         PayloadLight pl(payload);
+        this->findChild<QLCDNumber*>("lcdNumber_25")->display(pl.light);
         break;
     }
     default:
