@@ -7,6 +7,9 @@ GroundStation::GroundStation(QWidget *parent) :
     QMainWindow(parent), link(parent), ui(new Ui::GroundStation)
 {
     link.addTopic(PayloadSensorFusionType);
+    link.addTopic(PayloadSensorGyroType);
+    link.addTopic(PayloadSensorXMType);
+    link.addTopic(PayloadLightType);
     connect(&link, SIGNAL(readReady()), this, SLOT(readFromLink()));
     ui->setupUi(this);
 }
