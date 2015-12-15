@@ -1,6 +1,28 @@
+#include <QByteArray>
+#include <QtEndian>
 #include "payload.h"
 
-PayloadSensorFusion::PayloadSensorFusion(PayloadSatellite payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
+PayloadSatellite::PayloadSatellite() : checksum(0), senderNode(0), timestamp(0), senderThread(0), topic(0), ttl(0), userDataLen(0){
+    userData[0] = 0;
+}
+
+PayloadSatellite::PayloadSatellite(const QByteArray &buffer) : checksum(0), senderNode(0), timestamp(0), senderThread(0), topic(0), ttl(0), userDataLen(0){
+    userData[0] = 0;
+    if(buffer.size() < 1023)
+        return;
+
+    checksum = qFromBigEndian(*((quint16*)(buffer.constData() + 0)));
+    senderNode = qFromBigEndian(*((quint32*)(buffer.constData() + 2)));
+    timestamp = qFromBigEndian(*((quint64*)(buffer.constData() + 6)));
+    senderThread = qFromBigEndian(*((quint32*)(buffer.constData() + 14)));
+    topic = qFromBigEndian(*((quint32*)(buffer.constData() + 18)));
+    ttl = qFromBigEndian(*((quint16*)(buffer.constData() + 22)));
+    userDataLen = qFromBigEndian(*((quint16*)(buffer.constData() + 24)));
+    memcpy(userData, buffer.constData() + 26, userDataLen);
+    userData[userDataLen] = 0x00;
+}
+
+PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
     if(payload.userDataLen != sizeof(PayloadSensorFusion) || payload.topic != PayloadSensorFusionType)
         return;
 
@@ -9,7 +31,7 @@ PayloadSensorFusion::PayloadSensorFusion(PayloadSatellite payload):roll(-qInf())
     yaw = *(float*)(payload.userData + 2 * sizeof(float));
 }
 
-PayloadSensor1::PayloadSensor1(PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
+PayloadSensor1::PayloadSensor1(const PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
     if(payload.userDataLen != sizeof(PayloadSensor1) || payload.topic != PayloadSensor1Type)
         return;
 
@@ -18,7 +40,7 @@ PayloadSensor1::PayloadSensor1(PayloadSatellite payload):x(-qInf()), y(-qInf()),
     z = *(float*)(payload.userData + 2 * sizeof(float));
 }
 
-PayloadSensor2::PayloadSensor2(PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
+PayloadSensor2::PayloadSensor2(const PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
     if(payload.userDataLen != sizeof(PayloadSensor2) || payload.topic != PayloadSensor2Type)
         return;
 
@@ -27,7 +49,7 @@ PayloadSensor2::PayloadSensor2(PayloadSatellite payload):x(-qInf()), y(-qInf()),
     z = *(float*)(payload.userData + 2 * sizeof(float));
 }
 
-PayloadSensor3::PayloadSensor3(PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
+PayloadSensor3::PayloadSensor3(const PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
     if(payload.userDataLen != sizeof(PayloadSensor3) || payload.topic != PayloadSensor3Type)
         return;
 
@@ -36,7 +58,7 @@ PayloadSensor3::PayloadSensor3(PayloadSatellite payload):x(-qInf()), y(-qInf()),
     z = *(float*)(payload.userData + 2 * sizeof(float));
 }
 
-PayloadLight::PayloadLight(PayloadSatellite payload):light(0){
+PayloadLight::PayloadLight(const PayloadSatellite payload):light(0){
     if(payload.userDataLen != sizeof(PayloadLight) || payload.topic != PayloadLightType)
         return;
 

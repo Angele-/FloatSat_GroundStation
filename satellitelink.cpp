@@ -24,16 +24,7 @@ void SatelliteLink::readFromSocket(){
 //            buffer.remove(i+1, 1);
 //    }
 
-    PayloadSatellite payload;
-    payload.checksum = qFromBigEndian(*((quint16*)(buffer.constData() + 0)));
-    payload.senderNode = qFromBigEndian(*((quint32*)(buffer.constData() + 2)));
-    payload.timestamp = qFromBigEndian(*((quint64*)(buffer.constData() + 6)));
-    payload.senderThread = qFromBigEndian(*((quint32*)(buffer.constData() + 14)));
-    payload.topic = qFromBigEndian(*((quint32*)(buffer.constData() + 18)));
-    payload.ttl = qFromBigEndian(*((quint16*)(buffer.constData() + 22)));
-    payload.userDataLen = qFromBigEndian(*((quint16*)(buffer.constData() + 24)));
-    memcpy(payload.userData, buffer.constData() + 26, payload.userDataLen);
-    payload.userData[payload.userDataLen] = 0x00;
+    PayloadSatellite payload(buffer);
 
     quint16 checksum = 0;
     for(int i = 2; i < 26 + payload.userDataLen; ++i){
@@ -63,15 +54,15 @@ void SatelliteLink::addTopic(PayloadType topicId){
     topics.insert(topicId);
 }
 
-int SatelliteLink::write(quint32 topicId, QByteArray &data){
+int SatelliteLink::write(quint32 topicId, const QByteArray &data){
     QByteArray buffer(1023, 0x00);
 
-    *((quint32*)(buffer.data() + 2)) = 0;// TODO payload.senderNode;
-    *((quint64*)(buffer.data() + 6)) = QDateTime::currentDateTime().toMSecsSinceEpoch() * 1000000;
-    *((quint32*)(buffer.data() + 14)) = 0;
-    *((quint32*)(buffer.data() + 18)) = topicId;
-    *((quint16*)(buffer.data() + 22)) = 64;
-    *((quint16*)(buffer.data() + 24)) = data.length();
+    *((quint32*)(buffer.data() + 2)) = qToBigEndian(0); // TODO payload.senderNode;
+    *((quint64*)(buffer.data() + 6)) = qToBigEndian(QDateTime::currentDateTime().toMSecsSinceEpoch() * 1000000);
+    *((quint32*)(buffer.data() + 14)) = qToBigEndian(0);
+    *((quint32*)(buffer.data() + 18)) = qToBigEndian(topicId);
+    *((quint16*)(buffer.data() + 22)) = qToBigEndian(64);
+    *((quint16*)(buffer.data() + 24)) = qToBigEndian(data.length());
     memcpy(buffer.data() + 26, data.constData(), data.length());
     *(buffer.data() + 26 + data.length()) = 0x00;
 
@@ -86,7 +77,7 @@ int SatelliteLink::write(quint32 topicId, QByteArray &data){
     }
     *((quint16*)(buffer.data() + 0)) = checksum;
 
-    int extra = 0;
+//    int extra = 0;
 //    for(int i = 0; i < 26 + data.length() + extra; ++i){
 //        if(buffer[i] == (char)0xFF){
 //            buffer.insert(i+1, 0x7E);
@@ -94,7 +85,7 @@ int SatelliteLink::write(quint32 topicId, QByteArray &data){
 //            ++extra;
 //        }
 //    }
-    buffer.resize(26 + data.length() + extra);
+//    buffer.resize(26 + data.length() + extra);
 
     return socket.writeDatagram(buffer.constData(), remoteAddress, port);
 }

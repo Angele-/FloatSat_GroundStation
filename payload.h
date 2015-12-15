@@ -12,6 +12,12 @@ enum PayloadType{
     PayloadSensor3Type = 1013,
 };
 
+struct PayloadSensorFusion;
+struct PayloadSensor1;
+struct PayloadSensor2;
+struct PayloadSensor3;
+struct PayloadLight;
+
 struct PayloadSatellite{
     quint16 checksum;
     quint32 senderNode;
@@ -21,39 +27,46 @@ struct PayloadSatellite{
     quint16 ttl;
     quint16 userDataLen;
     quint8 userData[998];
+    PayloadSatellite();
+    PayloadSatellite(const QByteArray &buffer);
+    PayloadSatellite(const PayloadSensorFusion payload);
+    PayloadSatellite(const PayloadSensor1 payload);
+    PayloadSatellite(const PayloadSensor2 payload);
+    PayloadSatellite(const PayloadSensor3 payload);
+    PayloadSatellite(const PayloadLight payload);
 };
 
 struct PayloadSensorFusion{
     float roll;
     float pitch;
     float yaw;
-    PayloadSensorFusion(PayloadSatellite payload);
+    PayloadSensorFusion(const PayloadSatellite payload);
 };
 
 struct PayloadSensor1{
     float x;
     float y;
     float z;
-    PayloadSensor1(PayloadSatellite payload);
+    PayloadSensor1(const PayloadSatellite payload);
 };
 
 struct PayloadSensor2{
     float x;
     float y;
     float z;
-    PayloadSensor2(PayloadSatellite payload);
+    PayloadSensor2(const PayloadSatellite payload);
 };
 
 struct PayloadSensor3{
     float x;
     float y;
     float z;
-    PayloadSensor3(PayloadSatellite payload);
+    PayloadSensor3(const PayloadSatellite payload);
 };
 
 struct PayloadLight{
     quint16 light;
-    PayloadLight(PayloadSatellite payload);
+    PayloadLight(const PayloadSatellite payload);
 };
 
 #endif // PAYLOAD_H

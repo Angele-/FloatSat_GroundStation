@@ -28,7 +28,7 @@ private slots:
 public:
     explicit SatelliteLink(QObject *parent = 0, bool checkChecksum = false);
     void addTopic(PayloadType);
-    int write(quint32 topicId, QByteArray &data);
+    int write(quint32 topicId, const QByteArray &data);
     PayloadSatellite read();
     bool isBound();
     bool isReadReady();
