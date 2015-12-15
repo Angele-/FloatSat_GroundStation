@@ -49,8 +49,8 @@ void SatelliteLink::readFromSocket(){
         payloads.enqueue(payload);
         emit readReady();
     }
-    if(payload.topic == PayloadSensorDataType){
-        PayloadSensorData psd(payload);
+    if(payload.topic == PayloadSensorFusionType){
+        PayloadSensorFusion psd(payload);
         QString roll, pitch, yaw;
         roll.sprintf("%+06.2f", psd.roll);
         pitch.sprintf("%+06.2f", psd.pitch);
@@ -87,13 +87,13 @@ int SatelliteLink::write(quint32 topicId, QByteArray &data){
     *((quint16*)(buffer.data() + 0)) = checksum;
 
     int extra = 0;
-    for(int i = 0; i < 26 + data.length() + extra; ++i){
-        if(buffer[i] == (char)0xFF){
-            buffer.insert(i+1, 0x7E);
-            ++i;
-            ++extra;
-        }
-    }
+//    for(int i = 0; i < 26 + data.length() + extra; ++i){
+//        if(buffer[i] == (char)0xFF){
+//            buffer.insert(i+1, 0x7E);
+//            ++i;
+//            ++extra;
+//        }
+//    }
     buffer.resize(26 + data.length() + extra);
 
     return socket.writeDatagram(buffer.constData(), remoteAddress, port);
