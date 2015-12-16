@@ -67,7 +67,7 @@ GroundStation::~GroundStation()
     delete ui;
 }
 
-void GroundStation::on_pushButton_6_clicked()
+void GroundStation::on_pushButton_Burn_clicked()
 {
 
     QByteArray arr;
@@ -81,4 +81,69 @@ void GroundStation::on_pushButton_6_clicked()
     arr.append((char)2);
     arr.append('\0');
     qDebug() << link.write(3001, arr);
+}
+
+void GroundStation::on_pushButton_Velocity_Mode_clicked()
+{
+
+}
+
+void GroundStation::on_pushButton_Standby_Mode_clicked()
+{
+
+}
+
+void GroundStation::on_pushButton_Position_Mode_clicked()
+{
+
+}
+
+void GroundStation::on_pushButton_RDV_Mode_clicked()
+{
+
+}
+
+void GroundStation::on_pushButton_Deployment_Mode_clicked()
+{
+
+}
+
+void GroundStation::on_pushButton_Docking_Mode_clicked()
+{
+
+}
+
+void GroundStation::on_pushButton_Calibration_clicked()
+{
+
+}
+
+void GroundStation::on_spinBox_Motor_Speed_editingFinished()
+{
+
+}
+
+void GroundStation::on_radioButton_Motor_Clockwise_clicked()
+{
+
+}
+
+void GroundStation::on_radioButton_Motor_Counterclockwise_clicked()
+{
+
+}
+
+void GroundStation::on_spinBox_P_gain_editingFinished()
+{
+
+}
+
+void GroundStation::on_spinBox_I_gain_editingFinished()
+{
+
+}
+
+void GroundStation::on_spinBox_D_Gain_editingFinished()
+{
+
 }

@@ -16,7 +16,33 @@ class GroundStation : public QMainWindow
 private slots:
     void readFromLink();
 
-    void on_pushButton_6_clicked();
+    void on_pushButton_Burn_clicked();
+
+    void on_pushButton_Velocity_Mode_clicked();
+
+    void on_pushButton_Standby_Mode_clicked();
+
+    void on_pushButton_Position_Mode_clicked();
+
+    void on_pushButton_RDV_Mode_clicked();
+
+    void on_pushButton_Deployment_Mode_clicked();
+
+    void on_pushButton_Docking_Mode_clicked();
+
+    void on_pushButton_Calibration_clicked();
+
+    void on_spinBox_Motor_Speed_editingFinished();
+
+    void on_radioButton_Motor_Clockwise_clicked();
+
+    void on_radioButton_Motor_Counterclockwise_clicked();
+
+    void on_spinBox_P_gain_editingFinished();
+
+    void on_spinBox_I_gain_editingFinished();
+
+    void on_spinBox_D_Gain_editingFinished();
 
 public:
     explicit GroundStation(QWidget *parent = 0);
