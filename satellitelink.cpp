@@ -40,14 +40,6 @@ void SatelliteLink::readFromSocket(){
         payloads.enqueue(payload);
         emit readReady();
     }
-    if(payload.topic == PayloadSensorFusionType){
-        PayloadSensorFusion psd(payload);
-        QString roll, pitch, yaw;
-        roll.sprintf("%+06.2f", psd.roll);
-        pitch.sprintf("%+06.2f", psd.pitch);
-        yaw.sprintf("%+06.2f", psd.yaw);
-        qDebug() << qSetRealNumberPrecision(2) << "Roll:" << roll << "Pith:" << pitch << "Yaw:" << yaw;
-    }
 }
 
 void SatelliteLink::addTopic(PayloadType topicId){
@@ -57,27 +49,28 @@ void SatelliteLink::addTopic(PayloadType topicId){
 int SatelliteLink::write(quint32 topicId, const QByteArray &data){
     QByteArray buffer(1023, 0x00);
 
-    *((quint32*)(buffer.data() + 2)) = qToBigEndian(0); // TODO payload.senderNode;
-    *((quint64*)(buffer.data() + 6)) = qToBigEndian(QDateTime::currentDateTime().toMSecsSinceEpoch() * 1000000);
-    *((quint32*)(buffer.data() + 14)) = qToBigEndian(0);
-    *((quint32*)(buffer.data() + 18)) = qToBigEndian(topicId);
-    *((quint16*)(buffer.data() + 22)) = qToBigEndian(64);
-    *((quint16*)(buffer.data() + 24)) = qToBigEndian(data.length());
+    *((quint32*)(buffer.data() + 2)) = qToBigEndian((quint32)1);
+    *((quint64*)(buffer.data() + 6)) = qToBigEndian((quint64)QDateTime::currentDateTime().toMSecsSinceEpoch() * 1000000);
+    *((quint32*)(buffer.data() + 14)) = qToBigEndian((quint32)1);
+    *((quint32*)(buffer.data() + 18)) = qToBigEndian((quint32)topicId);
+    *((quint16*)(buffer.data() + 22)) = qToBigEndian((quint16)10);
+    *((quint16*)(buffer.data() + 24)) = qToBigEndian((quint16)data.length());
     memcpy(buffer.data() + 26, data.constData(), data.length());
     *(buffer.data() + 26 + data.length()) = 0x00;
 
-    quint16 checksum = 0;
+    quint32 checksum = 0;
     for(int i = 2; i < 26 + data.length(); ++i){
-        bool lowestBit = checksum & 1;
-        checksum >>= 1;
-        if(lowestBit)
-            checksum |= 0x8000;
+        if (checksum & 01)
+            checksum = checksum >> 1 | 0x8000;
+        else
+            checksum >>= 1;
 
         checksum += buffer[i];
+        checksum &= 0xffff;
     }
-    *((quint16*)(buffer.data() + 0)) = checksum;
+    *((quint16*)(buffer.data() + 0)) = qToBigEndian((quint16)checksum);
 
-//    int extra = 0;
+    int extra = 0;
 //    for(int i = 0; i < 26 + data.length() + extra; ++i){
 //        if(buffer[i] == (char)0xFF){
 //            buffer.insert(i+1, 0x7E);
@@ -85,9 +78,9 @@ int SatelliteLink::write(quint32 topicId, const QByteArray &data){
 //            ++extra;
 //        }
 //    }
-//    buffer.resize(26 + data.length() + extra);
+    buffer.resize(26 + data.length() + extra);
 
-    return socket.writeDatagram(buffer.constData(), remoteAddress, port);
+    return socket.writeDatagram(buffer.constData(), buffer.size(), remoteAddress, port);
 }
 
 PayloadSatellite SatelliteLink::read(){

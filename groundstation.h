@@ -16,6 +16,8 @@ class GroundStation : public QMainWindow
 private slots:
     void readFromLink();
 
+    void on_pushButton_6_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     ~GroundStation();

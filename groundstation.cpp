@@ -52,7 +52,7 @@ void GroundStation::readFromLink(){
     }
     case PayloadLightType:{
         PayloadLight pl(payload);
-        this->findChild<QLCDNumber*>("lcdNumber_25")->display(pl.light);
+        this->findChild<QLCDNumber*>("lcdNumber_32")->display(pl.light);
         break;
     }
     default:
@@ -64,4 +64,19 @@ void GroundStation::readFromLink(){
 GroundStation::~GroundStation()
 {
     delete ui;
+}
+
+void GroundStation::on_pushButton_6_clicked()
+{
+
+    QByteArray arr;
+    arr.append('\0');
+    arr.append('\0');
+    arr.append('\0');
+    arr.append('\0');
+    arr.append((char)1);
+    arr.append('\0');
+    arr.append('\0');
+    arr.append('\0');
+    qDebug() << link.write(3001, arr);
 }
