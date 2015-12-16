@@ -10,6 +10,7 @@ GroundStation::GroundStation(QWidget *parent) :
     link.addTopic(PayloadSensorGyroType);
     link.addTopic(PayloadSensorXMType);
     link.addTopic(PayloadLightType);
+    link.addTopic(PayloadCounterType);
     connect(&link, SIGNAL(readReady()), this, SLOT(readFromLink()));
     ui->setupUi(this);
 }
@@ -70,13 +71,14 @@ void GroundStation::on_pushButton_6_clicked()
 {
 
     QByteArray arr;
-    arr.append('\0');
-    arr.append('\0');
-    arr.append('\0');
-    arr.append('\0');
+    float p = 6666.0f;
+    arr.append(*(((char*)&p) + 0));
+    arr.append(*(((char*)&p) + 1));
+    arr.append(*(((char*)&p) + 2));
+    arr.append(*(((char*)&p) + 3));
     arr.append((char)1);
     arr.append('\0');
-    arr.append('\0');
+    arr.append((char)2);
     arr.append('\0');
     qDebug() << link.write(3001, arr);
 }

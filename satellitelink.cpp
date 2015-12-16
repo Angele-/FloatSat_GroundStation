@@ -26,14 +26,16 @@ void SatelliteLink::readFromSocket(){
 
     PayloadSatellite payload(buffer);
 
-    quint16 checksum = 0;
+    quint32 checksum = 0;
     for(int i = 2; i < 26 + payload.userDataLen; ++i){
-        bool lowestBit = checksum & 1;
-        checksum >>= 1;
-        if(lowestBit)
-            checksum |= 0x8000;
+        if (checksum & 01)
+            checksum = checksum >> 1 | 0x8000;
+        else
+            checksum >>= 1;
 
-        checksum += buffer[i];
+        checksum += (quint8)buffer[i];
+        checksum &= 0xFFFF;
+        qDebug() << i << QString::number(checksum, 16) << "Buffer" << QString::number((quint8)buffer[i], 16);
     }
 
     if((!checkChecksum || checksum == payload.checksum) && topics.contains(payload.topic)){
@@ -65,8 +67,8 @@ int SatelliteLink::write(quint32 topicId, const QByteArray &data){
         else
             checksum >>= 1;
 
-        checksum += buffer[i];
-        checksum &= 0xffff;
+        checksum += (quint8)buffer[i];
+        checksum &= 0xFFFF;
     }
     *((quint16*)(buffer.data() + 0)) = qToBigEndian((quint16)checksum);
 

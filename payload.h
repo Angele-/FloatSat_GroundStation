@@ -4,7 +4,7 @@
 #include <QtGlobal>
 
 enum PayloadType{
-    PayloadCounterType = 1,
+    PayloadCounterType = 9999,
     PayloadSensorFusionType = 1001,
     PayloadLightType = 1002,
     PayloadSensorGyroType = 1003,
