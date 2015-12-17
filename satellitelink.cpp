@@ -35,7 +35,6 @@ void SatelliteLink::readFromSocket(){
 
         checksum += (quint8)buffer[i];
         checksum &= 0xFFFF;
-        qDebug() << i << QString::number(checksum, 16) << "Buffer" << QString::number((quint8)buffer[i], 16);
     }
 
     if((!checkChecksum || checksum == payload.checksum) && topics.contains(payload.topic)){
