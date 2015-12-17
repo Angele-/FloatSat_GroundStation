@@ -1299,7 +1299,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_Send">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -1309,7 +1309,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Send</string>
+     <string>Send Telecommand</string>
     </property>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget_3">
