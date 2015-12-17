@@ -1377,7 +1377,7 @@
       <widget class="QLineEdit" name="lineEdit_Satellite"/>
      </item>
      <item>
-      <widget class="QLineEdit" name="Thread"/>
+      <widget class="QLineEdit" name="lineEdit_Thread"/>
      </item>
     </layout>
    </widget>
