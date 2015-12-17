@@ -153,3 +153,18 @@ void GroundStation::on_pushButton_Send_clicked()
     link.write(3001, tc);
 }
 
+
+void GroundStation::on_lineEdit_Command_returnPressed()
+{
+    on_pushButton_Send_clicked();
+}
+
+void GroundStation::on_lineEdit_Satellite_returnPressed()
+{
+    on_pushButton_Send_clicked();
+}
+
+void GroundStation::on_lineEdit_Thread_returnPressed()
+{
+    on_pushButton_Send_clicked();
+}
