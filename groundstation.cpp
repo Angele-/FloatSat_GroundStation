@@ -176,5 +176,16 @@ void GroundStation::on_pushButton_motor_clicked()
 
     bool clockwise = this->findChild<QRadioButton*>("radioButton_Motor_Clockwise")->isChecked();
 
+    if (clockwise)
+        command = abs(command);
+    else
+        command = - abs(command);
 
+    Telecommand tc (command, 1, 2);
+    link.write(3001, tc);
+}
+
+void GroundStation::on_lineEdit_Motor_speed_returnPressed()
+{
+    on_pushButton_motor_clicked();
 }
