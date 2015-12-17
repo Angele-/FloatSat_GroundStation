@@ -48,6 +48,12 @@ private slots:
 
     void on_lineEdit_Command_returnPressed();
 
+    void on_lineEdit_Satellite_returnPressed();
+
+    void on_lineEdit_Thread_returnPressed();
+
+    void on_pushButton_motor_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     ~GroundStation();

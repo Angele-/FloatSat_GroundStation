@@ -168,3 +168,13 @@ void GroundStation::on_lineEdit_Thread_returnPressed()
 {
     on_pushButton_Send_clicked();
 }
+
+void GroundStation::on_pushButton_motor_clicked()
+{
+    QString str = this->findChild<QLineEdit*>("lineEdit_motor")->text();
+    float command = str.toFloat();
+
+    bool clockwise = this->findChild<QRadioButton*>("radioButton_Motor_Clockwise")->isChecked();
+
+
+}
