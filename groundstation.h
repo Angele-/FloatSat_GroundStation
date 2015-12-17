@@ -44,6 +44,8 @@ private slots:
 
     void on_spinBox_D_Gain_editingFinished();
 
+    void on_pushButton_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     ~GroundStation();

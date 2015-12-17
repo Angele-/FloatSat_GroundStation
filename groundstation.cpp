@@ -70,7 +70,7 @@ GroundStation::~GroundStation()
 void GroundStation::on_pushButton_Burn_clicked()
 {
     Telecommand command(6666.0f, 1, 2);
-    qDebug() << link.write(3001, command);
+    link.write(3001, command);
 }
 
 void GroundStation::on_pushButton_Velocity_Mode_clicked()
@@ -137,3 +137,19 @@ void GroundStation::on_spinBox_D_Gain_editingFinished()
 {
 
 }
+
+void GroundStation::on_pushButton_Send_clicked()
+{
+    QString str = this->findChild<QLineEdit*>("lineEdit_Command")->text();
+    float command = str.toFloat();
+
+    str = this->findChild<QLineEdit*>("lineEdit_Satellite")->text();
+    quint16 satellite = str.toUShort();
+
+    str = this->findChild<QLineEdit*>("lineEdit_Thread")->text();
+    quint16 thread = str.toUShort();
+
+    Telecommand tc(command, satellite, thread);
+    link.write(3001, tc);
+}
+
