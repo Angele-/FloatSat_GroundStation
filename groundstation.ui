@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1297</width>
-    <height>670</height>
+    <height>689</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1303,7 +1303,7 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>530</y>
+      <y>550</y>
       <width>131</width>
       <height>28</height>
      </rect>
@@ -1316,7 +1316,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>500</y>
+      <y>520</y>
       <width>91</width>
       <height>101</height>
      </rect>
@@ -1364,7 +1364,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>500</y>
+      <y>520</y>
       <width>81</width>
       <height>101</height>
      </rect>
@@ -1380,6 +1380,29 @@
       <widget class="QLineEdit" name="Thread"/>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="label_51">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>480</y>
+      <width>241</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Sitka Subheading</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>Custom Telecommand</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
