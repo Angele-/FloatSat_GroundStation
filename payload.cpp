@@ -82,3 +82,6 @@ PayloadLight::PayloadLight(const PayloadSatellite payload):light(0){
 
     light = *(quint16*)(payload.userData + 0 * sizeof(quint16));
 }
+
+Telecommand::Telecommand(float command, quint16 satellite, quint16 thread) : command(command), satellite(satellite), thread(thread){
+}

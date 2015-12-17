@@ -85,6 +85,12 @@ int SatelliteLink::write(quint32 topicId, const QByteArray &data){
     return socket.writeDatagram(buffer.constData(), buffer.size(), remoteAddress, port);
 }
 
+int SatelliteLink::write(quint32 topicId, const Telecommand &telecommand){
+    QByteArray buffer(sizeof(Telecommand), 0x00);
+    memcpy(buffer.data(), (char*)&telecommand, sizeof(Telecommand));
+    return write(topicId, buffer);
+}
+
 PayloadSatellite SatelliteLink::read(){
     if(!payloads.size())
         return PayloadSatellite();

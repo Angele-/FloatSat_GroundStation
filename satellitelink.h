@@ -29,8 +29,10 @@ public:
     explicit SatelliteLink(QObject *parent = 0, bool checkChecksum = true);
     void addTopic(PayloadType);
     int write(quint32 topicId, const QByteArray &data);
+    int write(quint32 topicId, const Telecommand &telecommand);
     PayloadSatellite read();
     bool isBound();
     bool isReadReady();
 };
+
 #endif // SATELLITELINK_H

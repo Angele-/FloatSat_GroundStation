@@ -85,5 +85,12 @@ struct PayloadLight{
     PayloadLight(const PayloadSatellite payload);
 };
 
+struct Telecommand{
+    float command;
+    quint16 satellite;
+    quint16 thread;
+    Telecommand(float command, quint16 satellite, quint16 thread);
+};
+
 #endif // PAYLOAD_H
 
