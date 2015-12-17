@@ -54,6 +54,8 @@ private slots:
 
     void on_pushButton_motor_clicked();
 
+    void on_lineEdit_Motor_speed_returnPressed();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     ~GroundStation();
