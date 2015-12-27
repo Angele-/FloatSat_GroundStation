@@ -22,7 +22,7 @@ PayloadSatellite::PayloadSatellite(const QByteArray &buffer) : checksum(0), send
     userData[userDataLen] = 0x00;
 }
 //Not working
-PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
+PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(0.0), pitch(-qInf()), yaw(-qInf()){
     if(payload.userDataLen != sizeof(PayloadSensorFusion) || payload.topic != PayloadSensorFusionType)
         return;
 
