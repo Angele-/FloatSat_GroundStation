@@ -21,8 +21,9 @@ PayloadSatellite::PayloadSatellite(const QByteArray &buffer) : checksum(0), send
     memcpy(userData, buffer.constData() + 26, userDataLen);
     userData[userDataLen] = 0x00;
 }
+
 //Not working
-PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(0.0), pitch(-qInf()), yaw(-qInf()){
+PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(0.0), pitch(0.0), yaw(0.0){
     if(payload.userDataLen != sizeof(PayloadSensorFusion) || payload.topic != PayloadSensorFusionType)
         return;
 
