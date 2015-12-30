@@ -1,6 +1,7 @@
 #include <QByteArray>
 #include <QtEndian>
 #include "payload.h"
+#include <QDebug>
 
 PayloadSatellite::PayloadSatellite() : checksum(0), senderNode(0), timestamp(0), senderThread(0), topic(0), ttl(0), userDataLen(0){
     userData[0] = 0;
@@ -22,7 +23,6 @@ PayloadSatellite::PayloadSatellite(const QByteArray &buffer) : checksum(0), send
     userData[userDataLen] = 0x00;
 }
 
-//Not working
 PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(0.0), pitch(0.0), yaw(0.0){
     if(payload.userDataLen != sizeof(PayloadSensorFusion) || payload.topic != PayloadSensorFusionType)
         return;
@@ -82,6 +82,47 @@ PayloadLight::PayloadLight(const PayloadSatellite payload):light(0){
         return;
 
     light = *(quint16*)(payload.userData + 0 * sizeof(quint16));
+}
+
+PictureProperties::PictureProperties(const PayloadSatellite payload): Width(0), Height(0){
+
+    //qDebug() << "Act " << payload.userDataLen << " Exp " << sizeof(PictureProperties);
+    if(payload.userDataLen != sizeof(PictureProperties) || payload.topic != PayloadCameraPropertiesType){
+        return;
+    }
+    Height = *(quint16*)(payload.userData + 0 * sizeof(quint16));
+    Width = *(quint16*)(payload.userData + 1 * sizeof(quint16));
+    qDebug() << "W: " << Width << " H: " << Height << endl;
+}
+
+Pixel::Pixel(const PayloadSatellite payload): r(0), g(0), b(0){
+    if(payload.userDataLen != sizeof(Pixel) || payload.topic != PayloadCameraPixelType){
+        return;
+    }
+
+    r = *(quint8*)(payload.userData + 0 * sizeof(quint8));
+    g = *(quint8*)(payload.userData + 1 * sizeof(quint8));
+    b = *(quint8*)(payload.userData + 2 * sizeof(quint8));
+
+    //qDebug() << "R " << r << " G " << g << " B " << b << endl;
+}
+
+PixelRow::PixelRow(const PayloadSatellite payload){
+    qDebug() << "Act " << payload.userDataLen << " Exp " << sizeof(PixelRow);
+
+    if(payload.userDataLen != sizeof(PixelRow) || payload.topic != PayloadCameraPixelType){
+        return;
+    }
+
+    for(int i = 0; i < PICTURE_HEIGHT * 3; i++){
+        pixel[i].r = *(quint8*)(payload.userData + (i) * sizeof(quint8));
+        pixel[i].g = *(quint8*)(payload.userData + (i) * sizeof(quint8));
+        pixel[i].b = *(quint8*)(payload.userData + (i) * sizeof(quint8));
+
+        qDebug() << "R " << pixel[i].r << " G " << pixel[i].g << " B " << pixel[i].b << endl;
+    }
+
+
 }
 
 Telecommand::Telecommand(float command, quint16 satellite, quint16 thread) : command(command), satellite(satellite), thread(thread){

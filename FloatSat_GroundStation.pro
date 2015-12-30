@@ -23,4 +23,11 @@ HEADERS  += groundstation.h \
 
 FORMS    += groundstation.ui
 
-CONFIG += console
+CONFIG += console c++11
+
+INCLUDEPATH += /usr/local/include
+LIBS += -L/usr/local/lib \
+     -lopencv_core \
+     -lopencv_imgproc \
+     -lopencv_features2d\
+     -lopencv_highgui

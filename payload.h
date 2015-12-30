@@ -3,12 +3,16 @@
 
 #include <QtGlobal>
 
+#define PICTURE_WIDTH 160
+#define PICTURE_HEIGHT 120
 enum PayloadType{
     PayloadCounterType = 9999,
     PayloadSensorFusionType = 1001,
     PayloadLightType = 1002,
     PayloadSensorGyroType = 1003,
     PayloadSensorXMType = 1004,
+    PayloadCameraPropertiesType = 1005,
+    PayloadCameraPixelType = 1006,
     PayloadSensor1Type = 1011,
     PayloadSensor2Type = 1012,
     PayloadSensor3Type = 1013,
@@ -90,6 +94,22 @@ struct Telecommand{
     quint16 satellite;
     quint16 thread;
     Telecommand(float command, quint16 satellite, quint16 thread);
+};
+
+struct Pixel{
+    quint8 r,g,b;
+    Pixel():r(0),g(0),b(0) {}
+    Pixel(const PayloadSatellite payload);
+};
+
+struct PixelRow{
+    Pixel pixel[160];
+    PixelRow(const PayloadSatellite payload);
+};
+struct PictureProperties{
+    quint16 Width;
+    quint16 Height;
+    PictureProperties(const PayloadSatellite payload);
 };
 
 #endif // PAYLOAD_H

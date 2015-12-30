@@ -11,6 +11,8 @@ GroundStation::GroundStation(QWidget *parent) :
     link.addTopic(PayloadSensorXMType);
     link.addTopic(PayloadLightType);
     link.addTopic(PayloadCounterType);
+    link.addTopic(PayloadCameraPropertiesType);
+    link.addTopic(PayloadCameraPixelType);
     connect(&link, SIGNAL(readReady()), this, SLOT(readFromLink()));
     ui->setupUi(this);
 }
@@ -39,6 +41,11 @@ void GroundStation::readFromLink(){
         this->findChild<QLCDNumber*>("lcdNumber_9")->display(psx.yaw * 180.0f / M_PI);
         break;
     }
+    case PayloadLightType:{
+        PayloadLight pl(payload);
+        this->findChild<QLCDNumber*>("lcdNumber_32")->display(pl.light);
+        break;
+    }
     case PayloadSensor1Type:{
         PayloadSensor1 ps(payload);
         break;
@@ -51,9 +58,31 @@ void GroundStation::readFromLink(){
         PayloadSensor3 ps(payload);
         break;
     }
-    case PayloadLightType:{
-        PayloadLight pl(payload);
-        this->findChild<QLCDNumber*>("lcdNumber_32")->display(pl.light);
+    case PayloadCameraPropertiesType:{
+        PictureProperties ps(payload);
+        if(ps.Height > 0 && ps.Width > 0){
+            propertiesRecieved = true;
+            Image = cv::Mat::zeros(cv::Size(ps.Height, ps.Width), CV_8UC3);
+            QString labelText = "Size: " + QString::number(ps.Height) + " x " + QString::number(ps.Width);
+            ui->img_size_lbl->setText(labelText);
+            pixelCount = rows = cols = 0;
+        }
+        break;
+    }
+    case PayloadCameraPixelType:{
+        qDebug() << "PixelRow recieved" << endl;
+        PixelRow pr(payload);
+        if(propertiesRecieved){
+            pixelCount++;
+            ui->picRecieveStatus->setValue(pixelCount);
+            if(pixelCount == (quint32)(Image.rows*Image.cols)){
+                displayImage();
+                propertiesRecieved = false;
+                pixelCount = 0;
+                ui->picRecieveStatus->reset();
+            }
+        }
+
         break;
     }
     default:
@@ -177,9 +206,9 @@ void GroundStation::on_pushButton_motor_clicked()
     bool clockwise = this->findChild<QRadioButton*>("radioButton_Motor_Clockwise")->isChecked();
 
     if (clockwise)
-        command = abs(command);
+        command = std::abs(command);
     else
-        command = - abs(command);
+        command = - std::abs(command);
 
     Telecommand tc (command, 1, 2);
     link.write(3001, tc);
@@ -188,4 +217,22 @@ void GroundStation::on_pushButton_motor_clicked()
 void GroundStation::on_lineEdit_Motor_speed_returnPressed()
 {
     on_pushButton_motor_clicked();
+}
+
+void GroundStation::setPixel(Pixel p){
+    Image.at<cv::Vec3b>(cols, rows)[0] = p.r;
+    Image.at<cv::Vec3b>(cols, rows)[1] = p.g;
+    Image.at<cv::Vec3b>(cols, rows)[2] = p.b;
+    if(rows >= 120){
+        rows = 0;
+        cols++;
+    }else if(rows < 120){
+        rows++;
+    }
+
+}
+
+void GroundStation::displayImage(){
+    QImage image((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
+    ui->picture->setPixmap(QPixmap::fromImage(image));
 }

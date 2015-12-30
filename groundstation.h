@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include "satellitelink.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgcodecs/imgcodecs.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 namespace Ui {
 class GroundStation;
@@ -61,7 +65,15 @@ public:
     ~GroundStation();
 
 private:
+    void setPixel(Pixel p);
+    void displayImage();
     Ui::GroundStation *ui;
+    QVector<Pixel> picture;
+    bool propertiesRecieved = false;
+    bool pictureFinished = false;
+    cv::Mat Image;
+    quint16 rows,cols = 0;
+    quint32 pixelCount = 0;
 };
 
 #endif // GROUNDSTATION_H
