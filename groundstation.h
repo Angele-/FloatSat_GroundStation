@@ -3,10 +3,14 @@
 
 #include <QMainWindow>
 #include "satellitelink.h"
+#include "basics.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <QSerialPort>
+#include <QSerialPortInfo>
+#include <QVector>
 
 namespace Ui {
 class GroundStation;
@@ -19,6 +23,8 @@ class GroundStation : public QMainWindow
 
 private slots:
     void readFromLink();
+
+    void readSerialData();
 
     void on_pushButton_Burn_clicked();
 
@@ -60,20 +66,29 @@ private slots:
 
     void on_lineEdit_Motor_speed_returnPressed();
 
+    void on_consoleClearBtn_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     ~GroundStation();
 
 private:
     void setPixel(Pixel p);
+    void setPixelRow(PixelRow p);
     void displayImage();
+    void openSerialPort();
+    void ProcessImageGray();
     Ui::GroundStation *ui;
-    QVector<Pixel> picture;
-    bool propertiesRecieved = false;
-    bool pictureFinished = false;
     cv::Mat Image;
-    quint16 rows,cols = 0;
-    quint32 pixelCount = 0;
+    qint32 pixelCount = 0;
+    QSerialPort *serial;
+    QSerialPortInfo *serialInfo;
+    QString line = "";
+    PictureProperties properties;
+    bool picFinished = false;
+    bool propertiesRx = false;
+    QVector<quint8> yuv;
+    bool sendToConsole = true;
 };
 
 #endif // GROUNDSTATION_H

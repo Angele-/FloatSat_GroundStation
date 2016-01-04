@@ -1426,10 +1426,10 @@
    <widget class="QFrame" name="pic_frame">
     <property name="geometry">
      <rect>
-      <x>704</x>
-      <y>176</y>
-      <width>125</width>
-      <height>165</height>
+      <x>710</x>
+      <y>169</y>
+      <width>130</width>
+      <height>170</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -1441,8 +1441,8 @@
     <widget class="QLabel" name="picture">
      <property name="geometry">
       <rect>
-       <x>3</x>
-       <y>3</y>
+       <x>5</x>
+       <y>5</y>
        <width>120</width>
        <height>160</height>
       </rect>
@@ -1455,8 +1455,8 @@
    <widget class="QLabel" name="ov7670_lbl">
     <property name="geometry">
      <rect>
-      <x>714</x>
-      <y>342</y>
+      <x>712</x>
+      <y>150</y>
       <width>103</width>
       <height>16</height>
      </rect>
@@ -1468,8 +1468,8 @@
    <widget class="QLabel" name="img_size_lbl">
     <property name="geometry">
      <rect>
-      <x>714</x>
-      <y>360</y>
+      <x>715</x>
+      <y>363</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -1481,9 +1481,9 @@
    <widget class="QProgressBar" name="picRecieveStatus">
     <property name="geometry">
      <rect>
-      <x>710</x>
-      <y>379</y>
-      <width>118</width>
+      <x>713</x>
+      <y>340</y>
+      <width>125</width>
       <height>23</height>
      </rect>
     </property>
@@ -1492,6 +1492,54 @@
     </property>
     <property name="value">
      <number>0</number>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="debugConsole">
+    <property name="geometry">
+     <rect>
+      <x>232</x>
+      <y>504</y>
+      <width>426</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Monaco</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="maximumBlockCount">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="debugConsoleLbl">
+    <property name="geometry">
+     <rect>
+      <x>233</x>
+      <y>488</y>
+      <width>157</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bluetooth Debug Console</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="consoleClearBtn">
+    <property name="geometry">
+     <rect>
+      <x>552</x>
+      <y>479</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear Console</string>
     </property>
    </widget>
   </widget>

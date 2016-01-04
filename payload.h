@@ -2,6 +2,7 @@
 #define PAYLOAD_H
 
 #include <QtGlobal>
+#include "basics.h"
 
 #define PICTURE_WIDTH 160
 #define PICTURE_HEIGHT 120
@@ -103,13 +104,15 @@ struct Pixel{
 };
 
 struct PixelRow{
-    Pixel pixel[160];
+    Pixel pixel[ROWSIZE];
     PixelRow(const PayloadSatellite payload);
 };
 struct PictureProperties{
     quint16 Width;
     quint16 Height;
+    quint8 type;
     PictureProperties(const PayloadSatellite payload);
+    PictureProperties(): Width(0), Height(0) {}
 };
 
 #endif // PAYLOAD_H

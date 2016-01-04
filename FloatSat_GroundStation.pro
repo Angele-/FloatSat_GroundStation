@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui network serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,14 +19,15 @@ SOURCES += main.cpp\
 
 HEADERS  += groundstation.h \
     satellitelink.h \
-    payload.h
+    payload.h \
+    basics.h
 
 FORMS    += groundstation.ui
 
 CONFIG += console c++11
 
-INCLUDEPATH += /usr/local/include
-LIBS += -L/usr/local/lib \
+unix:INCLUDEPATH += /usr/local/include
+unix:LIBS += -L/usr/local/lib \
      -lopencv_core \
      -lopencv_imgproc \
      -lopencv_features2d\

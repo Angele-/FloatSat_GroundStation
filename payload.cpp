@@ -96,6 +96,7 @@ PictureProperties::PictureProperties(const PayloadSatellite payload): Width(0), 
 }
 
 Pixel::Pixel(const PayloadSatellite payload): r(0), g(0), b(0){
+    qDebug() << "Act " << payload.userDataLen << " Exp " << sizeof(PictureProperties);
     if(payload.userDataLen != sizeof(Pixel) || payload.topic != PayloadCameraPixelType){
         return;
     }
@@ -108,18 +109,18 @@ Pixel::Pixel(const PayloadSatellite payload): r(0), g(0), b(0){
 }
 
 PixelRow::PixelRow(const PayloadSatellite payload){
-    qDebug() << "Act " << payload.userDataLen << " Exp " << sizeof(PixelRow);
+    //qDebug() << "Act " << payload.userDataLen << " Exp " << sizeof(PixelRow);
 
     if(payload.userDataLen != sizeof(PixelRow) || payload.topic != PayloadCameraPixelType){
         return;
     }
 
-    for(int i = 0; i < PICTURE_HEIGHT * 3; i++){
+    for(int i = 0; i < ROWSIZE * 3; i++){
         pixel[i].r = *(quint8*)(payload.userData + (i) * sizeof(quint8));
         pixel[i].g = *(quint8*)(payload.userData + (i) * sizeof(quint8));
         pixel[i].b = *(quint8*)(payload.userData + (i) * sizeof(quint8));
 
-        qDebug() << "R " << pixel[i].r << " G " << pixel[i].g << " B " << pixel[i].b << endl;
+        //qDebug() << pixel[i].r << endl;
     }
 
 
