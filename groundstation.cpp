@@ -5,6 +5,10 @@
 #include <QMessageBox>
 #include <QList>
 #include <QScrollBar>
+#include <QElapsedTimer>
+
+QElapsedTimer t;
+
 
 GroundStation::GroundStation(QWidget *parent) :
     QMainWindow(parent), link(parent), ui(new Ui::GroundStation)
@@ -67,19 +71,23 @@ void GroundStation::readSerialData(){
         sendToConsole = false;
         picFinished = false;
         //Length of a whole String containing YUV Data for a 160*120 Image including spacers
-        ui->picRecieveStatus->setMaximum(properties.Width * properties.Height * 2 * 4);
+        ui->picRecieveStatus->setMaximum(properties.Width * properties.Height);
         pixelCount = 0;
     }
     if(!picFinished && line.contains(";_CAMERA_TX_END;", Qt::CaseSensitive)){
+        t.start();
         line = line.left(line.indexOf(";_CAMERA_TX_END;"));
+        qDebug() << t.nsecsElapsed()/1000;
         picFinished = true;
         propertiesRx = false;
         QStringList d = line.split(";", QString::SplitBehavior::SkipEmptyParts);
+        qDebug() << t.nsecsElapsed()/1000;
 
         for(QStringList::iterator i = d.begin(); i != d.end(); ++i){
             QString current = (*i);
             yuv.append(current.toInt());
         }
+        qDebug() << t.nsecsElapsed()/1000;
 
         ui->debugConsole->insertPlainText("\nRecieved YUV Data: " + QString::number(yuv.length()) + "\n");
 
@@ -87,6 +95,7 @@ void GroundStation::readSerialData(){
         data.clear();
         sendToConsole = true;
         ProcessImageGray();
+        qDebug() << t.nsecsElapsed()/1000;
     }
     if(sendToConsole){
         ui->debugConsole->insertPlainText(data);
@@ -108,8 +117,39 @@ void GroundStation::readSerialData(){
 
 }
 
+void GroundStation::ProcessImageV(){
+    int i = 0; //vYuY
+    bool even = true;
+    for(int x = 0; x < Image.rows; x++){
+        for(int y = 0; y < Image.cols; y++){
+            if(i > yuv.size() - 1){
+                Image.at<cv::Vec3b>(x,y)[0] = 0;
+                Image.at<cv::Vec3b>(x,y)[1] = 0;
+                Image.at<cv::Vec3b>(x,y)[2] = 0;
+                //qDebug() << "Error - YUV underflow" << endl;
+            }else{
+                Image.at<cv::Vec3b>(x,y)[0] = (uchar) yuv.at(i);
+                Image.at<cv::Vec3b>(x,y)[1] = (uchar) yuv.at(i);
+                Image.at<cv::Vec3b>(x,y)[2] = (uchar) yuv.at(i);
+            }
+            if(even){
+                even = false;
+            }else{
+                even = true;
+                i = i + 4;
+            }
+
+        }
+    }
+    cv::transpose(Image,Image);
+    cv::flip(Image,Image, 1);
+    QImage image((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
+    ui->picture->setPixmap(QPixmap::fromImage(image));
+    yuv.clear();
+}
+
 void GroundStation::ProcessImageGray(){
-    int i = 1; //uYvY?
+    int i = 1; //vYuY
 
     for(int x = 0; x < Image.rows; x++){
         for(int y = 0; y < Image.cols; y++){

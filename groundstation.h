@@ -78,6 +78,7 @@ private:
     void displayImage();
     void openSerialPort();
     void ProcessImageGray();
+    void ProcessImageV();
     Ui::GroundStation *ui;
     cv::Mat Image;
     qint32 pixelCount = 0;
