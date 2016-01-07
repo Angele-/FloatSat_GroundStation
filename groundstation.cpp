@@ -144,6 +144,25 @@ void GroundStation::readSerialImage(){
     }
 
     if(!sendToConsole){
+        if(line.contains(";")){
+
+            for(quint16 x = rows; x < Image.rows; x++){
+                for(quint16 y = cols; y < Image.cols; y++){
+                    Image.at<cv::Vec3b>(x, y)[0] = 0;
+                    Image.at<cv::Vec3b>(x, y)[1] = 0;
+                    Image.at<cv::Vec3b>(x, y)[2] = 0;
+                }
+            }
+            cv::transpose(Image,Image);
+            cv::flip(Image,Image, 1);
+            QImage image((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
+            ui->picture->setPixmap(QPixmap::fromImage(image));
+            rows = cols = 0;
+            ui->picRecieveStatus->setValue(0);
+            Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
+            line = "";
+            return;
+        }
         while(line.length() > 2){
             QString pxl = line.left(3);
             line = line.mid(3);
@@ -159,9 +178,8 @@ void GroundStation::readSerialImage(){
                 ui->picture->setPixmap(QPixmap::fromImage(image));
                 rows = cols = 0;
                 ui->picRecieveStatus->setValue(0);
-                Image = cv::Mat::zeros(properties.Width, properties.Height, CV_8UC3);
-                propertiesRx = false;
-                sendToConsole = true;
+                Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
+                line = "";
                 break;
             }else if(cols == Image.cols-1){
                 cols = 0;
