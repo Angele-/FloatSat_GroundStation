@@ -30,5 +30,5 @@ unix:INCLUDEPATH += /usr/local/include
 unix:LIBS += -L/usr/local/lib \
      -lopencv_core \
      -lopencv_imgproc \
+     -lopencv_highgui \
      -lopencv_features2d\
-     -lopencv_highgui

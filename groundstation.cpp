@@ -21,7 +21,7 @@ GroundStation::GroundStation(QWidget *parent) :
     link.addTopic(PayloadCameraPropertiesType);
     link.addTopic(PayloadCameraPixelType);
     serial = new QSerialPort(this);
-    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialData()));
+    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialImage()));
     connect(&link, SIGNAL(readReady()), this, SLOT(readFromLink()));
     serialInfo = new QSerialPortInfo();
     openSerialPort();
@@ -114,6 +114,68 @@ void GroundStation::readSerialData(){
         }
     }
 
+
+}
+
+void GroundStation::readSerialImage(){
+    QByteArray data = serial->readAll();
+    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
+    line.append(data);
+    if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
+        QString props = line.mid(line.indexOf("CAMERA_TX_START;")+16,10);
+        QStringList d = props.split(";",  QString::SplitBehavior::SkipEmptyParts);
+        properties.Height = d.at(0).toInt();
+        properties.Width = d.at(1).toInt();
+        properties.type = d.at(2).toInt();
+        if(properties.Height > 0 && properties.Width > 0){
+            Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
+            QString labelText = "Size: " + QString::number(properties.Height) + " x " + QString::number(properties.Width);
+            ui->img_size_lbl->setText(labelText);
+
+        }
+        line = line.mid(line.indexOf(";PROPS;")+7);
+        propertiesRx = true;
+        sendToConsole = false;
+        picFinished = false;
+        //Length of a whole String containing YUV Data for a 160*120 Image including spacers
+        ui->picRecieveStatus->setMaximum(properties.Width * properties.Height);
+        ui->picRecieveStatus->setValue(0);
+        pixelCount = 0;
+    }
+
+    if(!sendToConsole){
+        while(line.length() > 2){
+            QString pxl = line.left(3);
+            line = line.mid(3);
+            ui->picRecieveStatus->setValue(ui->picRecieveStatus->value() + 3);
+            Image.at<cv::Vec3b>(rows, cols)[0] = pxl.toInt();
+            Image.at<cv::Vec3b>(rows, cols)[1] = pxl.toInt();
+            Image.at<cv::Vec3b>(rows, cols)[2] = pxl.toInt();
+
+            if(rows == Image.rows - 1 && cols == Image.cols - 1){
+                cv::transpose(Image,Image);
+                cv::flip(Image,Image, 1);
+                QImage image((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
+                ui->picture->setPixmap(QPixmap::fromImage(image));
+                rows = cols = 0;
+                ui->picRecieveStatus->setValue(0);
+                Image = cv::Mat::zeros(properties.Width, properties.Height, CV_8UC3);
+                propertiesRx = false;
+                sendToConsole = true;
+                break;
+            }else if(cols == Image.cols-1){
+                cols = 0;
+                rows++;
+            }else{
+                cols++;
+            }
+
+        }
+    }else{
+        ui->debugConsole->insertPlainText(data);
+        QScrollBar *scrollbar = ui->debugConsole->verticalScrollBar();
+        scrollbar->setValue(scrollbar->maximum());
+    }
 
 }
 

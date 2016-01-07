@@ -26,6 +26,8 @@ private slots:
 
     void readSerialData();
 
+    void readSerialImage();
+
     void on_pushButton_Burn_clicked();
 
     void on_pushButton_Velocity_Mode_clicked();
@@ -90,6 +92,7 @@ private:
     bool propertiesRx = false;
     QVector<quint8> yuv;
     bool sendToConsole = true;
+    quint16 rows,cols = 0;
 };
 
 #endif // GROUNDSTATION_H
