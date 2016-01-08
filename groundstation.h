@@ -4,14 +4,9 @@
 #include <QMainWindow>
 #include "satellitelink.h"
 #include "basics.h"
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgcodecs/imgcodecs.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <QSerialPort>
-#include <QSerialPortInfo>
-#include <QVector>
-
+#include "imageprocessor.h"
+#include "payload.h"
+#include <QScrollBar>
 namespace Ui {
 class GroundStation;
 }
@@ -19,14 +14,23 @@ class GroundStation;
 class GroundStation : public QMainWindow
 {
     Q_OBJECT
-    SatelliteLink link;
 
 private slots:
     void readFromLink();
 
-    void readSerialData();
+    void onSetPicRecieveStatusMaximum(qint32 maximum);
 
-    void readSerialImage();
+    void onSetPicRecieveStatusValue(qint32 value);
+
+    void onSetConsoleText(QString text);
+
+    void onSetConsoleText(QByteArray data);
+
+    void onSetImgSizeLbl(QString text);
+
+    void onUpdatePicture();
+
+    //Predefined Slots:
 
     void on_pushButton_Burn_clicked();
 
@@ -41,10 +45,6 @@ private slots:
     void on_pushButton_Deployment_Mode_clicked();
 
     void on_pushButton_Docking_Mode_clicked();
-
-    void on_pushButton_Calibration_clicked();
-
-    void on_spinBox_Motor_Speed_editingFinished();
 
     void on_radioButton_Motor_Clockwise_clicked();
 
@@ -72,28 +72,18 @@ private slots:
 
 public:
     explicit GroundStation(QWidget *parent = 0);
+    SatelliteLink link;
     ~GroundStation();
 
 private:
     void setPixel(Pixel p);
     void setPixelRow(PixelRow p);
     void displayImage();
-    void openSerialPort();
-    void ProcessImageGray();
-    void ProcessImageV();
+
     Ui::GroundStation *ui;
-    cv::Mat Image;
-    qint32 pixelCount = 0;
-    QSerialPort *serial;
-    QSerialPortInfo *serialInfo;
-    QString line = "";
-    PictureProperties properties;
-    bool picFinished = false;
-    bool propertiesRx = false;
-    QVector<quint8> yuv;
-    bool sendToConsole = true;
-    quint16 rows,cols = 0;
-    bool transmissionFinished = false;
+
+    ImageProcessor *proc;
+
 };
 
 #endif // GROUNDSTATION_H

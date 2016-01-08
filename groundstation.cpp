@@ -5,10 +5,6 @@
 #include <QMessageBox>
 #include <QList>
 #include <QScrollBar>
-#include <QElapsedTimer>
-
-QElapsedTimer t;
-
 
 GroundStation::GroundStation(QWidget *parent) :
     QMainWindow(parent), link(parent), ui(new Ui::GroundStation)
@@ -20,250 +16,18 @@ GroundStation::GroundStation(QWidget *parent) :
     link.addTopic(PayloadCounterType);
     link.addTopic(PayloadCameraPropertiesType);
     link.addTopic(PayloadCameraPixelType);
-    serial = new QSerialPort(this);
-    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialImage()));
     connect(&link, SIGNAL(readReady()), this, SLOT(readFromLink()));
-    serialInfo = new QSerialPortInfo();
-    openSerialPort();
+    proc = new ImageProcessor(this);        //Serial Image Reader
+    connect(proc, SIGNAL(updatePicture()), this, SLOT(onUpdatePicture()));
+    connect(proc, SIGNAL(setConsoleText(QByteArray)), this, SLOT(onSetConsoleText(QByteArray)));
+    connect(proc, SIGNAL(setConsoleText(QString)), this, SLOT(onSetConsoleText(QString)));
+    connect(proc, SIGNAL(setImgSizeLbl(QString)), this, SLOT(onSetImgSizeLbl(QString)));
+    connect(proc, SIGNAL(setPicRecieveStatusMaximum(qint32)), this, SLOT(onSetPicRecieveStatusMaximum(qint32)));
+    connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
+    proc->init();
     ui->setupUi(this);
 }
 
-void GroundStation::openSerialPort(){
-    /*QList<QSerialPortInfo> ports = serialInfo->availablePorts();
-    QList<QSerialPortInfo>::Iterator  i;
-    for(i = ports.begin(); i != ports.end(); i++){
-        qDebug() << "Port: " << (*i).portName();
-    }*/
-
-
-    serial->setPortName("cu.FloatSat-10-SPPDev");
-    serial->setBaudRate(QSerialPort::Baud115200);
-    serial->setDataBits(QSerialPort::Data8);
-    serial->setParity(QSerialPort::NoParity);
-    serial->setStopBits(QSerialPort::OneStop);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-    if (serial->open(QIODevice::ReadWrite)) {
-        qDebug() << "Connected to " << serial->portName() << endl;
-    } else {
-        qDebug() << "Could not connect to " << serial->portName() << endl;
-    }
-}
-
-void GroundStation::readSerialData(){
-    QByteArray data = serial->readAll();
-    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
-    line.append(data);
-    if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
-        QString props = line.mid(line.indexOf("CAMERA_TX_START;")+16,10);
-        QStringList d = props.split(";",  QString::SplitBehavior::SkipEmptyParts);
-        properties.Height = d.at(0).toInt();
-        properties.Width = d.at(1).toInt();
-        properties.type = d.at(2).toInt();
-        if(properties.Height > 0 && properties.Width > 0){
-            Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
-            QString labelText = "Size: " + QString::number(properties.Height) + " x " + QString::number(properties.Width);
-            ui->img_size_lbl->setText(labelText);
-
-        }
-        //qDebug() << properties.Height << " " << properties.Width << " " << properties.type;
-        line = line.mid(line.indexOf(";PROPS;")+7);
-        propertiesRx = true;
-        sendToConsole = false;
-        picFinished = false;
-        //Length of a whole String containing YUV Data for a 160*120 Image including spacers
-        ui->picRecieveStatus->setMaximum(properties.Width * properties.Height);
-        pixelCount = 0;
-    }
-    if(!picFinished && line.contains(";_CAMERA_TX_END;", Qt::CaseSensitive)){
-        t.start();
-        line = line.left(line.indexOf(";_CAMERA_TX_END;"));
-        qDebug() << t.nsecsElapsed()/1000;
-        picFinished = true;
-        propertiesRx = false;
-        QStringList d = line.split(";", QString::SplitBehavior::SkipEmptyParts);
-        qDebug() << t.nsecsElapsed()/1000;
-
-        for(QStringList::iterator i = d.begin(); i != d.end(); ++i){
-            QString current = (*i);
-            yuv.append(current.toInt());
-        }
-        qDebug() << t.nsecsElapsed()/1000;
-
-        ui->debugConsole->insertPlainText("\nRecieved YUV Data: " + QString::number(yuv.length()) + "\n");
-
-        line = "";
-        data.clear();
-        sendToConsole = true;
-        ProcessImageGray();
-        qDebug() << t.nsecsElapsed()/1000;
-    }
-    if(sendToConsole){
-        ui->debugConsole->insertPlainText(data);
-        QScrollBar *scrollbar = ui->debugConsole->verticalScrollBar();
-        scrollbar->setValue(scrollbar->maximum());
-
-        if(line.length() > 1000) line = "";
-    }else{
-        if(propertiesRx){
-            pixelCount = line.length();
-            if(pixelCount < ui->picRecieveStatus->maximum()){
-                ui->picRecieveStatus->setValue(pixelCount);
-            }else{
-                ui->picRecieveStatus->setValue(ui->picRecieveStatus->maximum());
-            }
-        }
-    }
-
-
-}
-
-void GroundStation::readSerialImage(){
-    QByteArray data = serial->readAll();
-    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
-    line.append(data);
-    if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
-        QString props = line.mid(line.indexOf("CAMERA_TX_START;")+16,10);
-        QStringList d = props.split(";",  QString::SplitBehavior::SkipEmptyParts);
-        properties.Height = d.at(0).toInt();
-        properties.Width = d.at(1).toInt();
-        properties.type = d.at(2).toInt();
-        if(properties.Height > 0 && properties.Width > 0){
-            Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
-            QString labelText = "Size: " + QString::number(properties.Height) + " x " + QString::number(properties.Width);
-            ui->img_size_lbl->setText(labelText);
-
-        }
-        line = line.mid(line.indexOf(";PROPS;")+7);
-        propertiesRx = true;
-        sendToConsole = false;
-        picFinished = false;
-        //Length of a whole String containing YUV Data for a 160*120 Image including spacers
-        ui->picRecieveStatus->setMaximum(properties.Width * properties.Height);
-        ui->picRecieveStatus->setValue(0);
-        pixelCount = 0;
-    }
-
-    if(!sendToConsole){
-        //End Condition
-        if(line.contains(";")){
-            //Fill Image with Zeros and reset Everything
-            for(quint16 x = rows; x < Image.rows; x++){
-                for(quint16 y = cols; y < Image.cols; y++){
-                    Image.at<cv::Vec3b>(x, y)[0] = 0;
-                    Image.at<cv::Vec3b>(x, y)[1] = 0;
-                    Image.at<cv::Vec3b>(x, y)[2] = 0;
-                }
-            }
-            cv::transpose(Image,Image);
-            cv::flip(Image,Image, 1);
-            QImage image((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
-            ui->picture->setPixmap(QPixmap::fromImage(image));
-            rows = cols = 0;
-            ui->picRecieveStatus->setValue(0);
-            Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
-            line = "";
-
-            if(transmissionFinished){
-                sendToConsole = true;
-                transmissionFinished = false;
-                propertiesRx = false;
-            }
-            return;
-        }
-        //As long as theres data available, get 1 Pixel and put it into the picture
-        while(line.length() > 2){
-            QString pxl = line.left(3);
-            line = line.mid(3);
-            ui->picRecieveStatus->setValue(ui->picRecieveStatus->value() + 3);
-            Image.at<cv::Vec3b>(rows, cols)[0] = pxl.toInt();
-            Image.at<cv::Vec3b>(rows, cols)[1] = pxl.toInt();
-            Image.at<cv::Vec3b>(rows, cols)[2] = pxl.toInt();
-
-            if(rows == Image.rows - 1 && cols == Image.cols - 1){
-                cv::transpose(Image,Image);
-                cv::flip(Image,Image, 1);
-                QImage image((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
-                ui->picture->setPixmap(QPixmap::fromImage(image));
-                rows = cols = 0;
-                ui->picRecieveStatus->setValue(0);
-                Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
-                line = "";
-                break;
-            }else if(cols == Image.cols-1){
-                cols = 0;
-                rows++;
-            }else{
-                cols++;
-            }
-
-        }
-    }else{
-        ui->debugConsole->insertPlainText(data);
-        QScrollBar *scrollbar = ui->debugConsole->verticalScrollBar();
-        scrollbar->setValue(scrollbar->maximum());
-    }
-
-}
-
-void GroundStation::ProcessImageV(){
-    int i = 0; //vYuY
-    bool even = true;
-    for(int x = 0; x < Image.rows; x++){
-        for(int y = 0; y < Image.cols; y++){
-            if(i > yuv.size() - 1){
-                Image.at<cv::Vec3b>(x,y)[0] = 0;
-                Image.at<cv::Vec3b>(x,y)[1] = 0;
-                Image.at<cv::Vec3b>(x,y)[2] = 0;
-                //qDebug() << "Error - YUV underflow" << endl;
-            }else{
-                Image.at<cv::Vec3b>(x,y)[0] = (uchar) yuv.at(i);
-                Image.at<cv::Vec3b>(x,y)[1] = (uchar) yuv.at(i);
-                Image.at<cv::Vec3b>(x,y)[2] = (uchar) yuv.at(i);
-            }
-            if(even){
-                even = false;
-            }else{
-                even = true;
-                i = i + 4;
-            }
-
-        }
-    }
-    cv::transpose(Image,Image);
-    cv::flip(Image,Image, 1);
-    QImage image((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
-    ui->picture->setPixmap(QPixmap::fromImage(image));
-    yuv.clear();
-}
-
-void GroundStation::ProcessImageGray(){
-    int i = 1; //vYuY
-
-    for(int x = 0; x < Image.rows; x++){
-        for(int y = 0; y < Image.cols; y++){
-            if(i > yuv.size() - 1){
-                Image.at<cv::Vec3b>(x,y)[0] = 0;
-                Image.at<cv::Vec3b>(x,y)[1] = 0;
-                Image.at<cv::Vec3b>(x,y)[2] = 0;
-                //qDebug() << "Error - YUV underflow" << endl;
-            }else{
-                Image.at<cv::Vec3b>(x,y)[0] = (uchar) yuv.at(i);
-                Image.at<cv::Vec3b>(x,y)[1] = (uchar) yuv.at(i);
-                Image.at<cv::Vec3b>(x,y)[2] = (uchar) yuv.at(i);
-            }
-            if(properties.type == 0){
-                i = i+2;
-            }else{
-                i++;
-            }
-        }
-    }
-    cv::transpose(Image,Image);
-    cv::flip(Image,Image, 1);
-    QImage image((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
-    ui->picture->setPixmap(QPixmap::fromImage(image));
-    yuv.clear();
-}
 
 void GroundStation::readFromLink(){
     PayloadSatellite payload = link.read();
@@ -353,16 +117,6 @@ void GroundStation::on_pushButton_Docking_Mode_clicked()
 
 }
 
-void GroundStation::on_pushButton_Calibration_clicked()
-{
-
-}
-
-void GroundStation::on_spinBox_Motor_Speed_editingFinished()
-{
-
-}
-
 void GroundStation::on_radioButton_Motor_Clockwise_clicked()
 {
 
@@ -393,10 +147,7 @@ void GroundStation::on_pushButton_Send_clicked()
     QString str = this->findChild<QLineEdit*>("lineEdit_Command")->text();
     float command = str.toFloat();
 
-    if(command == 1003.0){
-        transmissionFinished = true;
-        qDebug() << "Transmission finished";
-    }
+
     str = this->findChild<QLineEdit*>("lineEdit_Satellite")->text();
     quint16 satellite = str.toUShort();
 
@@ -405,6 +156,11 @@ void GroundStation::on_pushButton_Send_clicked()
 
     Telecommand tc(command, satellite, thread);
     link.write(3001, tc);
+
+    if(command == 1003.0 && thread == 4 && satellite == 1){
+        proc->setTransmissionFinished(true);
+        qDebug() << "Transmission finished";
+    }
 }
 
 
@@ -447,4 +203,36 @@ void GroundStation::on_lineEdit_Motor_speed_returnPressed()
 void GroundStation::on_consoleClearBtn_clicked()
 {
     ui->debugConsole->clear();
+}
+
+void GroundStation::onSetPicRecieveStatusMaximum(qint32 maximum){
+    ui->picRecieveStatus->setMaximum(maximum);
+}
+
+void GroundStation::onSetPicRecieveStatusValue(qint32 value){
+    ui->picRecieveStatus->setValue(value);
+}
+
+void GroundStation::onSetConsoleText(QString text){
+    ui->debugConsole->insertPlainText(text);
+    QScrollBar* scrollbar = ui->debugConsole->verticalScrollBar();
+    scrollbar->setValue(scrollbar->maximum());
+
+    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
+}
+
+void GroundStation::onSetConsoleText(QByteArray data){
+    ui->debugConsole->insertPlainText(data);
+    QScrollBar* scrollbar = ui->debugConsole->verticalScrollBar();
+    scrollbar->setValue(scrollbar->maximum());
+
+    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
+}
+
+void GroundStation::onSetImgSizeLbl(QString text){
+    ui->img_size_lbl->setText(text);
+}
+
+void GroundStation::onUpdatePicture(){
+    ui->picture->setPixmap(QPixmap::fromImage(proc->getImage()));
 }
