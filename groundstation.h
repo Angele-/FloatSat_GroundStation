@@ -93,6 +93,7 @@ private:
     QVector<quint8> yuv;
     bool sendToConsole = true;
     quint16 rows,cols = 0;
+    bool transmissionFinished = false;
 };
 
 #endif // GROUNDSTATION_H

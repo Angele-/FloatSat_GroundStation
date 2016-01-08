@@ -144,8 +144,9 @@ void GroundStation::readSerialImage(){
     }
 
     if(!sendToConsole){
+        //End Condition
         if(line.contains(";")){
-
+            //Fill Image with Zeros and reset Everything
             for(quint16 x = rows; x < Image.rows; x++){
                 for(quint16 y = cols; y < Image.cols; y++){
                     Image.at<cv::Vec3b>(x, y)[0] = 0;
@@ -161,8 +162,15 @@ void GroundStation::readSerialImage(){
             ui->picRecieveStatus->setValue(0);
             Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
             line = "";
+
+            if(transmissionFinished){
+                sendToConsole = true;
+                transmissionFinished = false;
+                propertiesRx = false;
+            }
             return;
         }
+        //As long as theres data available, get 1 Pixel and put it into the picture
         while(line.length() > 2){
             QString pxl = line.left(3);
             line = line.mid(3);
@@ -385,6 +393,10 @@ void GroundStation::on_pushButton_Send_clicked()
     QString str = this->findChild<QLineEdit*>("lineEdit_Command")->text();
     float command = str.toFloat();
 
+    if(command == 1003.0){
+        transmissionFinished = true;
+        qDebug() << "Transmission finished";
+    }
     str = this->findChild<QLineEdit*>("lineEdit_Satellite")->text();
     quint16 satellite = str.toUShort();
 

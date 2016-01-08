@@ -18,7 +18,6 @@ class SatelliteLink : public QObject
     bool checkChecksum;
     QSet<quint32> topics;
     QQueue<PayloadSatellite> payloads;
-
 signals:
     void readReady();
 
