@@ -293,12 +293,14 @@ void ImageProcessor::DetectCircles(cv::Mat src){
 
     std::vector<cv::Vec3f> circles;
 
-    cv::HoughCircles( src_gray, circles, CV_HOUGH_GRADIENT, 1, 10, 80, 40, 0, 0 );
+    cv::HoughCircles( src_gray, circles, CV_HOUGH_GRADIENT, 1, 10, 80, 40, 0, 0);
 
     for(size_t i = 0; i < circles.size(); i++){
-        cv::Point center(circles[i][0], circles[i][1]);
-        // circle outline
-        cv::circle( src, center, circles[i][2], cv::Scalar(0,255,0), 3, 8, 0 );
+        if(circles[i][2] > 15.0 && circles[i][2] < 20.0){
+            cv::Point center(circles[i][0], circles[i][1]);
+            cv::circle( src, center, circles[i][2], cv::Scalar(0,255,0), 3, 8, 0 );
+            qDebug() << "Center (x,y): " << circles[i][0] << circles[i][1] << " R: " << circles[i][2];
+        }
     }
 
 }
