@@ -44,7 +44,8 @@ INCLUDEPATH += C:/opencv/modules/imgcodecs/include
 INCLUDEPATH += C:/opencv/modules/videoio/include
 
 LIBS += -LC:/opencvbuild/lib \
-     -lopencv_core310 \
-     -lopencv_imgproc310 \
-     -lopencv_highgui310 \
-     -lopencv_features2d310 \
+        -LC:/opencvbuild/bin \
+        -lopencv_core310 \
+        -lopencv_imgproc310 \
+        -lopencv_highgui310 \
+        -lopencv_features2d310 \
