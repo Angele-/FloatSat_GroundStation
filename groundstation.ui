@@ -1418,23 +1418,14 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_43">
+    <widget class="Compass" name="compass_widget" native="true">
      <property name="geometry">
       <rect>
-       <x>115</x>
-       <y>128</y>
-       <width>81</width>
-       <height>31</height>
+       <x>50</x>
+       <y>40</y>
+       <width>221</width>
+       <height>191</height>
       </rect>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>(Compass)</string>
      </property>
     </widget>
    </widget>
@@ -1564,7 +1555,7 @@
      <x>0</x>
      <y>0</y>
      <width>1297</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -1579,6 +1570,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Compass</class>
+   <extends>QWidget</extends>
+   <header>compass.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

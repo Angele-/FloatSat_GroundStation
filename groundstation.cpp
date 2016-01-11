@@ -53,6 +53,7 @@ void GroundStation::readFromLink(){
         this->findChild<QLCDNumber*>("lcdNumber_5")->display(psx.roll * 180.0f / M_PI);
         this->findChild<QLCDNumber*>("lcdNumber_7")->display(psx.pitch * 180.0f / M_PI);
         this->findChild<QLCDNumber*>("lcdNumber_9")->display(psx.yaw * 180.0f / M_PI);
+        this->findChild<Compass*>("compass_widget")->heading = psx.yaw * 180.0f / M_PI;
         break;
     }
     case PayloadLightType:{

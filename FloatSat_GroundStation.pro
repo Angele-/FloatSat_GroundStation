@@ -16,13 +16,15 @@ SOURCES += main.cpp\
         groundstation.cpp \
     satellitelink.cpp \
     payload.cpp \
-    imageprocessor.cpp
+    imageprocessor.cpp \
+    compass.cpp
 
 HEADERS  += groundstation.h \
     satellitelink.h \
     payload.h \
     basics.h \
-    imageprocessor.h
+    imageprocessor.h \
+    compass.h
 
 FORMS    += groundstation.ui
 
