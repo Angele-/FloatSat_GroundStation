@@ -4,8 +4,10 @@
 #include <QtGlobal>
 #include "basics.h"
 
+#define USER_DATA_MAX_LEN 992
 #define PICTURE_WIDTH 160
 #define PICTURE_HEIGHT 120
+
 enum PayloadType{
     PayloadCounterType = 9999,
     PayloadSensorFusionType = 1001,
@@ -33,7 +35,14 @@ struct PayloadSatellite{
     quint32 topic;
     quint16 ttl;
     quint16 userDataLen;
-    quint8 userData[998];
+    union{
+        quint8 userData8[USER_DATA_MAX_LEN / sizeof(quint8)];
+        quint16 userData16[USER_DATA_MAX_LEN / sizeof(quint16)];
+        quint32 userData32[USER_DATA_MAX_LEN / sizeof(quint32)];
+        quint64 userData64[USER_DATA_MAX_LEN / sizeof(quint64)];
+        float userDataFloat[USER_DATA_MAX_LEN / sizeof(float)];
+        double userDataDouble[USER_DATA_MAX_LEN / sizeof(double)];
+    };
     PayloadSatellite();
     PayloadSatellite(const QByteArray &buffer);
     PayloadSatellite(const PayloadSensorFusion payload);
