@@ -59,6 +59,7 @@ void GroundStation::logHandler(QtMsgType type, const QMessageLogContext&, const 
 //    logString += ")\n";
     logString += "\n";
     ui_static->logConsole->appendPlainText(logString);
+    ui_static->logConsole->verticalScrollBar()->setValue(ui_static->logConsole->verticalScrollBar()->maximum());
     if(type == QtFatalMsg)
         abort();
 }
