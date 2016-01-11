@@ -1499,8 +1499,8 @@
      <rect>
       <x>232</x>
       <y>504</y>
-      <width>426</width>
-      <height>151</height>
+      <width>611</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -1532,8 +1532,8 @@
    <widget class="QPushButton" name="consoleClearBtn">
     <property name="geometry">
      <rect>
-      <x>552</x>
-      <y>479</y>
+      <x>870</x>
+      <y>510</y>
       <width>113</width>
       <height>32</height>
      </rect>
@@ -1549,7 +1549,7 @@
      <x>0</x>
      <y>0</y>
      <width>1297</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

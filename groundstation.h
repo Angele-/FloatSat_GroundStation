@@ -7,6 +7,7 @@
 #include "imageprocessor.h"
 #include "payload.h"
 #include <QScrollBar>
+
 namespace Ui {
 class GroundStation;
 }

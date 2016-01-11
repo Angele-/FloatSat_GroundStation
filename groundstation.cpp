@@ -17,6 +17,7 @@ GroundStation::GroundStation(QWidget *parent) :
     link.addTopic(PayloadCameraPropertiesType);
     link.addTopic(PayloadCameraPixelType);
     connect(&link, SIGNAL(readReady()), this, SLOT(readFromLink()));
+
     proc = new ImageProcessor(this);        //Serial Image Reader
     connect(proc, SIGNAL(updatePicture()), this, SLOT(onUpdatePicture()));
     connect(proc, SIGNAL(setConsoleText(QByteArray)), this, SLOT(onSetConsoleText(QByteArray)));
@@ -25,6 +26,7 @@ GroundStation::GroundStation(QWidget *parent) :
     connect(proc, SIGNAL(setPicRecieveStatusMaximum(qint32)), this, SLOT(onSetPicRecieveStatusMaximum(qint32)));
     connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
     proc->init();
+
     ui->setupUi(this);
 }
 
