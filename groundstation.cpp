@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QList>
 #include <QScrollBar>
+#include <QTextBlock>
 
 Ui::GroundStation *GroundStation::ui_static = NULL;
 
@@ -59,6 +60,12 @@ void GroundStation::logHandler(QtMsgType type, const QMessageLogContext&, const 
 //    logString += ")\n";
     logString += "\n";
     ui_static->logConsole->appendPlainText(logString);
+    if(ui_static->logConsole->document()->blockCount() > 2000){
+        QTextBlock block = ui_static->logConsole->document()->begin();
+        QTextCursor cursor(block);
+        cursor.select(QTextCursor::BlockUnderCursor);
+        cursor.removeSelectedText();
+    }
     ui_static->logConsole->verticalScrollBar()->setValue(ui_static->logConsole->verticalScrollBar()->maximum());
     if(type == QtFatalMsg)
         abort();
