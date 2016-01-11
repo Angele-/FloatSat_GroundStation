@@ -22,8 +22,6 @@ GroundStation::GroundStation(QWidget *parent) :
 
     proc = new ImageProcessor(this);        //Serial Image Reader
     connect(proc, SIGNAL(updatePicture()), this, SLOT(onUpdatePicture()));
-    connect(proc, SIGNAL(setConsoleText(QByteArray)), this, SLOT(onSetConsoleText(QByteArray)));
-    connect(proc, SIGNAL(setConsoleText(QString)), this, SLOT(onSetConsoleText(QString)));
     connect(proc, SIGNAL(setImgSizeLbl(QString)), this, SLOT(onSetImgSizeLbl(QString)));
     connect(proc, SIGNAL(setPicRecieveStatusMaximum(qint32)), this, SLOT(onSetPicRecieveStatusMaximum(qint32)));
     connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
@@ -243,33 +241,12 @@ void GroundStation::on_lineEdit_Motor_speed_returnPressed()
     on_pushButton_motor_clicked();
 }
 
-void GroundStation::on_consoleClearBtn_clicked()
-{
-    ui->debugConsole->clear();
-}
-
 void GroundStation::onSetPicRecieveStatusMaximum(qint32 maximum){
     ui->picRecieveStatus->setMaximum(maximum);
 }
 
 void GroundStation::onSetPicRecieveStatusValue(qint32 value){
     ui->picRecieveStatus->setValue(value);
-}
-
-void GroundStation::onSetConsoleText(QString text){
-    ui->debugConsole->insertPlainText(text);
-    QScrollBar* scrollbar = ui->debugConsole->verticalScrollBar();
-    scrollbar->setValue(scrollbar->maximum());
-
-    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
-}
-
-void GroundStation::onSetConsoleText(QByteArray data){
-    ui->debugConsole->insertPlainText(data);
-    QScrollBar* scrollbar = ui->debugConsole->verticalScrollBar();
-    scrollbar->setValue(scrollbar->maximum());
-
-    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
 }
 
 void GroundStation::onSetImgSizeLbl(QString text){

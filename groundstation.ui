@@ -1509,61 +1509,13 @@
      <number>0</number>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="debugConsole">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>510</y>
-      <width>941</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Monaco</family>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-    <property name="maximumBlockCount">
-     <number>0</number>
-    </property>
-   </widget>
-   <widget class="QLabel" name="debugConsoleLbl">
-    <property name="geometry">
-     <rect>
-      <x>233</x>
-      <y>488</y>
-      <width>157</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Bluetooth Debug Console</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="consoleClearBtn">
-    <property name="geometry">
-     <rect>
-      <x>1180</x>
-      <y>520</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear Console</string>
-    </property>
-   </widget>
    <widget class="QPlainTextEdit" name="logConsole">
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>580</y>
+      <y>490</y>
       <width>941</width>
-      <height>71</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="readOnly">
@@ -1574,7 +1526,7 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>560</y>
+      <y>470</y>
       <width>61</width>
       <height>16</height>
      </rect>
@@ -1586,8 +1538,8 @@
    <widget class="QPushButton" name="logClearButton">
     <property name="geometry">
      <rect>
-      <x>1180</x>
-      <y>590</y>
+      <x>1190</x>
+      <y>500</y>
       <width>91</width>
       <height>31</height>
      </rect>
