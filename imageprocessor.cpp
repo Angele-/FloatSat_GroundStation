@@ -73,7 +73,7 @@ void ImageProcessor::readSerialData(){
             yuv.append(current.toInt());
         }
 
-        emit setConsoleText("\nRecieved YUV Data: " + QString::number(yuv.length()) + "\n");
+        qInfo() << "\nRecieved YUV Data: " << yuv.length();
 
         line = "";
         data.clear();
@@ -81,7 +81,7 @@ void ImageProcessor::readSerialData(){
         ProcessImageGray();
     }
     if(sendToConsole){
-        emit setConsoleText(data);
+        qInfo() << data;
 
         if(line.length() > 1000) line = "";
     }else{
@@ -151,7 +151,7 @@ void ImageProcessor::readSerialImage(){
 
             sendToConsole = true;
             transmissionFinished = false;
-            emit setConsoleText(QString("Console reenabled\n"));
+            qInfo() << "Console reenabled\n";
             propertiesRx = false;
             return;
         }
@@ -206,7 +206,7 @@ void ImageProcessor::readSerialImage(){
 
         }
     }else{
-        emit setConsoleText(data);
+       qInfo() << data;
     }
 
 }

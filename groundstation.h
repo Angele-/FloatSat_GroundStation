@@ -23,10 +23,6 @@ private slots:
 
     void onSetPicRecieveStatusValue(qint32 value);
 
-    void onSetConsoleText(QString text);
-
-    void onSetConsoleText(QByteArray data);
-
     void onSetImgSizeLbl(QString text);
 
     void onUpdatePicture();
@@ -70,8 +66,6 @@ private slots:
     void on_pushButton_motor_clicked();
 
     void on_lineEdit_Motor_speed_returnPressed();
-
-    void on_consoleClearBtn_clicked();
 
     void on_logClearButton_clicked();
 
