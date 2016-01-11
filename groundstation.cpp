@@ -6,6 +6,8 @@
 #include <QList>
 #include <QScrollBar>
 
+Ui::GroundStation *GroundStation::ui_static = NULL;
+
 GroundStation::GroundStation(QWidget *parent) :
     QMainWindow(parent), link(parent), ui(new Ui::GroundStation)
 {
@@ -27,9 +29,41 @@ GroundStation::GroundStation(QWidget *parent) :
     connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
     proc->init();
 
+    ui_static = ui;
     ui->setupUi(this);
 }
 
+void GroundStation::logHandler(QtMsgType type, const QMessageLogContext&, const QString &msg){
+    QString logString;
+    switch (type) {
+    case QtDebugMsg:
+        logString = "Debug: ";
+        break;
+    case QtInfoMsg:
+        logString = "Info: ";
+        break;
+    case QtWarningMsg:
+        logString = "Warning: ";
+        break;
+    case QtCriticalMsg:
+        logString = "Critical: ";
+        break;
+    case QtFatalMsg:
+        logString = "Fatal: ";
+    }
+    logString += msg;
+//    logString += " (";
+//    logString += context.file;
+//    logString += ":";
+//    logString += QString::number(context.line);
+//    logString += ", ";
+//    logString += context.function;
+//    logString += ")\n";
+    logString += "\n";
+    ui_static->logConsole->appendPlainText(logString);
+    if(type == QtFatalMsg)
+        abort();
+}
 
 void GroundStation::readFromLink(){
     PayloadSatellite payload = link.read();
