@@ -82,9 +82,12 @@ void GroundStation::readFromLink(){
     }
     case PayloadSensorXMType:{
         PayloadSensorXM psx(payload);
+
         ui->lcdNumber_5->display(psx.roll * 180.0f / M_PI);
         ui->lcdNumber_7->display(psx.pitch * 180.0f / M_PI);
         ui->lcdNumber_9->display(psx.yaw * 180.0f / M_PI);
+        ui->compass_widget->heading = psx.yaw * 180.0f / M_PI;
+
         break;
     }
     case PayloadLightType:{
