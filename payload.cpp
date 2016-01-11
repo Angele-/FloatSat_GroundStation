@@ -126,5 +126,5 @@ PixelRow::PixelRow(const PayloadSatellite payload){
 
 }
 
-Telecommand::Telecommand(float command, quint16 satellite, quint16 thread) : command(command), satellite(satellite), thread(thread){
+Telecommand::Telecommand(float command, quint16 satellite, quint16 thread, quint32 variableId) : command(command), satellite(satellite), thread(thread), variableId(variableId){
 }

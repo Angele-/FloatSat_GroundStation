@@ -65,6 +65,8 @@ private slots:
 
     void on_lineEdit_Thread_returnPressed();
 
+    void on_lineEdit_Var_returnPressed();
+
     void on_pushButton_motor_clicked();
 
     void on_lineEdit_Motor_speed_returnPressed();

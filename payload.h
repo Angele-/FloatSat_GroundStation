@@ -94,7 +94,8 @@ struct Telecommand{
     float command;
     quint16 satellite;
     quint16 thread;
-    Telecommand(float command, quint16 satellite, quint16 thread);
+    quint32 variableId;
+    Telecommand(float command, quint16 satellite, quint16 thread, quint32 variableId);
 };
 
 struct Pixel{

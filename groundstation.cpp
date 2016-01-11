@@ -85,7 +85,7 @@ GroundStation::~GroundStation()
 
 void GroundStation::on_pushButton_Burn_clicked()
 {
-    Telecommand command(6666.0f, 1, 2);
+    Telecommand command(666.0f, 1, 2, 6);
     link.write(3001, command);
 }
 
@@ -149,14 +149,16 @@ void GroundStation::on_pushButton_Send_clicked()
     QString str = this->findChild<QLineEdit*>("lineEdit_Command")->text();
     float command = str.toFloat();
 
-
     str = this->findChild<QLineEdit*>("lineEdit_Satellite")->text();
     quint16 satellite = str.toUShort();
 
     str = this->findChild<QLineEdit*>("lineEdit_Thread")->text();
     quint16 thread = str.toUShort();
 
-    Telecommand tc(command, satellite, thread);
+    str = this->findChild<QLineEdit*>("lineEdit_Var")->text();
+    quint32 variableId = str.toUShort();
+
+    Telecommand tc(command, satellite, thread, variableId);
     link.write(3001, tc);
 
     if(command == 1003.0 && thread == 4 && satellite == 1){
@@ -181,6 +183,11 @@ void GroundStation::on_lineEdit_Thread_returnPressed()
     on_pushButton_Send_clicked();
 }
 
+void GroundStation::on_lineEdit_Var_returnPressed()
+{
+    on_pushButton_Send_clicked();
+}
+
 void GroundStation::on_pushButton_motor_clicked()
 {
     QString str = this->findChild<QLineEdit*>("lineEdit_motor")->text();
@@ -193,7 +200,7 @@ void GroundStation::on_pushButton_motor_clicked()
     else
         command = - std::abs(command);
 
-    Telecommand tc (command, 1, 2);
+    Telecommand tc(command, 1, 2, 7);
     link.write(3001, tc);
 }
 
