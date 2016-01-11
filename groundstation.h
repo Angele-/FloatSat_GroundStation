@@ -73,6 +73,8 @@ private slots:
 
     void on_consoleClearBtn_clicked();
 
+    void on_logClearButton_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     SatelliteLink link;
