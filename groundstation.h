@@ -73,8 +73,11 @@ private slots:
 
     void on_consoleClearBtn_clicked();
 
+    void on_logClearButton_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
+    static void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     SatelliteLink link;
     ~GroundStation();
 
@@ -84,6 +87,7 @@ private:
     void displayImage();
 
     Ui::GroundStation *ui;
+    static Ui::GroundStation *ui_static;
 
     ImageProcessor *proc;
 
