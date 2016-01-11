@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "basics.h"
-#include "extern_groundstation.h"
+#include "groundstation.h"
 
 int main(int argc, char *argv[])
 {
