@@ -231,7 +231,7 @@ void GroundStation::on_lineEdit_Var_returnPressed()
     on_pushButton_Send_clicked();
 }
 
-void GroundStation::on_pushButton_motor_clicked()
+void GroundStation::on_lineEdit_Motor_speed_returnPressed()
 {
     QString str = ui->lineEdit_Motor_speed->text();
     float command = str.toFloat();
@@ -245,11 +245,6 @@ void GroundStation::on_pushButton_motor_clicked()
 
     Telecommand tc(command, 1, 2, 7);
     link.write(3001, tc);
-}
-
-void GroundStation::on_lineEdit_Motor_speed_returnPressed()
-{
-    on_pushButton_motor_clicked();
 }
 
 void GroundStation::onSetPicRecieveStatusMaximum(qint32 maximum){
