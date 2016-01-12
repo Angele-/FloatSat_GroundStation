@@ -32,43 +32,33 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void GroundStation::logHandler(QtMsgType type, const QMessageLogContext&, const QString &msg){
-    QString logString;
-    switch (type) {
-    case QtDebugMsg:
-        logString = "Debug: ";
-        break;
-    case QtInfoMsg:
-        logString = "Info: ";
-        break;
-    case QtWarningMsg:
-        logString = "Warning: ";
-        break;
-    case QtCriticalMsg:
-        logString = "Critical: ";
-        break;
-    case QtFatalMsg:
-        logString = "Fatal: ";
+void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context, const QString &msg){
+    QString str;
+    if(context.line){
+        str += "FROM: ";
+        str += context.file;
+        str += ":";
+        str += QString::number(context.line);
+        str += ", ";
+        str += context.function;
+        str += "\n";
     }
-    logString += msg;
-//    logString += " (";
-//    logString += context.file;
-//    logString += ":";
-//    logString += QString::number(context.line);
-//    logString += ", ";
-//    logString += context.function;
-//    logString += ")\n";
-    logString += "\n";
-    ui_static->logConsole->appendPlainText(logString);
-    if(ui_static->logConsole->document()->blockCount() > 2000){
-        QTextBlock block = ui_static->logConsole->document()->begin();
+    str += msg;
+    str += "\n";
+
+    QPlainTextEdit *console = ui_static->logConsole;
+    if(type == QtDebugMsg){
+        console = ui_static->debugConsole;
+    }
+
+    console->appendPlainText(str);
+    if(console->document()->blockCount() > 2000){
+        QTextBlock block = console->document()->begin();
         QTextCursor cursor(block);
         cursor.select(QTextCursor::BlockUnderCursor);
         cursor.removeSelectedText();
     }
-    ui_static->logConsole->verticalScrollBar()->setValue(ui_static->logConsole->verticalScrollBar()->maximum());
-    if(type == QtFatalMsg)
-        abort();
+    console->verticalScrollBar()->setValue(console->verticalScrollBar()->maximum());
 }
 
 void GroundStation::readFromLink(){
@@ -261,9 +251,4 @@ void GroundStation::onSetImgSizeLbl(QString text){
 
 void GroundStation::onUpdatePicture(){
     ui->picture->setPixmap(QPixmap::fromImage(proc->getImage()));
-}
-
-void GroundStation::on_logClearButton_clicked()
-{
-    ui->logConsole->clear();
 }
