@@ -10,16 +10,20 @@
 Ui::GroundStation *GroundStation::ui_static = NULL;
 
 GroundStation::GroundStation(QWidget *parent) :
-    QMainWindow(parent), link(parent), ui(new Ui::GroundStation)
+    QMainWindow(parent), ui(new Ui::GroundStation)
 {
-    link.addTopic(PayloadSensorFusionType);
-    link.addTopic(PayloadSensorGyroType);
-    link.addTopic(PayloadSensorXMType);
-    link.addTopic(PayloadLightType);
-    link.addTopic(PayloadCounterType);
-    link.addTopic(PayloadCameraPropertiesType);
-    link.addTopic(PayloadCameraPixelType);
-    connect(&link, SIGNAL(readReady()), this, SLOT(readFromLink()));
+    ui_static = ui;
+    ui->setupUi(this);
+
+    link = new SatelliteLink(this);
+    link->addTopic(PayloadSensorFusionType);
+    link->addTopic(PayloadSensorGyroType);
+    link->addTopic(PayloadSensorXMType);
+    link->addTopic(PayloadLightType);
+    link->addTopic(PayloadCounterType);
+    link->addTopic(PayloadCameraPropertiesType);
+    link->addTopic(PayloadCameraPixelType);
+    connect(link, SIGNAL(readReady()), this, SLOT(readFromLink()));
 
     proc = new ImageProcessor(this);        //Serial Image Reader
     connect(proc, SIGNAL(updatePicture()), this, SLOT(onUpdatePicture()));
@@ -27,9 +31,6 @@ GroundStation::GroundStation(QWidget *parent) :
     connect(proc, SIGNAL(setPicRecieveStatusMaximum(qint32)), this, SLOT(onSetPicRecieveStatusMaximum(qint32)));
     connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
     proc->init();
-
-    ui_static = ui;
-    ui->setupUi(this);
 }
 
 void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context, const QString &msg){
@@ -62,7 +63,7 @@ void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context
 }
 
 void GroundStation::readFromLink(){
-    PayloadSatellite payload = link.read();
+    PayloadSatellite payload = link->read();
     switch(payload.topic){
     case PayloadSensorFusionType:{
         PayloadSensorFusion psd(payload);
@@ -119,7 +120,7 @@ GroundStation::~GroundStation()
 void GroundStation::on_pushButton_Burn_clicked()
 {
     Telecommand command(666.0f, 1, 2, 6);
-    link.write(3001, command);
+    link->write(3001, command);
 }
 
 void GroundStation::on_pushButton_Velocity_Mode_clicked()
@@ -192,7 +193,7 @@ void GroundStation::on_pushButton_Send_clicked()
     quint32 variableId = str.toUShort();
 
     Telecommand tc(command, satellite, thread, variableId);
-    link.write(3001, tc);
+    link->write(3001, tc);
 
     if(command == 1003.0 && thread == 4 && satellite == 1){
         proc->setTransmissionFinished(true);
@@ -234,7 +235,7 @@ void GroundStation::on_lineEdit_Motor_speed_returnPressed()
         command = - std::abs(command);
 
     Telecommand tc(command, 1, 2, 7);
-    link.write(3001, tc);
+    link->write(3001, tc);
 }
 
 void GroundStation::onSetPicRecieveStatusMaximum(qint32 maximum){

@@ -68,7 +68,7 @@ private slots:
 public:
     explicit GroundStation(QWidget *parent = 0);
     static void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-    SatelliteLink link;
+    SatelliteLink *link;
     ~GroundStation();
 
 private:

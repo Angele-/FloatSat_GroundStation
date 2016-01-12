@@ -19,12 +19,16 @@ void ImageProcessor::run(){
 }
 
 void ImageProcessor::openSerialPort(){
-    /*QList<QSerialPortInfo> ports = serialInfo->availablePorts();
+    QList<QSerialPortInfo> ports = serialInfo->availablePorts();
     QList<QSerialPortInfo>::Iterator  i;
     for(i = ports.begin(); i != ports.end(); i++){
         qDebug() << "Port: " << (*i).portName();
-    }*/
-    serial->setPortName("cu.FloatSat-10-SPPDev");
+    }
+    #ifdef Q_OS_WIN
+        serial->setPortName("COM4");
+    #elif Q_OS_MAC
+        serial->setPortName("cu.FloatSat-10-SPPDev");
+    #endif
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
