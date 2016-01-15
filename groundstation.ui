@@ -396,6 +396,9 @@
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>2</number>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">
@@ -404,6 +407,9 @@
         <font>
          <pointsize>9</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>2</number>
        </property>
       </widget>
      </item>
@@ -636,6 +642,9 @@
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>2</number>
+       </property>
       </widget>
      </item>
     </layout>
@@ -682,6 +691,9 @@
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>2</number>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -704,6 +716,9 @@
         <font>
          <pointsize>9</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>2</number>
        </property>
       </widget>
      </item>
@@ -751,6 +766,9 @@
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>2</number>
+       </property>
       </widget>
      </item>
      <item row="2" column="1">
@@ -788,6 +806,9 @@
         <font>
          <pointsize>9</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>2</number>
        </property>
       </widget>
      </item>
@@ -869,6 +890,9 @@
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>2</number>
+       </property>
        <property name="intValue" stdset="0">
         <number>42</number>
        </property>
@@ -895,6 +919,9 @@
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>2</number>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">
@@ -903,6 +930,9 @@
         <font>
          <pointsize>9</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>2</number>
        </property>
       </widget>
      </item>
@@ -935,6 +965,9 @@
         <font>
          <pointsize>9</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>2</number>
        </property>
       </widget>
      </item>
@@ -973,6 +1006,9 @@
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>2</number>
+       </property>
       </widget>
      </item>
      <item row="2" column="0">
@@ -995,6 +1031,9 @@
         <font>
          <pointsize>9</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>2</number>
        </property>
        <property name="intValue" stdset="0">
         <number>42</number>
@@ -1236,13 +1275,24 @@
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QLCDNumber" name="lcdNumber_22"/>
+      <widget class="QLCDNumber" name="lcdNumber_22">
+       <property name="digitCount">
+        <number>2</number>
+       </property>
+      </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QLCDNumber" name="lcdNumber_24"/>
+      <widget class="QLCDNumber" name="lcdNumber_24">
+       <property name="digitCount">
+        <number>2</number>
+       </property>
+      </widget>
      </item>
      <item row="1" column="2">
       <widget class="QLCDNumber" name="lcdNumber_23">
+       <property name="digitCount">
+        <number>2</number>
+       </property>
        <property name="intValue" stdset="0">
         <number>42</number>
        </property>
@@ -1307,6 +1357,9 @@
         <font>
          <pointsize>9</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>2</number>
        </property>
        <property name="intValue" stdset="0">
         <number>42</number>
