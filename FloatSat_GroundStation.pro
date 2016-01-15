@@ -6,7 +6,7 @@
 
 QT       += core gui network serialport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = FloatSat_GroundStation
 TEMPLATE = app
@@ -44,10 +44,13 @@ INCLUDEPATH += C:/opencv/modules/imgproc/include
 INCLUDEPATH += C:/opencv/modules/highgui/include
 INCLUDEPATH += C:/opencv/modules/imgcodecs/include
 INCLUDEPATH += C:/opencv/modules/videoio/include
+INCLUDEPATH += C:/qcustomplot-source
 
 LIBS += -LC:/opencvbuild/lib \
         -LC:/opencvbuild/bin \
+        -LC:/qcustomplot-source/qcustomplot-sharedlib/sharedlib-compilation/release \
         -lopencv_core310 \
         -lopencv_imgproc310 \
         -lopencv_highgui310 \
         -lopencv_features2d310 \
+        -lqcustomplot1
