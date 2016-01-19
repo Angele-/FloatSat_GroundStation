@@ -6,8 +6,11 @@
 #include <QList>
 #include <QScrollBar>
 #include <QTextBlock>
+#include <QHBoxLayout>
 #include <qcustomplot.h>
+#include <QTimer>
 
+static QCustomPlot *globalPlot;
 Ui::GroundStation *GroundStation::ui_static = NULL;
 
 GroundStation::GroundStation(QWidget *parent) :
@@ -33,70 +36,61 @@ GroundStation::GroundStation(QWidget *parent) :
     connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
     proc->init();
 
-
-    // TEST
-    QCustomPlot *plot = new QCustomPlot();
+    QCustomPlot *plot = new QCustomPlot(this);
+    globalPlot = plot;
     ui->graphLayout1->addWidget(plot);
     plot->addGraph(); // blue line
     plot->graph(0)->setPen(QPen(Qt::blue));
-    plot->graph(0)->setBrush(QBrush(QColor(240, 255, 200)));
     plot->graph(0)->setAntialiasedFill(false);
     plot->addGraph(); // red line
     plot->graph(1)->setPen(QPen(Qt::red));
-    plot->graph(0)->setChannelFillGraph(plot->graph(1));
+    plot->graph(1)->setAntialiasedFill(false);
 
     plot = new QCustomPlot();
     ui->graphLayout1->addWidget(plot);
     plot->addGraph(); // blue line
     plot->graph(0)->setPen(QPen(Qt::blue));
-    plot->graph(0)->setBrush(QBrush(QColor(240, 255, 200)));
     plot->graph(0)->setAntialiasedFill(false);
     plot->addGraph(); // red line
     plot->graph(1)->setPen(QPen(Qt::red));
-    plot->graph(0)->setChannelFillGraph(plot->graph(1));
+    plot->graph(1)->setAntialiasedFill(false);
+
+    QHBoxLayout *graphLayout2 = new QHBoxLayout();
+    ui->graphLayout1->addLayout(graphLayout2);
 
     plot = new QCustomPlot();
-    ui->graphLayout2->addWidget(plot);
-    plot->addGraph(); // blue line
-    plot->graph(0)->setPen(QPen(Qt::blue));
-    plot->graph(0)->setBrush(QBrush(QColor(240, 255, 200)));
+    graphLayout2->addWidget(plot);
+    plot->addGraph(); // black line
+    plot->graph(0)->setPen(QPen(Qt::black));
     plot->graph(0)->setAntialiasedFill(false);
-    plot->addGraph(); // red line
-    plot->graph(1)->setPen(QPen(Qt::red));
-    plot->graph(0)->setChannelFillGraph(plot->graph(1));
 
     plot = new QCustomPlot();
-    ui->graphLayout2->addWidget(plot);
-    plot->addGraph(); // blue line
-    plot->graph(0)->setPen(QPen(Qt::blue));
-    plot->graph(0)->setBrush(QBrush(QColor(240, 255, 200)));
+    graphLayout2->addWidget(plot);
+    plot->addGraph(); // black line
+    plot->graph(0)->setPen(QPen(Qt::black));
     plot->graph(0)->setAntialiasedFill(false);
-    plot->addGraph(); // red line
-    plot->graph(1)->setPen(QPen(Qt::red));
-    plot->graph(0)->setChannelFillGraph(plot->graph(1));
 
-//    plot->addGraph(); // blue dot
-//    plot->graph(2)->setPen(QPen(Qt::blue));
-//    plot->graph(2)->setLineStyle(QCPGraph::lsNone);
-//    plot->graph(2)->setScatterStyle(QCPScatterStyle::ssDisc);
-//    plot->addGraph(); // red dot
-//    plot->graph(3)->setPen(QPen(Qt::red));
-//    plot->graph(3)->setLineStyle(QCPGraph::lsNone);
-//    plot->graph(3)->setScatterStyle(QCPScatterStyle::ssDisc);
+    QTimer *dataTimer = new QTimer();
+    connect(dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
+    dataTimer->start(0);
+}
 
-//    plot->xAxis->setTickLabelType(QCPAxis::ltDateTime);
-//    plot->xAxis->setDateTimeFormat("hh:mm:ss");
-//    plot->xAxis->setAutoTickStep(false);
-//    plot->xAxis->setTickStep(2);
-//    plot->axisRect()->setupFullAxesBox();
-
-    // make left and bottom axes transfer their ranges to right and top axes:
-    //connect(plot->xAxis, SIGNAL(rangeChanged(QCPRange)), plot->xAxis2, SLOT(setRange(QCPRange)));
-    //connect(plot->yAxis, SIGNAL(rangeChanged(QCPRange)), plot->yAxis2, SLOT(setRange(QCPRange)));
-
-    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-    //connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    //dataTimer.start(0); // Interval 0 means to refresh as fast as possible
+void GroundStation::realtimeDataSlot(){
+    static double lastPointKey = 0;
+    double key = QDateTime::currentDateTime().toMSecsSinceEpoch()/1000.0;
+    if (key - lastPointKey > 0.010){
+        double value = qSin(key);
+        // add data to lines:
+        globalPlot->graph(0)->addData(key, value);
+        // remove data of lines that's outside visible range:
+        globalPlot->graph(0)->removeDataBefore(key-6.29);
+        // rescale value (vertical) axis to fit the current data:
+        globalPlot->graph(0)->rescaleAxes();
+        lastPointKey = key;
+    }
+    // make key axis range scroll with the data (at a constant range size of 8):
+    //ui->customPlot->xAxis->setRange(key+0.25, 8, Qt::AlignRight);
+    globalPlot->replot();
 }
 
 void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context, const QString &msg){
@@ -298,7 +292,7 @@ void GroundStation::on_lineEdit_Motor_speed_returnPressed()
     if (clockwise)
         command = std::abs(command);
     else
-        command = - std::abs(command);
+        command = -std::abs(command);
 
     Telecommand tc(command, 1, 2, 7);
     link->write(3001, tc);

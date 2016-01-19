@@ -17,6 +17,8 @@ class GroundStation : public QMainWindow
     Q_OBJECT
 
 private slots:
+    void realtimeDataSlot(); // THIS IS A TEST
+
     void readFromLink();
 
     void onSetPicRecieveStatusMaximum(qint32 maximum);

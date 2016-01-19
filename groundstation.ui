@@ -1321,11 +1321,7 @@
       <height>600</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="graphLayout1">
-     <item>
-      <layout class="QHBoxLayout" name="graphLayout2"/>
-     </item>
-    </layout>
+    <layout class="QVBoxLayout" name="graphLayout1"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -1334,7 +1330,7 @@
      <x>0</x>
      <y>0</y>
      <width>1297</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
