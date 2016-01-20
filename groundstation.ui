@@ -138,10 +138,10 @@
    <widget class="QGroupBox" name="groupBox_CustomTelecommand">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>300</y>
-      <width>270</width>
-      <height>200</height>
+      <x>120</x>
+      <y>260</y>
+      <width>240</width>
+      <height>170</height>
      </rect>
     </property>
     <property name="font">
@@ -265,10 +265,10 @@
    <widget class="QGroupBox" name="groupBox_Motor">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>120</x>
       <y>50</y>
-      <width>151</width>
-      <height>111</height>
+      <width>140</width>
+      <height>100</height>
      </rect>
     </property>
     <property name="font">
@@ -332,10 +332,10 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>1120</x>
-      <y>470</y>
-      <width>170</width>
-      <height>180</height>
+      <x>1130</x>
+      <y>370</y>
+      <width>160</width>
+      <height>160</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -353,10 +353,10 @@
    <widget class="QGroupBox" name="groupBox_SolarArrays">
     <property name="geometry">
      <rect>
-      <x>1120</x>
-      <y>50</y>
-      <width>171</width>
-      <height>111</height>
+      <x>1130</x>
+      <y>40</y>
+      <width>160</width>
+      <height>90</height>
      </rect>
     </property>
     <property name="font">
@@ -392,6 +392,12 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
+       <property name="intValue" stdset="0">
+        <number>12345</number>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">
@@ -400,6 +406,9 @@
         <font>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
        </property>
       </widget>
      </item>
@@ -422,10 +431,10 @@
    <widget class="QGroupBox" name="groupBox_Commands">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>270</x>
       <y>50</y>
-      <width>110</width>
-      <height>111</height>
+      <width>90</width>
+      <height>100</height>
      </rect>
     </property>
     <property name="font">
@@ -473,10 +482,10 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>460</y>
-      <width>170</width>
-      <height>190</height>
+      <x>960</x>
+      <y>350</y>
+      <width>160</width>
+      <height>180</height>
      </rect>
     </property>
     <property name="font">
@@ -596,10 +605,10 @@
    <widget class="QGroupBox" name="groupBox_PWM">
     <property name="geometry">
      <rect>
-      <x>1120</x>
-      <y>300</y>
-      <width>170</width>
-      <height>81</height>
+      <x>1130</x>
+      <y>240</y>
+      <width>160</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="font">
@@ -635,6 +644,12 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
+       <property name="intValue" stdset="0">
+        <number>12345</number>
+       </property>
       </widget>
      </item>
     </layout>
@@ -642,10 +657,10 @@
    <widget class="QGroupBox" name="groupBox_Batteries">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>50</y>
-      <width>171</width>
-      <height>111</height>
+      <x>960</x>
+      <y>40</y>
+      <width>160</width>
+      <height>90</height>
      </rect>
     </property>
     <property name="font">
@@ -681,6 +696,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -704,6 +722,12 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
+       <property name="intValue" stdset="0">
+        <number>12345</number>
+       </property>
       </widget>
      </item>
     </layout>
@@ -711,10 +735,10 @@
    <widget class="QGroupBox" name="groupBox_Accelerometer">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>160</y>
-      <width>171</width>
-      <height>141</height>
+      <x>960</x>
+      <y>130</y>
+      <width>160</width>
+      <height>110</height>
      </rect>
     </property>
     <property name="font">
@@ -750,6 +774,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
       </widget>
      </item>
      <item row="2" column="1">
@@ -759,8 +786,11 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
        <property name="intValue" stdset="0">
-        <number>42</number>
+        <number>12345</number>
        </property>
       </widget>
      </item>
@@ -785,6 +815,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -806,10 +839,10 @@
    <widget class="QGroupBox" name="groupBox_Gyroscope">
     <property name="geometry">
      <rect>
-      <x>1120</x>
-      <y>160</y>
-      <width>170</width>
-      <height>141</height>
+      <x>1130</x>
+      <y>130</y>
+      <width>160</width>
+      <height>110</height>
      </rect>
     </property>
     <property name="font">
@@ -865,8 +898,11 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
        <property name="intValue" stdset="0">
-        <number>42</number>
+        <number>12345</number>
        </property>
       </widget>
      </item>
@@ -891,6 +927,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">
@@ -900,6 +939,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
       </widget>
      </item>
     </layout>
@@ -907,10 +949,10 @@
    <widget class="QGroupBox" name="groupBox_SensorFusion">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>300</y>
-      <width>171</width>
-      <height>161</height>
+      <x>960</x>
+      <y>240</y>
+      <width>160</width>
+      <height>110</height>
      </rect>
     </property>
     <property name="font">
@@ -930,7 +972,15 @@
        <property name="font">
         <font>
          <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
         </font>
+       </property>
+       <property name="smallDecimalPoint">
+        <bool>false</bool>
+       </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
        </property>
       </widget>
      </item>
@@ -969,6 +1019,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
       </widget>
      </item>
      <item row="2" column="0">
@@ -992,8 +1045,11 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
        <property name="intValue" stdset="0">
-        <number>42</number>
+        <number>12345</number>
        </property>
       </widget>
      </item>
@@ -1004,8 +1060,8 @@
      <rect>
       <x>10</x>
       <y>50</y>
-      <width>131</width>
-      <height>450</height>
+      <width>100</width>
+      <height>380</height>
      </rect>
     </property>
     <property name="font">
@@ -1029,7 +1085,7 @@
        <property name="font">
         <font>
          <family>Segoe UI Symbol</family>
-         <pointsize>11</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1050,7 +1106,7 @@
        <property name="font">
         <font>
          <family>Segoe UI Symbol</family>
-         <pointsize>11</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1071,7 +1127,7 @@
        <property name="font">
         <font>
          <family>Segoe UI Symbol</family>
-         <pointsize>11</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1092,7 +1148,7 @@
        <property name="font">
         <font>
          <family>Segoe UI Symbol</family>
-         <pointsize>11</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1113,7 +1169,7 @@
        <property name="font">
         <font>
          <family>Segoe UI Symbol</family>
-         <pointsize>11</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1134,7 +1190,7 @@
        <property name="font">
         <font>
          <family>Segoe UI Symbol</family>
-         <pointsize>11</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1149,10 +1205,10 @@
    <widget class="QGroupBox" name="groupBox_Controller">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>160</y>
-      <width>271</width>
-      <height>140</height>
+      <x>120</x>
+      <y>150</y>
+      <width>240</width>
+      <height>110</height>
      </rect>
     </property>
     <property name="font">
@@ -1236,6 +1292,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
       </widget>
      </item>
      <item row="2" column="2">
@@ -1245,6 +1304,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
       </widget>
      </item>
      <item row="1" column="2">
@@ -1253,6 +1315,9 @@
         <font>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
        </property>
        <property name="intValue" stdset="0">
         <number>42</number>
@@ -1275,10 +1340,10 @@
    <widget class="QGroupBox" name="groupBox_Light">
     <property name="geometry">
      <rect>
-      <x>1120</x>
-      <y>380</y>
-      <width>170</width>
-      <height>81</height>
+      <x>1130</x>
+      <y>300</y>
+      <width>160</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="font">
@@ -1319,8 +1384,11 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Flat</enum>
+       </property>
        <property name="intValue" stdset="0">
-        <number>42</number>
+        <number>12345</number>
        </property>
       </widget>
      </item>
