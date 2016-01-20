@@ -146,10 +146,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="title">
@@ -160,7 +158,7 @@
       <widget class="QLabel" name="label_2">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -174,7 +172,7 @@
       <widget class="QLineEdit" name="lineEdit_Command">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -183,7 +181,7 @@
       <widget class="QLabel" name="label_3">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -197,7 +195,7 @@
       <widget class="QLineEdit" name="lineEdit_Satellite">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -206,7 +204,7 @@
       <widget class="QLabel" name="label_4">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -220,7 +218,7 @@
       <widget class="QLineEdit" name="lineEdit_Thread">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -229,7 +227,7 @@
       <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -243,7 +241,7 @@
       <widget class="QLineEdit" name="lineEdit_Var">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -252,7 +250,7 @@
       <widget class="QPushButton" name="pushButton_Send">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -275,10 +273,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="title">
@@ -289,7 +285,7 @@
       <widget class="QLineEdit" name="lineEdit_Motor_speed">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -301,7 +297,7 @@
          <property name="font">
           <font>
            <family>Sitka Subheading</family>
-           <pointsize>9</pointsize>
+           <pointsize>8</pointsize>
            <weight>50</weight>
            <bold>false</bold>
           </font>
@@ -319,7 +315,7 @@
          <property name="font">
           <font>
            <family>Sitka Subheading</family>
-           <pointsize>9</pointsize>
+           <pointsize>8</pointsize>
            <weight>50</weight>
            <bold>false</bold>
           </font>
@@ -365,8 +361,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -379,7 +375,7 @@
       <widget class="QLabel" name="label_70">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -393,7 +389,7 @@
       <widget class="QLCDNumber" name="lcdNumber_19">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -402,7 +398,7 @@
       <widget class="QLCDNumber" name="lcdNumber_17">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -411,7 +407,7 @@
       <widget class="QLabel" name="label_69">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -434,10 +430,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="title">
@@ -448,8 +442,8 @@
       <widget class="QPushButton" name="pushButton_Burn">
        <property name="font">
         <font>
-         <family>Cambria</family>
-         <pointsize>9</pointsize>
+         <family>Segoe UI Symbol</family>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -463,8 +457,8 @@
       <widget class="QPushButton" name="pushButton_Calib">
        <property name="font">
         <font>
-         <family>Cambria</family>
-         <pointsize>9</pointsize>
+         <family>Segoe UI Symbol</family>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -487,8 +481,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="title">
@@ -530,7 +524,7 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="maximum">
@@ -551,7 +545,7 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="text">
@@ -569,6 +563,11 @@
       <width>410</width>
       <height>140</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Symbol</family>
+     </font>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -605,8 +604,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -619,7 +618,7 @@
       <widget class="QLabel" name="label_76">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -633,7 +632,7 @@
       <widget class="QLCDNumber" name="lcdNumber_21">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -651,8 +650,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -665,7 +664,7 @@
       <widget class="QLabel" name="label_72">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -679,7 +678,7 @@
       <widget class="QLCDNumber" name="lcdNumber_33">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -688,7 +687,7 @@
       <widget class="QLabel" name="label_75">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -702,7 +701,7 @@
       <widget class="QLCDNumber" name="lcdNumber_34">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -720,8 +719,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -734,7 +733,7 @@
       <widget class="QLabel" name="label_47">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -748,7 +747,7 @@
       <widget class="QLCDNumber" name="lcdNumber_5">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -757,7 +756,7 @@
       <widget class="QLCDNumber" name="lcdNumber_9">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="intValue" stdset="0">
@@ -769,7 +768,7 @@
       <widget class="QLabel" name="label_44">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -783,7 +782,7 @@
       <widget class="QLCDNumber" name="lcdNumber_7">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -792,7 +791,7 @@
       <widget class="QLabel" name="label_48">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -815,8 +814,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -835,7 +834,7 @@
       <widget class="QLabel" name="label_101">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -849,7 +848,7 @@
       <widget class="QLabel" name="label_102">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -863,7 +862,7 @@
       <widget class="QLCDNumber" name="lcdNumber_31">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="intValue" stdset="0">
@@ -875,7 +874,7 @@
       <widget class="QLabel" name="label_100">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -889,7 +888,7 @@
       <widget class="QLCDNumber" name="lcdNumber_30">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -898,7 +897,7 @@
       <widget class="QLCDNumber" name="lcdNumber_29">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -916,8 +915,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -930,7 +929,7 @@
       <widget class="QLCDNumber" name="lcdNumber_6">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -939,7 +938,7 @@
       <widget class="QLabel" name="label_49">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -953,7 +952,7 @@
       <widget class="QLabel" name="label_46">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -967,7 +966,7 @@
       <widget class="QLCDNumber" name="lcdNumber_8">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
       </widget>
@@ -976,7 +975,7 @@
       <widget class="QLabel" name="label_50">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -990,7 +989,7 @@
       <widget class="QLCDNumber" name="lcdNumber_10">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="intValue" stdset="0">
@@ -1011,8 +1010,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="title">
@@ -1029,7 +1028,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Cambria</family>
+         <family>Segoe UI Symbol</family>
          <pointsize>11</pointsize>
          <weight>50</weight>
          <bold>false</bold>
@@ -1050,7 +1049,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Cambria</family>
+         <family>Segoe UI Symbol</family>
          <pointsize>11</pointsize>
          <weight>50</weight>
          <bold>false</bold>
@@ -1071,7 +1070,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Cambria</family>
+         <family>Segoe UI Symbol</family>
          <pointsize>11</pointsize>
          <weight>50</weight>
          <bold>false</bold>
@@ -1092,7 +1091,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Cambria</family>
+         <family>Segoe UI Symbol</family>
          <pointsize>11</pointsize>
          <weight>50</weight>
          <bold>false</bold>
@@ -1113,7 +1112,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Cambria</family>
+         <family>Segoe UI Symbol</family>
          <pointsize>11</pointsize>
          <weight>50</weight>
          <bold>false</bold>
@@ -1134,7 +1133,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Cambria</family>
+         <family>Segoe UI Symbol</family>
          <pointsize>11</pointsize>
          <weight>50</weight>
          <bold>false</bold>
@@ -1158,10 +1157,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <family>Segoe UI Symbol</family>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="title">
@@ -1172,7 +1169,7 @@
       <widget class="QLabel" name="label_86">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1186,7 +1183,7 @@
       <widget class="QSpinBox" name="spinBox_P_gain">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1197,7 +1194,7 @@
       <widget class="QSpinBox" name="spinBox_I_gain">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1208,7 +1205,7 @@
       <widget class="QLabel" name="label_87">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1222,7 +1219,7 @@
       <widget class="QLabel" name="label_85">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1233,13 +1230,30 @@
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QLCDNumber" name="lcdNumber_22"/>
+      <widget class="QLCDNumber" name="lcdNumber_22">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QLCDNumber" name="lcdNumber_24"/>
+      <widget class="QLCDNumber" name="lcdNumber_24">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="1" column="2">
       <widget class="QLCDNumber" name="lcdNumber_23">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="intValue" stdset="0">
         <number>42</number>
        </property>
@@ -1249,7 +1263,7 @@
       <widget class="QSpinBox" name="spinBox_D_Gain">
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1270,7 +1284,7 @@
     <property name="font">
      <font>
       <family>Sitka Subheading</family>
-      <pointsize>12</pointsize>
+      <pointsize>9</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -1302,7 +1316,7 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="intValue" stdset="0">
@@ -1330,7 +1344,7 @@
      <x>0</x>
      <y>0</y>
      <width>1297</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
