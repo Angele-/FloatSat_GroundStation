@@ -154,6 +154,24 @@
      <string>Custom Telecommand</string>
     </property>
     <layout class="QFormLayout" name="formLayout">
+     <property name="horizontalSpacing">
+      <number>6</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>6</number>
+     </property>
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label_2">
        <property name="font">
@@ -267,6 +285,21 @@
      <string>Motor</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
      <item>
       <widget class="QLineEdit" name="lineEdit_Motor_speed">
        <property name="font">
@@ -321,7 +354,7 @@
       <x>540</x>
       <y>330</y>
       <width>160</width>
-      <height>80</height>
+      <height>90</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -369,6 +402,21 @@
      <string>Solar Arrays</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item row="1" column="0">
       <widget class="QLabel" name="label_70">
        <property name="font">
@@ -445,6 +493,21 @@
      <string>Commands</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
      <item>
       <widget class="QPushButton" name="pushButton_Burn">
        <property name="font">
@@ -546,7 +609,7 @@
           <property name="minimumSize">
            <size>
             <width>120</width>
-            <height>180</height>
+            <height>160</height>
            </size>
           </property>
           <property name="text">
@@ -606,9 +669,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>480</y>
+      <y>470</y>
       <width>690</width>
-      <height>200</height>
+      <height>210</height>
      </rect>
     </property>
     <property name="font">
@@ -667,6 +730,21 @@
      <string>Misc.</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item row="0" column="1">
       <widget class="QLCDNumber" name="lcdNumber_21">
        <property name="font">
@@ -752,6 +830,21 @@
      <string>Batteries</string>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label_72">
        <property name="font">
@@ -830,6 +923,21 @@
      <string>Accelerometer</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_6">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item row="2" column="0">
       <widget class="QLabel" name="label_47">
        <property name="font">
@@ -940,6 +1048,21 @@
      <bool>false</bool>
     </property>
     <layout class="QGridLayout" name="gridLayout_7">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item row="1" column="0">
       <widget class="QLabel" name="label_101">
        <property name="font">
@@ -1044,6 +1167,21 @@
      <string>SensorFusion</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item row="0" column="1">
       <widget class="QLCDNumber" name="lcdNumber_6">
        <property name="font">
@@ -1151,6 +1289,21 @@
      <string>Mode</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
      <item>
       <widget class="QPushButton" name="pushButton_Deployment_Mode">
        <property name="sizePolicy">
@@ -1298,6 +1451,21 @@
      <string>Controller</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>6</number>
+     </property>
      <item row="1" column="0">
       <widget class="QLabel" name="label_86">
        <property name="font">
@@ -1394,6 +1562,21 @@
      <string>Speed</string>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_9">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
      <item>
       <widget class="QLineEdit" name="lineEdit_4">
        <property name="font">
@@ -1424,6 +1607,21 @@
      <string>Angle</string>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_10">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <property name="topMargin">
+      <number>9</number>
+     </property>
+     <property name="rightMargin">
+      <number>9</number>
+     </property>
+     <property name="bottomMargin">
+      <number>9</number>
+     </property>
      <item>
       <widget class="QLineEdit" name="lineEdit_5">
        <property name="font">

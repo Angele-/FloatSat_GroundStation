@@ -56,7 +56,7 @@ void Compass::paintEvent(QPaintEvent *)
         painter.rotate(6.0);
     }
 
-    static const QPoint north = QPoint(-4.5,-85);
+    static const QPoint north = QPoint(-4.5,-75);
     //static const QPoint east = QPoint(85,5);
     //static const QPoint south = QPoint(-4.5,95);
     //static const QPoint west = QPoint(-96,5);
