@@ -57,17 +57,17 @@ void Compass::paintEvent(QPaintEvent *)
     }
 
     static const QPoint north = QPoint(-4.5,-85);
-    static const QPoint east = QPoint(85,5);
-    static const QPoint south = QPoint(-4.5,95);
-    static const QPoint west = QPoint(-96,5);
+    //static const QPoint east = QPoint(85,5);
+    //static const QPoint south = QPoint(-4.5,95);
+    //static const QPoint west = QPoint(-96,5);
 
     QFont font=painter.font();
-    font.setPointSize(10);
-    font.setWeight(QFont::DemiBold);
+    font.setPointSize(16);
+    //font.setWeight(QFont::DemiBold);
     painter.setFont(font);
     painter.drawText(north, "N");
-    painter.drawText(east, "E");
-    painter.drawText(south, "S");
-    painter.drawText(west, "W");
+    //painter.drawText(east, "E");
+    //painter.drawText(south, "S");
+    //painter.drawText(west, "W");
 }
 
