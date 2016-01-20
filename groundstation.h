@@ -45,10 +45,6 @@ private slots:
 
     void on_pushButton_Docking_Mode_clicked();
 
-    void on_radioButton_Motor_Clockwise_clicked();
-
-    void on_radioButton_Motor_Counterclockwise_clicked();
-
     void on_spinBox_P_gain_editingFinished();
 
     void on_spinBox_I_gain_editingFinished();
