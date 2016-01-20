@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1297</width>
-    <height>733</height>
+    <width>1350</width>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1301</width>
-      <height>41</height>
+      <width>1350</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="palette">
@@ -117,7 +117,7 @@
     <property name="font">
      <font>
       <family>Cambria</family>
-      <pointsize>24</pointsize>
+      <pointsize>20</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -1415,7 +1415,7 @@
       <x>360</x>
       <y>50</y>
       <width>10</width>
-      <height>460</height>
+      <height>450</height>
      </rect>
     </property>
     <property name="orientation">
@@ -1428,8 +1428,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1297</width>
-     <height>26</height>
+     <width>1350</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
