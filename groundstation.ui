@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1350</width>
-    <height>710</height>
+    <width>1351</width>
+    <height>718</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -139,7 +139,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>260</y>
+      <y>240</y>
       <width>240</width>
       <height>170</height>
      </rect>
@@ -266,7 +266,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>50</y>
+      <y>30</y>
       <width>140</width>
       <height>100</height>
      </rect>
@@ -354,7 +354,7 @@
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>40</y>
+      <y>30</y>
       <width>160</width>
       <height>90</height>
      </rect>
@@ -432,7 +432,7 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>50</y>
+      <y>30</y>
       <width>90</width>
       <height>100</height>
      </rect>
@@ -483,7 +483,7 @@
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>350</y>
+      <y>340</y>
       <width>160</width>
       <height>160</height>
      </rect>
@@ -572,9 +572,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>490</y>
+      <y>480</y>
       <width>690</width>
-      <height>160</height>
+      <height>170</height>
      </rect>
     </property>
     <property name="font">
@@ -601,7 +601,13 @@
      </attribute>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPlainTextEdit" name="debugConsole"/>
+       <widget class="QPlainTextEdit" name="debugConsole">
+        <property name="font">
+         <font>
+          <pointsize>7</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -610,7 +616,7 @@
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>240</y>
+      <y>230</y>
       <width>160</width>
       <height>60</height>
      </rect>
@@ -662,7 +668,7 @@
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>40</y>
+      <y>30</y>
       <width>160</width>
       <height>90</height>
      </rect>
@@ -740,7 +746,7 @@
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>130</y>
+      <y>120</y>
       <width>160</width>
       <height>110</height>
      </rect>
@@ -844,7 +850,7 @@
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>130</y>
+      <y>120</y>
       <width>160</width>
       <height>110</height>
      </rect>
@@ -954,7 +960,7 @@
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>240</y>
+      <y>230</y>
       <width>160</width>
       <height>110</height>
      </rect>
@@ -1063,7 +1069,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
+      <y>30</y>
       <width>100</width>
       <height>380</height>
      </rect>
@@ -1210,7 +1216,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>150</y>
+      <y>130</y>
       <width>240</width>
       <height>110</height>
      </rect>
@@ -1345,7 +1351,7 @@
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>300</y>
+      <y>290</y>
       <width>160</width>
       <height>60</height>
      </rect>
@@ -1401,10 +1407,10 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>50</y>
-      <width>590</width>
-      <height>600</height>
+      <x>710</x>
+      <y>40</y>
+      <width>630</width>
+      <height>610</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="graphLayout1"/>
@@ -1413,7 +1419,7 @@
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>50</y>
+      <y>40</y>
       <width>10</width>
       <height>450</height>
      </rect>
@@ -1428,8 +1434,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1350</width>
-     <height>21</height>
+     <width>1351</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
