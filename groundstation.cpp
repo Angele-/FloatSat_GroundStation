@@ -213,16 +213,6 @@ void GroundStation::on_pushButton_Docking_Mode_clicked()
 
 }
 
-void GroundStation::on_radioButton_Motor_Clockwise_clicked()
-{
-
-}
-
-void GroundStation::on_radioButton_Motor_Counterclockwise_clicked()
-{
-
-}
-
 void GroundStation::on_spinBox_P_gain_editingFinished()
 {
 
