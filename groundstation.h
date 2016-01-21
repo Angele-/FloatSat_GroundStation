@@ -7,6 +7,7 @@
 #include "imageprocessor.h"
 #include "payload.h"
 #include <QScrollBar>
+#include <qcustomplot.h>
 
 namespace Ui {
 class GroundStation;
@@ -79,6 +80,12 @@ private:
 
     ImageProcessor *proc;
 
+    QCustomPlot *plotCurrent;
+    QCustomPlot *plotVoltage;
+    QCustomPlot *plotPWM;
+    QCustomPlot *plotLight;
+    QCustomPlot *plotSpeed;
+    QCustomPlot *plotDataRate;
 };
 
 #endif // GROUNDSTATION_H

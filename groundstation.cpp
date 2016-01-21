@@ -6,11 +6,8 @@
 #include <QList>
 #include <QScrollBar>
 #include <QTextBlock>
-#include <QHBoxLayout>
-#include <qcustomplot.h>
 #include <QTimer>
 
-static QCustomPlot *globalPlot;
 Ui::GroundStation *GroundStation::ui_static = NULL;
 
 GroundStation::GroundStation(QWidget *parent) :
@@ -36,48 +33,47 @@ GroundStation::GroundStation(QWidget *parent) :
     connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
     proc->init();
 
-    QCustomPlot *plot = new QCustomPlot(this);
-    globalPlot = plot;
-    ui->plotLayout->addWidget(plot, 0, 0);
-    plot->addGraph(); // blue line
-    plot->graph(0)->setPen(QPen(Qt::blue));
-    plot->graph(0)->setAntialiasedFill(false);
-    plot->addGraph(); // red line
-    plot->graph(1)->setPen(QPen(Qt::red));
-    plot->graph(1)->setAntialiasedFill(false);
+    plotCurrent = new QCustomPlot(this);
+    ui->plotLayout->addWidget(plotCurrent, 0, 0);
+    plotCurrent->addGraph(); // blue line
+    plotCurrent->graph(0)->setPen(QPen(Qt::blue));
+    plotCurrent->graph(0)->setAntialiasedFill(false);
+    plotCurrent->addGraph(); // red line
+    plotCurrent->graph(1)->setPen(QPen(Qt::red));
+    plotCurrent->graph(1)->setAntialiasedFill(false);
 
-    plot = new QCustomPlot();
-    ui->plotLayout->addWidget(plot, 0, 1);
-    plot->addGraph(); // blue line
-    plot->graph(0)->setPen(QPen(Qt::blue));
-    plot->graph(0)->setAntialiasedFill(false);
-    plot->addGraph(); // red line
-    plot->graph(1)->setPen(QPen(Qt::red));
-    plot->graph(1)->setAntialiasedFill(false);
+    plotVoltage = new QCustomPlot();
+    ui->plotLayout->addWidget(plotVoltage, 0, 1);
+    plotVoltage->addGraph(); // blue line
+    plotVoltage->graph(0)->setPen(QPen(Qt::blue));
+    plotVoltage->graph(0)->setAntialiasedFill(false);
+    plotVoltage->addGraph(); // red line
+    plotVoltage->graph(1)->setPen(QPen(Qt::red));
+    plotVoltage->graph(1)->setAntialiasedFill(false);
 
-    plot = new QCustomPlot();
-    ui->plotLayout->addWidget(plot, 1, 0);
-    plot->addGraph(); // black line
-    plot->graph(0)->setPen(QPen(Qt::black));
-    plot->graph(0)->setAntialiasedFill(false);
+    plotPWM = new QCustomPlot();
+    ui->plotLayout->addWidget(plotPWM, 1, 0);
+    plotPWM->addGraph(); // black line
+    plotPWM->graph(0)->setPen(QPen(Qt::black));
+    plotPWM->graph(0)->setAntialiasedFill(false);
 
-    plot = new QCustomPlot();
-    ui->plotLayout->addWidget(plot, 1, 1);
-    plot->addGraph(); // black line
-    plot->graph(0)->setPen(QPen(Qt::black));
-    plot->graph(0)->setAntialiasedFill(false);
+    plotLight = new QCustomPlot();
+    ui->plotLayout->addWidget(plotLight, 1, 1);
+    plotLight->addGraph(); // black line
+    plotLight->graph(0)->setPen(QPen(Qt::black));
+    plotLight->graph(0)->setAntialiasedFill(false);
 
-    plot = new QCustomPlot();
-    ui->plotLayout->addWidget(plot, 2, 0);
-    plot->addGraph(); // black line
-    plot->graph(0)->setPen(QPen(Qt::black));
-    plot->graph(0)->setAntialiasedFill(false);
+    plotSpeed = new QCustomPlot();
+    ui->plotLayout->addWidget(plotSpeed, 2, 0);
+    plotSpeed->addGraph(); // black line
+    plotSpeed->graph(0)->setPen(QPen(Qt::black));
+    plotSpeed->graph(0)->setAntialiasedFill(false);
 
-    plot = new QCustomPlot();
-    ui->plotLayout->addWidget(plot, 2, 1);
-    plot->addGraph(); // black line
-    plot->graph(0)->setPen(QPen(Qt::black));
-    plot->graph(0)->setAntialiasedFill(false);
+    plotDataRate = new QCustomPlot();
+    ui->plotLayout->addWidget(plotDataRate, 2, 1);
+    plotDataRate->addGraph(); // black line
+    plotDataRate->graph(0)->setPen(QPen(Qt::black));
+    plotDataRate->graph(0)->setAntialiasedFill(false);
 
     QTimer *dataTimer = new QTimer();
     connect(dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
@@ -90,16 +86,16 @@ void GroundStation::realtimeDataSlot(){
     if (key - lastPointKey > 0.010){
         double value = qSin(key);
         // add data to lines:
-        globalPlot->graph(0)->addData(key, value);
+        plotSpeed->graph(0)->addData(key, value);
         // remove data of lines that's outside visible range:
-        globalPlot->graph(0)->removeDataBefore(key-6.29);
+        plotSpeed->graph(0)->removeDataBefore(key-6.29);
         // rescale value (vertical) axis to fit the current data:
-        globalPlot->graph(0)->rescaleAxes();
+        plotSpeed->graph(0)->rescaleAxes();
         lastPointKey = key;
     }
     // make key axis range scroll with the data (at a constant range size of 8):
     //ui->customPlot->xAxis->setRange(key+0.25, 8, Qt::AlignRight);
-    globalPlot->replot();
+    plotSpeed->replot();
 }
 
 void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context, const QString &msg){
