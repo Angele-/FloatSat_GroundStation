@@ -38,7 +38,7 @@ GroundStation::GroundStation(QWidget *parent) :
 
     QCustomPlot *plot = new QCustomPlot(this);
     globalPlot = plot;
-    ui->graphLayout1->addWidget(plot);
+    ui->plotLayout->addWidget(plot, 0, 0);
     plot->addGraph(); // blue line
     plot->graph(0)->setPen(QPen(Qt::blue));
     plot->graph(0)->setAntialiasedFill(false);
@@ -47,7 +47,7 @@ GroundStation::GroundStation(QWidget *parent) :
     plot->graph(1)->setAntialiasedFill(false);
 
     plot = new QCustomPlot();
-    ui->graphLayout1->addWidget(plot);
+    ui->plotLayout->addWidget(plot, 0, 1);
     plot->addGraph(); // blue line
     plot->graph(0)->setPen(QPen(Qt::blue));
     plot->graph(0)->setAntialiasedFill(false);
@@ -55,17 +55,26 @@ GroundStation::GroundStation(QWidget *parent) :
     plot->graph(1)->setPen(QPen(Qt::red));
     plot->graph(1)->setAntialiasedFill(false);
 
-    QHBoxLayout *graphLayout2 = new QHBoxLayout();
-    ui->graphLayout1->addLayout(graphLayout2);
-
     plot = new QCustomPlot();
-    graphLayout2->addWidget(plot);
+    ui->plotLayout->addWidget(plot, 1, 0);
     plot->addGraph(); // black line
     plot->graph(0)->setPen(QPen(Qt::black));
     plot->graph(0)->setAntialiasedFill(false);
 
     plot = new QCustomPlot();
-    graphLayout2->addWidget(plot);
+    ui->plotLayout->addWidget(plot, 1, 1);
+    plot->addGraph(); // black line
+    plot->graph(0)->setPen(QPen(Qt::black));
+    plot->graph(0)->setAntialiasedFill(false);
+
+    plot = new QCustomPlot();
+    ui->plotLayout->addWidget(plot, 2, 0);
+    plot->addGraph(); // black line
+    plot->graph(0)->setPen(QPen(Qt::black));
+    plot->graph(0)->setAntialiasedFill(false);
+
+    plot = new QCustomPlot();
+    ui->plotLayout->addWidget(plot, 2, 1);
     plot->addGraph(); // black line
     plot->graph(0)->setPen(QPen(Qt::black));
     plot->graph(0)->setAntialiasedFill(false);

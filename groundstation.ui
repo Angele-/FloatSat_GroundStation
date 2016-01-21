@@ -1519,24 +1519,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>40</y>
-      <width>630</width>
-      <height>640</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="graphLayout1"/>
-   </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
       <x>360</x>
       <y>40</y>
       <width>10</width>
-      <height>450</height>
+      <height>440</height>
      </rect>
     </property>
     <property name="orientation">
@@ -1631,6 +1620,21 @@
        </property>
       </widget>
      </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>40</y>
+      <width>630</width>
+      <height>640</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="plotLayout">
+     <property name="spacing">
+      <number>3</number>
+     </property>
     </layout>
    </widget>
   </widget>
