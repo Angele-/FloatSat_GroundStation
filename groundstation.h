@@ -46,14 +46,6 @@ private slots:
 
     void on_pushButton_Docking_Mode_clicked();
 
-    void on_spinBox_P_gain_editingFinished();
-
-    void on_spinBox_I_gain_editingFinished();
-
-    void on_spinBox_D_Gain_editingFinished();
-
-    void on_pushButton_Send_clicked();
-
     void on_lineEdit_Command_returnPressed();
 
     void on_lineEdit_Satellite_returnPressed();
@@ -74,6 +66,7 @@ private:
     void setPixel(Pixel p);
     void setPixelRow(PixelRow p);
     void displayImage();
+    void sendTelecommand();
 
     Ui::GroundStation *ui;
     static Ui::GroundStation *ui_static;

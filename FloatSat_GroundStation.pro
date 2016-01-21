@@ -39,18 +39,26 @@ unix:LIBS += -L/usr/local/lib \
      -lopencv_highgui \
      -lopencv_features2d\
 
-INCLUDEPATH += C:/opencv/modules/core/include
-INCLUDEPATH += C:/opencv/modules/imgproc/include
-INCLUDEPATH += C:/opencv/modules/highgui/include
-INCLUDEPATH += C:/opencv/modules/imgcodecs/include
-INCLUDEPATH += C:/opencv/modules/videoio/include
-INCLUDEPATH += C:/qcustomplot-source
+win32:INCLUDEPATH += C:/opencv/modules/core/include
+win32:INCLUDEPATH += C:/opencv/modules/imgproc/include
+win32:INCLUDEPATH += C:/opencv/modules/highgui/include
+win32:INCLUDEPATH += C:/opencv/modules/imgcodecs/include
+win32:INCLUDEPATH += C:/opencv/modules/videoio/include
+win32:INCLUDEPATH += C:/qcustomplot-source
 
+CONFIG(debug, release|debug) {
+  win32:QCPLIB = qcustomplotd1
+  else: QCPLIB = qcustomplotd
+} else {
+  win32:QCPLIB = qcustomplot1
+  else: QCPLIB = qcustomplot
+}
 LIBS += -LC:/opencvbuild/lib \
         -LC:/opencvbuild/bin \
         -LC:/qcustomplot-source/qcustomplot-sharedlib/sharedlib-compilation/release \
+        -LC:/qcustomplot-source/qcustomplot-sharedlib/sharedlib-compilation/debug \
         -lopencv_core310 \
         -lopencv_imgproc310 \
         -lopencv_highgui310 \
         -lopencv_features2d310 \
-        -lqcustomplot1
+        -l$$QCPLIB

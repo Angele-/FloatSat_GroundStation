@@ -8,6 +8,9 @@
 #include <QTextBlock>
 #include <QTimer>
 
+#define PLOT_PUBLISH_INTERVAL 0.01
+#define PLOT_VISIBLE_INTERVAL 7.5
+
 Ui::GroundStation *GroundStation::ui_static = NULL;
 
 GroundStation::GroundStation(QWidget *parent) :
@@ -156,7 +159,14 @@ void GroundStation::readFromLink(){
     }
     case PayloadLightType:{
         PayloadLight pl(payload);
-        ui->lcdNumber_32->display(pl.light);
+        ui->lcdLight->display(pl.light);
+
+        static double key = 0;
+        key += PLOT_PUBLISH_INTERVAL;
+        plotSpeed->graph(0)->addData(key, pl.light);
+        plotSpeed->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotSpeed->graph(0)->rescaleAxes();
+        plotSpeed->replot();
         break;
     }
     case PayloadSensor1Type:{
@@ -218,22 +228,7 @@ void GroundStation::on_pushButton_Docking_Mode_clicked()
 
 }
 
-void GroundStation::on_spinBox_P_gain_editingFinished()
-{
-
-}
-
-void GroundStation::on_spinBox_I_gain_editingFinished()
-{
-
-}
-
-void GroundStation::on_spinBox_D_Gain_editingFinished()
-{
-
-}
-
-void GroundStation::on_pushButton_Send_clicked()
+void GroundStation::sendTelecommand()
 {
     QString str = ui->lineEdit_Command->text();
     float command = str.toFloat();
@@ -259,22 +254,22 @@ void GroundStation::on_pushButton_Send_clicked()
 
 void GroundStation::on_lineEdit_Command_returnPressed()
 {
-    on_pushButton_Send_clicked();
+    sendTelecommand();
 }
 
 void GroundStation::on_lineEdit_Satellite_returnPressed()
 {
-    on_pushButton_Send_clicked();
+    sendTelecommand();
 }
 
 void GroundStation::on_lineEdit_Thread_returnPressed()
 {
-    on_pushButton_Send_clicked();
+    sendTelecommand();
 }
 
 void GroundStation::on_lineEdit_Var_returnPressed()
 {
-    on_pushButton_Send_clicked();
+    sendTelecommand();
 }
 
 void GroundStation::on_lineEdit_Motor_speed_returnPressed()

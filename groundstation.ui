@@ -432,7 +432,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLCDNumber" name="lcdNumber_19">
+      <widget class="QLCDNumber" name="lcdSolarArraysVoltage">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -447,7 +447,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLCDNumber" name="lcdNumber_17">
+      <widget class="QLCDNumber" name="lcdSolarArraysCurrent">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -734,16 +734,16 @@
       <number>6</number>
      </property>
      <property name="leftMargin">
-      <number>11</number>
+      <number>10</number>
      </property>
      <property name="topMargin">
-      <number>11</number>
+      <number>10</number>
      </property>
      <property name="rightMargin">
-      <number>11</number>
+      <number>10</number>
      </property>
      <property name="bottomMargin">
-      <number>11</number>
+      <number>10</number>
      </property>
      <item>
       <widget class="QLabel" name="label_76">
@@ -760,7 +760,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLCDNumber" name="lcdNumber_32">
+      <widget class="QLCDNumber" name="lcdPWM">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
          <horstretch>0</horstretch>
@@ -809,7 +809,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLCDNumber" name="lcdNumber_21">
+      <widget class="QLCDNumber" name="lcdLight">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
          <horstretch>0</horstretch>
@@ -882,7 +882,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLCDNumber" name="lcdNumber_33">
+      <widget class="QLCDNumber" name="lcdBatteryCurrent">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -908,7 +908,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLCDNumber" name="lcdNumber_34">
+      <widget class="QLCDNumber" name="lcdBatteryVoltage">
        <property name="font">
         <font>
          <pointsize>8</pointsize>

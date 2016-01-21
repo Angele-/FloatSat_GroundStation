@@ -9,8 +9,8 @@ ImageProcessor::ImageProcessor(QObject *parent) :
 }
 
 void ImageProcessor::init(){
-    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialImage()));
     openSerialPort();
+    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialImage()));
 }
 
 
@@ -25,7 +25,7 @@ void ImageProcessor::openSerialPort(){
         qDebug() << "Port: " << (*i).portName();
     }
     #ifdef Q_OS_WIN
-        serial->setPortName("COM4");
+        serial->setPortName("COM7");
     #elif Q_OS_MAC
         serial->setPortName("cu.FloatSat-10-SPPDev");
     #endif
@@ -57,7 +57,7 @@ void ImageProcessor::readSerialData(){
             emit setImgSizeLbl(labelText);
 
         }
-        //qDebug() << properties.Height << " " << properties.Width << " " << properties.type;
+        qDebug() << properties.Height << " " << properties.Width << " " << properties.type;
         line = line.mid(line.indexOf(";PROPS;")+7);
         propertiesRx = true;
         sendToConsole = false;
@@ -77,7 +77,7 @@ void ImageProcessor::readSerialData(){
             yuv.append(current.toInt());
         }
 
-        qInfo() << "\nRecieved YUV Data: " << yuv.length();
+        qDebug() << "\nReceived YUV Data: " << yuv.length();
 
         line = "";
         data.clear();
@@ -85,7 +85,7 @@ void ImageProcessor::readSerialData(){
         ProcessImageGray();
     }
     if(sendToConsole){
-        qInfo() << data;
+        qDebug() << data;
 
         if(line.length() > 1000) line = "";
     }else{
@@ -99,8 +99,6 @@ void ImageProcessor::readSerialData(){
             }
         }
     }
-
-
 }
 
 void ImageProcessor::readSerialImage(){
@@ -155,7 +153,7 @@ void ImageProcessor::readSerialImage(){
 
             sendToConsole = true;
             transmissionFinished = false;
-            qInfo() << "Console reenabled\n";
+            qDebug() << "Console reenabled\n";
             propertiesRx = false;
             return;
         }
@@ -210,7 +208,7 @@ void ImageProcessor::readSerialImage(){
 
         }
     }else{
-       qInfo() << data;
+       qDebug() << data;
     }
 
 }
@@ -224,7 +222,7 @@ void ImageProcessor::ProcessImageV(){
                 Image.at<cv::Vec3b>(x,y)[0] = 0;
                 Image.at<cv::Vec3b>(x,y)[1] = 0;
                 Image.at<cv::Vec3b>(x,y)[2] = 0;
-                //qDebug() << "Error - YUV underflow" << endl;
+                qDebug() << "Error - YUV underflow" << endl;
             }else{
                 Image.at<cv::Vec3b>(x,y)[0] = (uchar) yuv.at(i);
                 Image.at<cv::Vec3b>(x,y)[1] = (uchar) yuv.at(i);
@@ -256,7 +254,7 @@ void ImageProcessor::ProcessImageGray(){
                 Image.at<cv::Vec3b>(x,y)[0] = 0;
                 Image.at<cv::Vec3b>(x,y)[1] = 0;
                 Image.at<cv::Vec3b>(x,y)[2] = 0;
-                //qDebug() << "Error - YUV underflow" << endl;
+                qDebug() << "Error - YUV underflow" << endl;
             }else{
                 Image.at<cv::Vec3b>(x,y)[0] = (uchar) yuv.at(i);
                 Image.at<cv::Vec3b>(x,y)[1] = (uchar) yuv.at(i);
