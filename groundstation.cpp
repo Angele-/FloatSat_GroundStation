@@ -133,6 +133,9 @@ void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context
         console = ui_static->debugConsole;
     }
 
+    str.replace("\\t", "\t");
+    str.replace("\\r", "\r");
+    str.replace("\\n", "\n");
     console->appendPlainText(str);
     if(console->document()->blockCount() > 2000){
         QTextBlock block = console->document()->begin();
