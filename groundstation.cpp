@@ -8,7 +8,7 @@
 #include <QTextBlock>
 #include <QTimer>
 
-#define PLOT_PUBLISH_INTERVAL 0.01 // seconds
+#define PLOT_PUBLISH_INTERVAL 0.1 // seconds
 #define PLOT_VISIBLE_INTERVAL 7.5 // seconds
 #define PLOT_DATA_RATE_PUBLISH_INTERVAL 0.2 // seconds
 #define PLOT_DATA_RATE_VISIBLE_INTERVAL 15 // seconds
@@ -43,12 +43,12 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->plotLayout->addWidget(plotCurrent, 0, 0);
     plotCurrent->addGraph(); // blue line
     plotCurrent->graph(0)->setPen(QPen(Qt::blue));
-    plotCurrent->graph(0)->setAntialiasedFill(false);
+    plotCurrent->graph(0)->setName("Batteries");
     plotCurrent->addGraph(); // red line
     plotCurrent->graph(1)->setPen(QPen(Qt::red));
-    plotCurrent->graph(1)->setAntialiasedFill(false);
+    plotCurrent->graph(1)->setName("Solar Panels");
     plotCurrent->xAxis->setLabel("Seconds");
-    plotCurrent->yAxis->setLabel("Amperes");
+    plotCurrent->yAxis->setLabel("Milliamperes");
     QCPPlotTitle *title = new QCPPlotTitle(plotCurrent, "Current");
     title->setFont(ui->label_72->font());
     plotCurrent->plotLayout()->insertRow(0);
@@ -60,10 +60,8 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->plotLayout->addWidget(plotVoltage, 0, 1);
     plotVoltage->addGraph(); // blue line
     plotVoltage->graph(0)->setPen(QPen(Qt::blue));
-    plotVoltage->graph(0)->setAntialiasedFill(false);
     plotVoltage->addGraph(); // red line
     plotVoltage->graph(1)->setPen(QPen(Qt::red));
-    plotVoltage->graph(1)->setAntialiasedFill(false);
     plotVoltage->xAxis->setLabel("Seconds");
     plotVoltage->yAxis->setLabel("Volts");
     title = new QCPPlotTitle(plotVoltage, "Voltage");
@@ -77,7 +75,6 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->plotLayout->addWidget(plotPWM, 1, 0);
     plotPWM->addGraph(); // black line
     plotPWM->graph(0)->setPen(QPen(Qt::black));
-    plotPWM->graph(0)->setAntialiasedFill(false);
     plotPWM->xAxis->setLabel("Seconds");
     plotPWM->yAxis->setLabel("%");
     title = new QCPPlotTitle(plotPWM, "Duty cycle");
@@ -91,7 +88,6 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->plotLayout->addWidget(plotLight, 1, 1);
     plotLight->addGraph(); // black line
     plotLight->graph(0)->setPen(QPen(Qt::black));
-    plotLight->graph(0)->setAntialiasedFill(false);
     plotLight->xAxis->setLabel("Seconds");
     plotLight->yAxis->setLabel(" ");
     title = new QCPPlotTitle(plotLight, "Light");
@@ -105,7 +101,6 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->plotLayout->addWidget(plotSpeed, 2, 0);
     plotSpeed->addGraph(); // black line
     plotSpeed->graph(0)->setPen(QPen(Qt::black));
-    plotSpeed->graph(0)->setAntialiasedFill(false);
     plotSpeed->xAxis->setLabel("Seconds");
     plotSpeed->yAxis->setLabel("Radians / second");
     title = new QCPPlotTitle(plotSpeed, "Speed");
@@ -119,8 +114,6 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->plotLayout->addWidget(plotDataRate, 2, 1);
     plotDataRate->addGraph(); // black line
     plotDataRate->graph(0)->setPen(QPen(Qt::black));
-    plotDataRate->graph(0)->setAntialiasedFill(false);
-    plotDataRate->yAxis->setRange(0, 1024);
     plotDataRate->xAxis->setLabel("Seconds");
     plotDataRate->yAxis->setLabel("Bytes");
     title = new QCPPlotTitle(plotDataRate, "Data rate");
@@ -144,6 +137,7 @@ void GroundStation::doPlotDataRate(){
     plotDataRate->graph(0)->addData(key, link->readAndResetReceivedBytes() + link->readAndResetSentBytes() + proc->readAndResetReceivedBytes());
     plotDataRate->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
     plotDataRate->graph(0)->rescaleKeyAxis();
+    plotDataRate->graph(0)->rescaleValueAxis(true);
     plotDataRate->replot();
 }
 
@@ -240,6 +234,16 @@ void GroundStation::readFromLink(){
         ui->lcdBatteryVoltage->display(QString("%1").arg(pm.batteryVoltage, 6, 'f', 1, '0'));
         ui->lcdPanelVoltage->display(QString("%1").arg(pm.panelVoltage, 6, 'f', 1, '0'));
         ui->lcdPanelCurrent->display(QString("%1").arg(pm.panelCurrent, 6, 'f', 1, '0'));
+
+        static double key = 0;
+        key += PLOT_PUBLISH_INTERVAL;
+        plotCurrent->graph(0)->addData(key, pm.batteryCurrent);
+        plotCurrent->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotCurrent->graph(1)->addData(key, pm.panelCurrent);
+        plotCurrent->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotCurrent->graph(1)->rescaleKeyAxis();
+        plotCurrent->graph(1)->rescaleValueAxis(true);
+        plotCurrent->replot();
         break;
     }
     default:

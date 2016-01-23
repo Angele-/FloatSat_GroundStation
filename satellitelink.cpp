@@ -81,7 +81,9 @@ int SatelliteLink::write(quint32 topicId, const QByteArray &data){
 //    }
     buffer.resize(26 + data.length() + extra);
 
-    return socket.writeDatagram(buffer.constData(), buffer.size(), remoteAddress, port);
+    int written = socket.writeDatagram(buffer.constData(), buffer.size(), remoteAddress, port);
+    sentBytes += written;
+    return written;
 }
 
 int SatelliteLink::write(quint32 topicId, const Telecommand &telecommand){
