@@ -438,6 +438,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>6</number>
+       </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
        </property>
@@ -452,6 +455,9 @@
         <font>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>6</number>
        </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
@@ -669,9 +675,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>480</y>
+      <y>500</y>
       <width>690</width>
-      <height>200</height>
+      <height>180</height>
      </rect>
     </property>
     <property name="font">
@@ -701,7 +707,7 @@
        <widget class="QPlainTextEdit" name="debugConsole">
         <property name="font">
          <font>
-          <pointsize>14</pointsize>
+          <pointsize>10</pointsize>
          </font>
         </property>
        </widget>
@@ -888,6 +894,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>6</number>
+       </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
        </property>
@@ -913,6 +922,9 @@
         <font>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>6</number>
        </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
@@ -981,6 +993,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>6</number>
+       </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
        </property>
@@ -992,6 +1007,9 @@
         <font>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>6</number>
        </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
@@ -1021,6 +1039,9 @@
         <font>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>6</number>
        </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
@@ -1120,6 +1141,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>6</number>
+       </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
        </property>
@@ -1149,6 +1173,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>6</number>
+       </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
        </property>
@@ -1160,6 +1187,9 @@
         <font>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>6</number>
        </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
@@ -1216,6 +1246,9 @@
        <property name="smallDecimalPoint">
         <bool>false</bool>
        </property>
+       <property name="digitCount">
+        <number>6</number>
+       </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
        </property>
@@ -1256,6 +1289,9 @@
          <pointsize>8</pointsize>
         </font>
        </property>
+       <property name="digitCount">
+        <number>6</number>
+       </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>
        </property>
@@ -1281,6 +1317,9 @@
         <font>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="digitCount">
+        <number>6</number>
        </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Flat</enum>

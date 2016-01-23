@@ -17,16 +17,17 @@ SOURCES += main.cpp\
     satellitelink.cpp \
     payload.cpp \
     imageprocessor.cpp \
-    compass.cpp \
-    qcustomplot.cpp
+    compass.cpp
 
 HEADERS  += groundstation.h \
     satellitelink.h \
     payload.h \
     basics.h \
     imageprocessor.h \
-    compass.h \
-    qcustomplot.h
+    compass.h
+
+unix:SOURCES += qcustomplot.cpp
+unix:HEADER += qcustomplot.h
 
 FORMS    += groundstation.ui
 

@@ -135,26 +135,24 @@ void GroundStation::readFromLink(){
     switch(payload.topic){
     case PayloadSensorFusionType:{
         PayloadSensorFusion psd(payload);
-        ui->lcdNumber_6->display(QString("%1").arg(psd.roll * 180.0f / M_PI, 5, 'g', 2, '0'));
-        ui->lcdNumber_8->display(QString("%1").arg(psd.pitch * 180.0f / M_PI, 5, 'g', 2, '0'));
-        ui->lcdNumber_10->display(QString("%1").arg(psd.yaw * 180.0f / M_PI, 5, 'g', 2, '0'));
+        ui->lcdNumber_6->display(QString("%1").arg(psd.roll * 180.0f / M_PI, 6, 'f', 1, '0'));
+        ui->lcdNumber_8->display(QString("%1").arg(psd.pitch * 180.0f / M_PI, 6, 'f', 1, '0'));
+        ui->lcdNumber_10->display(QString("%1").arg(psd.yaw * 180.0f / M_PI, 6, 'f', 1, '0'));
+        ui->compass_widget->heading = psd.yaw * 180.0f / M_PI;
         break;
     }
     case PayloadSensorGyroType:{
         PayloadSensorGyro psg(payload);
-        ui->lcdNumber_29->display(QString("%1").arg(psg.roll * 180.0f / M_PI, 5, 'g', 2, '0'));
-        ui->lcdNumber_30->display(QString("%1").arg(psg.pitch * 180.0f / M_PI, 5, 'g', 2, '0'));
-        ui->lcdNumber_31->display(QString("%1").arg(psg.yaw * 180.0f / M_PI, 5, 'g', 2, '0'));
+        ui->lcdNumber_29->display(QString("%1").arg(psg.roll * 180.0f / M_PI, 6, 'f', 1, '0'));
+        ui->lcdNumber_30->display(QString("%1").arg(psg.pitch * 180.0f / M_PI, 6, 'f', 1, '0'));
+        ui->lcdNumber_31->display(QString("%1").arg(psg.yaw * 180.0f / M_PI, 6, 'f', 1, '0'));
         break;
     }
     case PayloadSensorXMType:{
         PayloadSensorXM psx(payload);
-
-        ui->lcdNumber_5->display(QString("%1").arg(psx.roll * 180.0f / M_PI, 5, 'g', 2, '0'));
-        ui->lcdNumber_7->display(QString("%1").arg(psx.pitch * 180.0f / M_PI, 5, 'g', 2, '0'));
-        ui->lcdNumber_9->display(QString("%1").arg(psx.yaw * 180.0f / M_PI, 5, 'g', 2, '0'));
-        ui->compass_widget->heading = psx.yaw * 180.0f / M_PI;
-
+        ui->lcdNumber_5->display(QString("%1").arg(psx.roll * 180.0f / M_PI, 6, 'f', 1, '0'));
+        ui->lcdNumber_7->display(QString("%1").arg(psx.pitch * 180.0f / M_PI, 6, 'f', 1, '0'));
+        ui->lcdNumber_9->display(QString("%1").arg(psx.yaw * 180.0f / M_PI, 6, 'f', 1, '0'));
         break;
     }
     case PayloadLightType:{
