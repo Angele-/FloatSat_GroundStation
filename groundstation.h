@@ -34,8 +34,6 @@ private slots:
 
     //Predefined Slots:
 
-    void on_pushButton_Burn_clicked();
-
     void on_pushButton_Velocity_Mode_clicked();
 
     void on_pushButton_Standby_Mode_clicked();

@@ -257,12 +257,6 @@ GroundStation::~GroundStation()
     delete ui;
 }
 
-void GroundStation::on_pushButton_Burn_clicked()
-{
-    Telecommand command(666.0f, 1, 2, 6);
-    link->write(3001, command);
-}
-
 void GroundStation::on_pushButton_Velocity_Mode_clicked()
 {
     ui->pushButton_Velocity_Mode->setDown(true);

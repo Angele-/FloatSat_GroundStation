@@ -4,12 +4,12 @@
 #include <QtEndian>
 
 SatelliteLink::SatelliteLink(QObject *parent, bool checkChecksum) : QObject(parent), localAddress("0.0.0.0"), remoteAddress("192.168.1.255"), port(12345), socket(this), bound(false), checkChecksum(checkChecksum), receivedBytes(0), sentBytes(0){
-    qDebug() << "Binding to IP" << localAddress.toString() << "and port" << port << "\n";
+    qInfo() << "Binding to IP" << localAddress.toString() << "and port" << port << "\n";
     if(socket.bind(localAddress, port)){
-        qDebug() << "Bind successful!\n";
+        qInfo() << "Bind successful!\n";
         bound = true;
     }else{
-        qDebug() << "Bind unsuccessful!\n";
+        qInfo() << "Bind unsuccessful!\n";
         return;
     }
     connect(&socket, SIGNAL(readyRead()), this, SLOT(readFromSocket()));
