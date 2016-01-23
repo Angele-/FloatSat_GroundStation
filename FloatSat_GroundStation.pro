@@ -27,7 +27,7 @@ HEADERS  += groundstation.h \
     compass.h
 
 unix:SOURCES += qcustomplot.cpp
-unix:HEADER += qcustomplot.h
+unix:HEADERS += qcustomplot.h
 
 FORMS    += groundstation.ui
 
@@ -50,11 +50,9 @@ win32:INCLUDEPATH += C:/opencv/modules/videoio/include
 win32:INCLUDEPATH += C:/qcustomplot-source
 
 win32:CONFIG(debug, release|debug) {
-  win32:QCPLIB = qcustomplotd1
-  else: QCPLIB = qcustomplotd
+  QCPLIB = qcustomplotd1
 } else {
-  win32:QCPLIB = qcustomplot1
-  else: QCPLIB = qcustomplot
+  QCPLIB = qcustomplot1
 }
 win32:LIBS += -LC:/opencvbuild/lib \
         -LC:/opencvbuild/bin \
