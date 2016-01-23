@@ -24,6 +24,7 @@ public:
     void setTransmissionFinished(bool t);
     QImage getImage();
     cv::Mat getMat();
+    qint64 readAndResetReceivedBytes();
 
 private:
     void openSerialPort();
@@ -46,6 +47,7 @@ private:
     bool transmissionFinished = false;
     QImage imageToDisplay;
     quint32 picRecieveStatusValue = 0;
+    qint64 receivedBytes;
 signals:
     void setPicRecieveStatusMaximum(qint32 maximum);
     void setPicRecieveStatusValue(qint32 value);

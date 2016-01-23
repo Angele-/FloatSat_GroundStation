@@ -43,6 +43,7 @@ void ImageProcessor::openSerialPort(){
 
 void ImageProcessor::readSerialData(){
     QByteArray data = serial->readAll();
+    receivedBytes += data.size();
     line.append(data);
     if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
         QString props = line.mid(line.indexOf("CAMERA_TX_START;")+16,10);
@@ -103,6 +104,7 @@ void ImageProcessor::readSerialData(){
 
 void ImageProcessor::readSerialImage(){
     QByteArray data = serial->readAll();
+    receivedBytes += data.size();
     line.append(data);
     if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
         QString props = line.mid(line.indexOf("CAMERA_TX_START;")+16,10);
@@ -305,4 +307,10 @@ void ImageProcessor::DetectCircles(cv::Mat src){
         }
     }
 
+}
+
+qint64 ImageProcessor::readAndResetReceivedBytes(){
+    int ret = receivedBytes;
+    receivedBytes = 0;
+    return ret;
 }

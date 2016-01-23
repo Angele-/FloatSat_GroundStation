@@ -17,7 +17,7 @@ SatelliteLink::SatelliteLink(QObject *parent, bool checkChecksum) : QObject(pare
 
 void SatelliteLink::readFromSocket(){
     QByteArray buffer(1023, 0x00);
-    socket.readDatagram(buffer.data(), buffer.size());
+    receivedBytes += socket.readDatagram(buffer.data(), buffer.size());
 
 //    for(int i = 0; i < buffer.size(); ++i){
 //        if(buffer[i] == (char)0xFF)
@@ -95,6 +95,12 @@ PayloadSatellite SatelliteLink::read(){
         return PayloadSatellite();
 
     return payloads.dequeue();
+}
+
+qint64 SatelliteLink::readAndResetReceivedBytes(){
+    unsigned ret = receivedBytes;
+    receivedBytes = 0;
+    return ret;
 }
 
 bool SatelliteLink::isBound(){

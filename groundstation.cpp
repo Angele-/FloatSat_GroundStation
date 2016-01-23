@@ -8,8 +8,10 @@
 #include <QTextBlock>
 #include <QTimer>
 
-#define PLOT_PUBLISH_INTERVAL 0.01
-#define PLOT_VISIBLE_INTERVAL 7.5
+#define PLOT_PUBLISH_INTERVAL 0.01 // seconds
+#define PLOT_VISIBLE_INTERVAL 7.5 // seconds
+#define PLOT_DATA_RATE_PUBLISH_INTERVAL 0.2 // seconds
+#define PLOT_DATA_RATE_VISIBLE_INTERVAL 15 // seconds
 
 Ui::GroundStation *GroundStation::ui_static = NULL;
 
@@ -78,9 +80,21 @@ GroundStation::GroundStation(QWidget *parent) :
     plotDataRate->graph(0)->setPen(QPen(Qt::black));
     plotDataRate->graph(0)->setAntialiasedFill(false);
 
+    connect(&dataRateTimer, SIGNAL(timeout()), this, SLOT(doPlotDataRate));
+    dataRateTimer.start(PLOT_DATA_RATE_PUBLISH_INTERVAL * 1000);
+
     QTimer *dataTimer = new QTimer();
     connect(dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
     dataTimer->start(0);
+}
+
+void GroundStation::doPlotDataRate(){
+    static double key = 0;
+    key += PLOT_DATA_RATE_PUBLISH_INTERVAL;
+    plotSpeed->graph(0)->addData(key, link->readAndResetReceivedBytes() + proc->readAndResetReceivedBytes());
+    plotSpeed->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
+    plotSpeed->graph(0)->rescaleAxes();
+    plotSpeed->replot();
 }
 
 void GroundStation::realtimeDataSlot(){

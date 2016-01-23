@@ -30,6 +30,8 @@ private slots:
 
     void onUpdatePicture();
 
+    void doPlotDataRate();
+
     //Predefined Slots:
 
     void on_pushButton_Burn_clicked();
@@ -85,6 +87,7 @@ private:
     QCustomPlot *plotLight;
     QCustomPlot *plotSpeed;
     QCustomPlot *plotDataRate;
+    QTimer dataRateTimer;
 };
 
 #endif // GROUNDSTATION_H
