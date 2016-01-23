@@ -17,14 +17,16 @@ SOURCES += main.cpp\
     satellitelink.cpp \
     payload.cpp \
     imageprocessor.cpp \
-    compass.cpp
+    compass.cpp \
+    qcustomplot.cpp
 
 HEADERS  += groundstation.h \
     satellitelink.h \
     payload.h \
     basics.h \
     imageprocessor.h \
-    compass.h
+    compass.h \
+    qcustomplot.h
 
 FORMS    += groundstation.ui
 
@@ -46,14 +48,14 @@ win32:INCLUDEPATH += C:/opencv/modules/imgcodecs/include
 win32:INCLUDEPATH += C:/opencv/modules/videoio/include
 win32:INCLUDEPATH += C:/qcustomplot-source
 
-CONFIG(debug, release|debug) {
+win32:CONFIG(debug, release|debug) {
   win32:QCPLIB = qcustomplotd1
   else: QCPLIB = qcustomplotd
 } else {
   win32:QCPLIB = qcustomplot1
   else: QCPLIB = qcustomplot
 }
-LIBS += -LC:/opencvbuild/lib \
+win32:LIBS += -LC:/opencvbuild/lib \
         -LC:/opencvbuild/bin \
         -LC:/qcustomplot-source/qcustomplot-sharedlib/sharedlib-compilation/release \
         -LC:/qcustomplot-source/qcustomplot-sharedlib/sharedlib-compilation/debug \

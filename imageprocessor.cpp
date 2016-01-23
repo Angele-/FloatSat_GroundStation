@@ -26,10 +26,10 @@ void ImageProcessor::openSerialPort(){
     }
     #ifdef Q_OS_WIN
         serial->setPortName("COM8");
-    #elif Q_OS_MAC
+    #else
         serial->setPortName("cu.FloatSat-10-SPPDev");
     #endif
-    serial->setBaudRate(QSerialPort::Baud115200);
+    serial->setBaudRate(921600);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
     serial->setStopBits(QSerialPort::OneStop);

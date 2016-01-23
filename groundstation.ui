@@ -701,7 +701,7 @@
        <widget class="QPlainTextEdit" name="debugConsole">
         <property name="font">
          <font>
-          <pointsize>7</pointsize>
+          <pointsize>14</pointsize>
          </font>
         </property>
        </widget>
