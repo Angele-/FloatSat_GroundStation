@@ -80,7 +80,7 @@ GroundStation::GroundStation(QWidget *parent) :
     plotDataRate->graph(0)->setPen(QPen(Qt::black));
     plotDataRate->graph(0)->setAntialiasedFill(false);
 
-    connect(&dataRateTimer, SIGNAL(timeout()), this, SLOT(doPlotDataRate));
+    connect(&dataRateTimer, SIGNAL(timeout()), this, SLOT(doPlotDataRate()));
     dataRateTimer.start(PLOT_DATA_RATE_PUBLISH_INTERVAL * 1000);
 
     QTimer *dataTimer = new QTimer();
@@ -91,10 +91,10 @@ GroundStation::GroundStation(QWidget *parent) :
 void GroundStation::doPlotDataRate(){
     static double key = 0;
     key += PLOT_DATA_RATE_PUBLISH_INTERVAL;
-    plotSpeed->graph(0)->addData(key, link->readAndResetReceivedBytes() + proc->readAndResetReceivedBytes());
-    plotSpeed->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
-    plotSpeed->graph(0)->rescaleAxes();
-    plotSpeed->replot();
+    plotDataRate->graph(0)->addData(key, link->readAndResetReceivedBytes() + proc->readAndResetReceivedBytes());
+    plotDataRate->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
+    plotDataRate->graph(0)->rescaleAxes();
+    plotDataRate->replot();
 }
 
 void GroundStation::realtimeDataSlot(){
