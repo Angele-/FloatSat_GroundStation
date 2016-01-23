@@ -46,6 +46,14 @@ GroundStation::GroundStation(QWidget *parent) :
     plotCurrent->addGraph(); // red line
     plotCurrent->graph(1)->setPen(QPen(Qt::red));
     plotCurrent->graph(1)->setAntialiasedFill(false);
+    plotCurrent->xAxis->setLabel("Seconds");
+    plotCurrent->yAxis->setLabel("Amperes");
+    QCPPlotTitle *title = new QCPPlotTitle(plotCurrent, "Current");
+    title->setFont(ui->label_72->font());
+    plotCurrent->plotLayout()->insertRow(0);
+    plotCurrent->plotLayout()->addElement(0, 0, title);
+    plotCurrent->plotLayout()->setRowSpacing(0);
+    plotCurrent->plotLayout()->setColumnSpacing(0);
 
     plotVoltage = new QCustomPlot();
     ui->plotLayout->addWidget(plotVoltage, 0, 1);
@@ -55,30 +63,71 @@ GroundStation::GroundStation(QWidget *parent) :
     plotVoltage->addGraph(); // red line
     plotVoltage->graph(1)->setPen(QPen(Qt::red));
     plotVoltage->graph(1)->setAntialiasedFill(false);
+    plotVoltage->xAxis->setLabel("Seconds");
+    plotVoltage->yAxis->setLabel("Volts");
+    title = new QCPPlotTitle(plotVoltage, "Voltage");
+    title->setFont(ui->label_72->font());
+    plotVoltage->plotLayout()->insertRow(0);
+    plotVoltage->plotLayout()->addElement(0, 0, title);
+    plotVoltage->plotLayout()->setRowSpacing(0);
+    plotVoltage->plotLayout()->setColumnSpacing(0);
 
     plotPWM = new QCustomPlot();
     ui->plotLayout->addWidget(plotPWM, 1, 0);
     plotPWM->addGraph(); // black line
     plotPWM->graph(0)->setPen(QPen(Qt::black));
     plotPWM->graph(0)->setAntialiasedFill(false);
+    plotPWM->xAxis->setLabel("Seconds");
+    plotPWM->yAxis->setLabel("%");
+    title = new QCPPlotTitle(plotPWM, "Duty cycle");
+    title->setFont(ui->label_72->font());
+    plotPWM->plotLayout()->insertRow(0);
+    plotPWM->plotLayout()->addElement(0, 0, title);
+    plotPWM->plotLayout()->setRowSpacing(0);
+    plotPWM->plotLayout()->setColumnSpacing(0);
 
     plotLight = new QCustomPlot();
     ui->plotLayout->addWidget(plotLight, 1, 1);
     plotLight->addGraph(); // black line
     plotLight->graph(0)->setPen(QPen(Qt::black));
     plotLight->graph(0)->setAntialiasedFill(false);
+    plotLight->xAxis->setLabel("Seconds");
+    plotLight->yAxis->setLabel(" ");
+    title = new QCPPlotTitle(plotLight, "Light");
+    title->setFont(ui->label_72->font());
+    plotLight->plotLayout()->insertRow(0);
+    plotLight->plotLayout()->addElement(0, 0, title);
+    plotLight->plotLayout()->setRowSpacing(0);
+    plotLight->plotLayout()->setColumnSpacing(0);
 
     plotSpeed = new QCustomPlot();
     ui->plotLayout->addWidget(plotSpeed, 2, 0);
     plotSpeed->addGraph(); // black line
     plotSpeed->graph(0)->setPen(QPen(Qt::black));
     plotSpeed->graph(0)->setAntialiasedFill(false);
+    plotSpeed->xAxis->setLabel("Seconds");
+    plotSpeed->yAxis->setLabel("Radians / second");
+    title = new QCPPlotTitle(plotSpeed, "Speed");
+    title->setFont(ui->label_72->font());
+    plotSpeed->plotLayout()->insertRow(0);
+    plotSpeed->plotLayout()->addElement(0, 0, title);
+    plotSpeed->plotLayout()->setRowSpacing(0);
+    plotSpeed->plotLayout()->setColumnSpacing(0);
 
     plotDataRate = new QCustomPlot();
     ui->plotLayout->addWidget(plotDataRate, 2, 1);
     plotDataRate->addGraph(); // black line
     plotDataRate->graph(0)->setPen(QPen(Qt::black));
     plotDataRate->graph(0)->setAntialiasedFill(false);
+    plotDataRate->yAxis->setRange(0, 1024);
+    plotDataRate->xAxis->setLabel("Seconds");
+    plotDataRate->yAxis->setLabel("Bytes");
+    title = new QCPPlotTitle(plotDataRate, "Data rate");
+    title->setFont(ui->label_72->font());
+    plotDataRate->plotLayout()->insertRow(0);
+    plotDataRate->plotLayout()->addElement(0, 0, title);
+    plotDataRate->plotLayout()->setRowSpacing(0);
+    plotDataRate->plotLayout()->setColumnSpacing(0);
 
     connect(&dataRateTimer, SIGNAL(timeout()), this, SLOT(doPlotDataRate()));
     dataRateTimer.start(PLOT_DATA_RATE_PUBLISH_INTERVAL * 1000);
@@ -93,7 +142,7 @@ void GroundStation::doPlotDataRate(){
     key += PLOT_DATA_RATE_PUBLISH_INTERVAL;
     plotDataRate->graph(0)->addData(key, link->readAndResetReceivedBytes() + proc->readAndResetReceivedBytes());
     plotDataRate->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
-    plotDataRate->graph(0)->rescaleAxes();
+    //plotDataRate->graph(0)->rescaleAxes();
     plotDataRate->replot();
 }
 

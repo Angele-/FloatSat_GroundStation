@@ -6,6 +6,7 @@ ImageProcessor::ImageProcessor(QObject *parent) :
 {
     serial = new QSerialPort(this);
     serialInfo = new QSerialPortInfo();
+    receivedBytes = 0;
 }
 
 void ImageProcessor::init(){
