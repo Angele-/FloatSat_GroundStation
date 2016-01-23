@@ -142,7 +142,7 @@ void GroundStation::doPlotDataRate(){
     key += PLOT_DATA_RATE_PUBLISH_INTERVAL;
     plotDataRate->graph(0)->addData(key, link->readAndResetReceivedBytes() + proc->readAndResetReceivedBytes());
     plotDataRate->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
-    //plotDataRate->graph(0)->rescaleAxes();
+    plotDataRate->graph(0)->rescaleKeyAxis();
     plotDataRate->replot();
 }
 
