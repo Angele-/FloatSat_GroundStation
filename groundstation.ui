@@ -140,7 +140,7 @@
      <rect>
       <x>120</x>
       <y>290</y>
-      <width>150</width>
+      <width>160</width>
       <height>130</height>
      </rect>
     </property>
@@ -271,7 +271,7 @@
      <rect>
       <x>120</x>
       <y>30</y>
-      <width>150</width>
+      <width>160</width>
       <height>150</height>
      </rect>
     </property>
@@ -383,9 +383,9 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>480</x>
       <y>330</y>
-      <width>160</width>
+      <width>180</width>
       <height>110</height>
      </rect>
     </property>
@@ -416,9 +416,9 @@
    <widget class="QGroupBox" name="groupBox_SolarArrays">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>480</x>
       <y>30</y>
-      <width>160</width>
+      <width>180</width>
       <height>80</height>
      </rect>
     </property>
@@ -515,9 +515,9 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>290</x>
       <y>220</y>
-      <width>160</width>
+      <width>180</width>
       <height>220</height>
      </rect>
     </property>
@@ -642,7 +642,7 @@
      <rect>
       <x>10</x>
       <y>500</y>
-      <width>600</width>
+      <width>650</width>
       <height>180</height>
      </rect>
     </property>
@@ -690,9 +690,9 @@
    <widget class="QGroupBox" name="groupBox_PWM">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>290</x>
       <y>440</y>
-      <width>330</width>
+      <width>370</width>
       <height>60</height>
      </rect>
     </property>
@@ -812,9 +812,9 @@
    <widget class="QGroupBox" name="groupBox_Batteries">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>290</x>
       <y>30</y>
-      <width>160</width>
+      <width>180</width>
       <height>80</height>
      </rect>
     </property>
@@ -911,9 +911,9 @@
    <widget class="QGroupBox" name="groupBox_Accelerometer">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>290</x>
       <y>110</y>
-      <width>160</width>
+      <width>180</width>
       <height>110</height>
      </rect>
     </property>
@@ -1039,9 +1039,9 @@
    <widget class="QGroupBox" name="groupBox_Gyroscope">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>480</x>
       <y>110</y>
-      <width>160</width>
+      <width>180</width>
       <height>110</height>
      </rect>
     </property>
@@ -1173,9 +1173,9 @@
    <widget class="QGroupBox" name="groupBox_SensorFusion">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>480</x>
       <y>220</y>
-      <width>160</width>
+      <width>180</width>
       <height>110</height>
      </rect>
     </property>
@@ -1470,7 +1470,7 @@
      <rect>
       <x>120</x>
       <y>180</y>
-      <width>150</width>
+      <width>160</width>
       <height>110</height>
      </rect>
     </property>
@@ -1555,7 +1555,7 @@
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>280</x>
       <y>40</y>
       <width>10</width>
       <height>450</height>
@@ -1568,9 +1568,9 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>670</x>
       <y>40</y>
-      <width>720</width>
+      <width>670</width>
       <height>640</height>
      </rect>
     </property>
