@@ -233,8 +233,11 @@ void GroundStation::readFromLink(){
         plotSpeed->replot();
         break;
     }
-    case PayloadSensor1Type:{
-        PayloadSensor1 ps(payload);
+    case PayloadMeasurementsType:{
+        PayloadMeasurements pm(payload);
+        ui->lcdBatteryCurrent->display(QString("%1").arg(pm.batteryCurrent, 6, 'f', 1, '0'));
+        ui->lcdBatteryVoltage->display(QString("%1").arg(pm.batteryVoltage, 6, 'f', 1, '0'));
+        ui->lcdPanelVoltage->display(QString("%1").arg(pm.panelVoltage, 6, 'f', 1, '0'));
         break;
     }
     case PayloadSensor2Type:{

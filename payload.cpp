@@ -50,13 +50,18 @@ PayloadSensorXM::PayloadSensorXM(const PayloadSatellite payload):roll(-qInf()), 
     yaw = payload.userDataFloat[2];
 }
 
-PayloadSensor1::PayloadSensor1(const PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
-    if(payload.userDataLen != sizeof(PayloadSensor1) || payload.topic != PayloadSensor1Type)
+PayloadMeasurements::PayloadMeasurements(const PayloadSatellite payload):batteryCurrent(-qInf()), batteryVoltage(-qInf()), panelVoltage(-qInf()), motorCurrent(-qInf()), servo1(-qInf()), servo2(-qInf()), servo3(-qInf()), servo4(-qInf()){
+    if(payload.userDataLen != sizeof(PayloadMeasurements) || payload.topic != PayloadMeasurementsType)
         return;
 
-    x = payload.userDataFloat[0];
-    y = payload.userDataFloat[1];
-    z = payload.userDataFloat[2];
+    batteryCurrent = payload.userDataFloat[0];
+    batteryVoltage = payload.userDataFloat[1];
+    panelVoltage = payload.userDataFloat[2];
+    motorCurrent = payload.userDataFloat[3];
+    servo1 = payload.userDataFloat[4];
+    servo2 = payload.userDataFloat[5];
+    servo3 = payload.userDataFloat[6];
+    servo4 = payload.userDataFloat[7];
 }
 
 PayloadSensor2::PayloadSensor2(const PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){

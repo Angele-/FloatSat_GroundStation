@@ -432,7 +432,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLCDNumber" name="lcdSolarArraysVoltage">
+      <widget class="QLCDNumber" name="lcdPanelVoltage">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -450,7 +450,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLCDNumber" name="lcdSolarArraysCurrent">
+      <widget class="QLCDNumber" name="lcdPanelCurrent">
        <property name="font">
         <font>
          <pointsize>8</pointsize>

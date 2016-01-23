@@ -16,7 +16,7 @@ enum PayloadType{
     PayloadSensorXMType = 1004,
     PayloadCameraPropertiesType = 1005,
     PayloadCameraPixelType = 1006,
-    PayloadSensor1Type = 1011,
+    PayloadMeasurementsType = 1007,
     PayloadSensor2Type = 1012,
     PayloadSensor3Type = 1013,
 };
@@ -73,11 +73,14 @@ struct PayloadSensorXM{
     PayloadSensorXM(const PayloadSatellite payload);
 };
 
-struct PayloadSensor1{
-    float x;
-    float y;
-    float z;
-    PayloadSensor1(const PayloadSatellite payload);
+struct PayloadMeasurements{
+    float batteryCurrent, batteryVoltage;
+    float panelVoltage;
+    float motorCurrent;
+    float servo1, servo2, servo3, servo4;
+
+    PayloadMeasurements():batteryCurrent(0), batteryVoltage(0), panelVoltage(0), motorCurrent(0), servo1(0), servo2(0), servo3(0), servo4(0){}
+    PayloadMeasurements(const PayloadSatellite payload);
 };
 
 struct PayloadSensor2{
