@@ -85,7 +85,7 @@ GroundStation::GroundStation(QWidget *parent) :
 
     QTimer *dataTimer = new QTimer();
     connect(dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    dataTimer->start(0);
+    dataTimer->start(10);
 }
 
 void GroundStation::doPlotDataRate(){
