@@ -113,7 +113,6 @@ void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context
         str += "\n";
     }
     str += msg;
-    str += "\n";
 
     QPlainTextEdit *console = ui_static->logConsole;
     if(type == QtDebugMsg){
