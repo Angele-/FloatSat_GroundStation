@@ -200,32 +200,32 @@ void GroundStation::on_pushButton_Burn_clicked()
 
 void GroundStation::on_pushButton_Velocity_Mode_clicked()
 {
-
+    ui->pushButton_Velocity_Mode->setDown(true);
 }
 
 void GroundStation::on_pushButton_Standby_Mode_clicked()
 {
-
+    ui->pushButton_Standby_Mode->setDown(true);
 }
 
 void GroundStation::on_pushButton_Position_Mode_clicked()
 {
-
+    ui->pushButton_Position_Mode->setDown(true);
 }
 
 void GroundStation::on_pushButton_RDV_Mode_clicked()
 {
-
+    ui->pushButton_RDV_Mode->setDown(true);
 }
 
 void GroundStation::on_pushButton_Deployment_Mode_clicked()
 {
-
+    ui->pushButton_Deployment_Mode->setDown(true);
 }
 
 void GroundStation::on_pushButton_Docking_Mode_clicked()
 {
-
+    ui->pushButton_Docking_Mode->setDown(true);
 }
 
 void GroundStation::sendTelecommand()
@@ -302,4 +302,23 @@ void GroundStation::onSetImgSizeLbl(QString text){
 
 void GroundStation::onUpdatePicture(){
     ui->picture->setPixmap(QPixmap::fromImage(proc->getImage()));
+}
+
+void GroundStation::on_lineEdit_Speed_returnPressed()
+{
+    QString str = ui->lineEdit_Speed->text();
+    float command = str.toFloat();
+
+    Telecommand tc(command, 1, 2, 5);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_lineEdit_Angle_returnPressed()
+{
+    QString str = ui->lineEdit_Angle->text();
+    float command = str.toFloat();
+    command *= M_PI / 180.0f;
+
+    Telecommand tc(command, 1, 2, 4);
+    link->write(3001, tc);
 }

@@ -1589,7 +1589,7 @@
       <number>9</number>
      </property>
      <item>
-      <widget class="QLineEdit" name="lineEdit_4">
+      <widget class="QLineEdit" name="lineEdit_Speed">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -1634,7 +1634,7 @@
       <number>9</number>
      </property>
      <item>
-      <widget class="QLineEdit" name="lineEdit_5">
+      <widget class="QLineEdit" name="lineEdit_Angle">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
