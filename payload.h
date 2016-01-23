@@ -74,12 +74,15 @@ struct PayloadSensorXM{
 };
 
 struct PayloadMeasurements{
-    float batteryCurrent, batteryVoltage;
-    float panelVoltage;
+    float batteryCurrent;
     float motorCurrent;
     float servo1, servo2, servo3, servo4;
+    float batteryVoltage;
+    float panelVoltage;
+    float panelCurrent;
 
-    PayloadMeasurements():batteryCurrent(0), batteryVoltage(0), panelVoltage(0), motorCurrent(0), servo1(0), servo2(0), servo3(0), servo4(0){}
+
+    PayloadMeasurements():batteryCurrent(0), motorCurrent(0),  servo1(0), servo2(0), servo3(0), servo4(0), batteryVoltage(0), panelVoltage(0), panelCurrent(0){}
     PayloadMeasurements(const PayloadSatellite payload);
 };
 
