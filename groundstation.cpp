@@ -133,6 +133,7 @@ void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context
         console = ui_static->debugConsole;
     }
 
+    str.replace("\"", "");
     str.replace("\\t", "\t");
     str.replace("\\r", "\r");
     str.replace("\\n", "\n");
