@@ -29,6 +29,7 @@ GroundStation::GroundStation(QWidget *parent) :
     link->addTopic(PayloadCounterType);
     link->addTopic(PayloadCameraPropertiesType);
     link->addTopic(PayloadCameraPixelType);
+    link->addTopic(PayloadMeasurementsType);
     connect(link, SIGNAL(readReady()), this, SLOT(readFromLink()));
 
     proc = new ImageProcessor(this);        //Serial Image Reader
