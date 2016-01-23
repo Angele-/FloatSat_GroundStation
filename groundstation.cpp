@@ -244,6 +244,15 @@ void GroundStation::readFromLink(){
         plotCurrent->graph(1)->rescaleKeyAxis();
         plotCurrent->graph(1)->rescaleValueAxis(true);
         plotCurrent->replot();
+
+        plotVoltage->graph(0)->addData(key, pm.batteryVoltage);
+        plotVoltage->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotVoltage->graph(1)->addData(key, pm.panelVoltage);
+        plotVoltage->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotVoltage->graph(1)->rescaleKeyAxis();
+        plotVoltage->graph(1)->rescaleValueAxis(true);
+        plotVoltage->replot();
+
         break;
     }
     default:
