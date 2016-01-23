@@ -17,15 +17,11 @@ enum PayloadType{
     PayloadCameraPropertiesType = 1005,
     PayloadCameraPixelType = 1006,
     PayloadMeasurementsType = 1007,
-    PayloadSensor2Type = 1012,
-    PayloadSensor3Type = 1013,
 };
 
 struct PayloadSensorFusion;
-struct PayloadSensor1;
-struct PayloadSensor2;
-struct PayloadSensor3;
 struct PayloadLight;
+struct PayloadMeasurements;
 
 struct PayloadSatellite{
     quint16 checksum;
@@ -46,9 +42,6 @@ struct PayloadSatellite{
     PayloadSatellite();
     PayloadSatellite(const QByteArray &buffer);
     PayloadSatellite(const PayloadSensorFusion payload);
-    PayloadSatellite(const PayloadSensor1 payload);
-    PayloadSatellite(const PayloadSensor2 payload);
-    PayloadSatellite(const PayloadSensor3 payload);
     PayloadSatellite(const PayloadLight payload);
 };
 
@@ -80,24 +73,7 @@ struct PayloadMeasurements{
     float batteryVoltage;
     float panelVoltage;
     float panelCurrent;
-
-
-    PayloadMeasurements():batteryCurrent(0), motorCurrent(0),  servo1(0), servo2(0), servo3(0), servo4(0), batteryVoltage(0), panelVoltage(0), panelCurrent(0){}
     PayloadMeasurements(const PayloadSatellite payload);
-};
-
-struct PayloadSensor2{
-    float x;
-    float y;
-    float z;
-    PayloadSensor2(const PayloadSatellite payload);
-};
-
-struct PayloadSensor3{
-    float x;
-    float y;
-    float z;
-    PayloadSensor3(const PayloadSatellite payload);
 };
 
 struct PayloadLight{

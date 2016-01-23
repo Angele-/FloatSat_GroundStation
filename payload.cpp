@@ -50,36 +50,19 @@ PayloadSensorXM::PayloadSensorXM(const PayloadSatellite payload):roll(-qInf()), 
     yaw = payload.userDataFloat[2];
 }
 
-PayloadMeasurements::PayloadMeasurements(const PayloadSatellite payload):batteryCurrent(-qInf()), batteryVoltage(-qInf()), panelVoltage(-qInf()), motorCurrent(-qInf()), servo1(-qInf()), servo2(-qInf()), servo3(-qInf()), servo4(-qInf()){
+PayloadMeasurements::PayloadMeasurements(const PayloadSatellite payload):batteryCurrent(-qInf()), motorCurrent(-qInf()), servo1(-qInf()), servo2(-qInf()), servo3(-qInf()), servo4(-qInf()), batteryVoltage(-qInf()), panelVoltage(-qInf()), panelCurrent(-qInf()){
     if(payload.userDataLen != sizeof(PayloadMeasurements) || payload.topic != PayloadMeasurementsType)
         return;
 
     batteryCurrent = payload.userDataFloat[0];
-    batteryVoltage = payload.userDataFloat[1];
-    panelVoltage = payload.userDataFloat[2];
-    motorCurrent = payload.userDataFloat[3];
-    servo1 = payload.userDataFloat[4];
-    servo2 = payload.userDataFloat[5];
-    servo3 = payload.userDataFloat[6];
-    servo4 = payload.userDataFloat[7];
-}
-
-PayloadSensor2::PayloadSensor2(const PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
-    if(payload.userDataLen != sizeof(PayloadSensor2) || payload.topic != PayloadSensor2Type)
-        return;
-
-    x = payload.userDataFloat[0];
-    y = payload.userDataFloat[1];
-    z = payload.userDataFloat[2];
-}
-
-PayloadSensor3::PayloadSensor3(const PayloadSatellite payload):x(-qInf()), y(-qInf()), z(-qInf()){
-    if(payload.userDataLen != sizeof(PayloadSensor3) || payload.topic != PayloadSensor3Type)
-        return;
-
-    x = payload.userDataFloat[0];
-    y = payload.userDataFloat[1];
-    z = payload.userDataFloat[2];
+    motorCurrent = payload.userDataFloat[1];
+    servo1 = payload.userDataFloat[2];
+    servo2 = payload.userDataFloat[3];
+    servo3 = payload.userDataFloat[4];
+    servo4 = payload.userDataFloat[5];
+    batteryVoltage = payload.userDataFloat[6];
+    panelVoltage = payload.userDataFloat[7];
+    panelCurrent = payload.userDataFloat[8];
 }
 
 PayloadLight::PayloadLight(const PayloadSatellite payload):light(0){

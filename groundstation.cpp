@@ -239,14 +239,7 @@ void GroundStation::readFromLink(){
         ui->lcdBatteryCurrent->display(QString("%1").arg(pm.batteryCurrent, 6, 'f', 1, '0'));
         ui->lcdBatteryVoltage->display(QString("%1").arg(pm.batteryVoltage, 6, 'f', 1, '0'));
         ui->lcdPanelVoltage->display(QString("%1").arg(pm.panelVoltage, 6, 'f', 1, '0'));
-        break;
-    }
-    case PayloadSensor2Type:{
-        PayloadSensor2 ps(payload);
-        break;
-    }
-    case PayloadSensor3Type:{
-        PayloadSensor3 ps(payload);
+        ui->lcdPanelCurrent->display(QString("%1").arg(pm.panelCurrent, 6, 'f', 1, '0'));
         break;
     }
     default:
