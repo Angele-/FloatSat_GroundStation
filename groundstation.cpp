@@ -320,3 +320,9 @@ void GroundStation::on_lineEdit_Angle_returnPressed()
     Telecommand tc(command, 1, 2, 4);
     link->write(3001, tc);
 }
+
+void GroundStation::on_pushButton_clearConsole_clicked()
+{
+    ui->debugConsole->clear();
+    ui->logConsole->clear();
+}
