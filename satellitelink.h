@@ -19,6 +19,7 @@ class SatelliteLink : public QObject
     QSet<quint32> topics;
     QQueue<PayloadSatellite> payloads;
     qint64 receivedBytes;
+    qint64 sentBytes;
 signals:
     void readReady();
 
@@ -32,6 +33,7 @@ public:
     int write(quint32 topicId, const Telecommand &telecommand);
     PayloadSatellite read();
     qint64 readAndResetReceivedBytes();
+    qint64 readAndResetSentBytes();
     bool isBound();
     bool isReadReady();
 };

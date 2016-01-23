@@ -3,7 +3,7 @@
 #include <QDateTime>
 #include <QtEndian>
 
-SatelliteLink::SatelliteLink(QObject *parent, bool checkChecksum) : QObject(parent), localAddress("0.0.0.0"), remoteAddress("192.168.1.255"), port(12345), socket(this), bound(false), checkChecksum(checkChecksum), receivedBytes(0){
+SatelliteLink::SatelliteLink(QObject *parent, bool checkChecksum) : QObject(parent), localAddress("0.0.0.0"), remoteAddress("192.168.1.255"), port(12345), socket(this), bound(false), checkChecksum(checkChecksum), receivedBytes(0), sentBytes(0){
     qDebug() << "Binding to IP" << localAddress.toString() << "and port" << port << "\n";
     if(socket.bind(localAddress, port)){
         qDebug() << "Bind successful!\n";
@@ -100,6 +100,12 @@ PayloadSatellite SatelliteLink::read(){
 qint64 SatelliteLink::readAndResetReceivedBytes(){
     unsigned ret = receivedBytes;
     receivedBytes = 0;
+    return ret;
+}
+
+qint64 SatelliteLink::readAndResetSentBytes(){
+    unsigned ret = sentBytes;
+    sentBytes = 0;
     return ret;
 }
 
