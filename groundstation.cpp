@@ -156,6 +156,7 @@ GroundStation::GroundStation(QWidget *parent) :
 void GroundStation::doPlotDataRate(){
     static double key = 0;
     key += PLOT_DATA_RATE_PUBLISH_INTERVAL;
+    plotDataRate->yAxis->setRange(0, plotDataRate->yAxis->range().upper - 5);
     plotDataRate->graph(0)->addData(key, (proc->readAndResetReceivedBytes()) * 1.0 / PLOT_DATA_RATE_PUBLISH_INTERVAL);
     plotDataRate->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
     plotDataRate->graph(0)->rescaleValueAxis(true);
@@ -262,16 +263,20 @@ void GroundStation::readFromLink(){
 
         static double key = 0;
         key += PLOT_PUBLISH_INTERVAL;
+        plotCurrent->yAxis->setRange(0, plotCurrent->yAxis->range().upper - 3);
         plotCurrent->graph(0)->addData(key, pm.batteryCurrent);
         plotCurrent->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotCurrent->graph(0)->rescaleValueAxis(true);
         plotCurrent->graph(1)->addData(key, pm.panelCurrent);
         plotCurrent->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotCurrent->graph(1)->rescaleKeyAxis();
         plotCurrent->graph(1)->rescaleValueAxis(true);
         plotCurrent->replot();
 
+        plotVoltage->yAxis->setRange(0, plotVoltage->yAxis->range().upper - 3);
         plotVoltage->graph(0)->addData(key, pm.batteryVoltage);
         plotVoltage->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotVoltage->graph(0)->rescaleValueAxis(true);
         plotVoltage->graph(1)->addData(key, pm.panelVoltage);
         plotVoltage->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotVoltage->graph(1)->rescaleKeyAxis();
