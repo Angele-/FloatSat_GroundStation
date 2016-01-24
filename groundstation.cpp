@@ -78,7 +78,7 @@ GroundStation::GroundStation(QWidget *parent) :
     plotVoltage->plotLayout()->setRowSpacing(0);
     plotVoltage->plotLayout()->setColumnSpacing(0);
     plotVoltage->legend->setVisible(true);
-    plotVoltage->legend->setFont(QFont("Segoe UI symbol",7));
+    plotVoltage->legend->setFont(QFont(ui->label_72->font().family(),7));
     plotVoltage->legend->setIconSize(15, 10);
 
 
@@ -123,8 +123,12 @@ GroundStation::GroundStation(QWidget *parent) :
 
     plotDataRate = new QCustomPlot();
     ui->plotLayout->addWidget(plotDataRate, 2, 1);
-    plotDataRate->addGraph(); // black line
-    plotDataRate->graph(0)->setPen(QPen(Qt::black));
+    plotDataRate->addGraph(); // blue line
+    plotDataRate->graph(0)->setPen(QPen(Qt::blue));
+    plotDataRate->graph(0)->setName("Bluetooth");
+    plotDataRate->addGraph(); // red line
+    plotDataRate->graph(1)->setPen(QPen(Qt::red));
+    plotDataRate->graph(1)->setName("WiFi");
     plotDataRate->xAxis->setLabel("Seconds");
     plotDataRate->yAxis->setLabel("Bytes / Second");
     title = new QCPPlotTitle(plotDataRate, "Data rate");
@@ -133,6 +137,9 @@ GroundStation::GroundStation(QWidget *parent) :
     plotDataRate->plotLayout()->addElement(0, 0, title);
     plotDataRate->plotLayout()->setRowSpacing(0);
     plotDataRate->plotLayout()->setColumnSpacing(0);
+    plotDataRate->legend->setVisible(true);
+    plotDataRate->legend->setFont(QFont(ui->label_72->font().family(),7));
+    plotDataRate->legend->setIconSize(15, 10);
 
     connect(&dataRateTimer, SIGNAL(timeout()), this, SLOT(doPlotDataRate()));
     dataRateTimer.start(PLOT_DATA_RATE_PUBLISH_INTERVAL * 1000);
@@ -145,10 +152,13 @@ GroundStation::GroundStation(QWidget *parent) :
 void GroundStation::doPlotDataRate(){
     static double key = 0;
     key += PLOT_DATA_RATE_PUBLISH_INTERVAL;
-    plotDataRate->graph(0)->addData(key, (link->readAndResetReceivedBytes() + link->readAndResetSentBytes() + proc->readAndResetReceivedBytes()) * 1.0 / PLOT_DATA_RATE_PUBLISH_INTERVAL);
+    plotDataRate->graph(0)->addData(key, (proc->readAndResetReceivedBytes()) * 1.0 / PLOT_DATA_RATE_PUBLISH_INTERVAL);
     plotDataRate->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
-    plotDataRate->graph(0)->rescaleKeyAxis();
     plotDataRate->graph(0)->rescaleValueAxis(true);
+    plotDataRate->graph(1)->addData(key, (link->readAndResetReceivedBytes() + link->readAndResetSentBytes())* 1.0 / PLOT_DATA_RATE_PUBLISH_INTERVAL);
+    plotDataRate->graph(1)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
+    plotDataRate->graph(1)->rescaleKeyAxis();
+    plotDataRate->graph(1)->rescaleValueAxis(true);
     plotDataRate->replot();
 }
 
