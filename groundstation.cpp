@@ -55,13 +55,20 @@ GroundStation::GroundStation(QWidget *parent) :
     plotCurrent->plotLayout()->addElement(0, 0, title);
     plotCurrent->plotLayout()->setRowSpacing(0);
     plotCurrent->plotLayout()->setColumnSpacing(0);
+    plotCurrent->legend->setVisible(true);
+    plotCurrent->legend->setFont(QFont(ui->label_72->font().family(),7));
+    plotCurrent->legend->setIconSize(15, 10);
+
+    //plotCurrent->legend->rowCount()->
 
     plotVoltage = new QCustomPlot();
     ui->plotLayout->addWidget(plotVoltage, 0, 1);
     plotVoltage->addGraph(); // blue line
     plotVoltage->graph(0)->setPen(QPen(Qt::blue));
+    plotVoltage->graph(0)->setName("Batteries");
     plotVoltage->addGraph(); // red line
     plotVoltage->graph(1)->setPen(QPen(Qt::red));
+    plotVoltage->graph(1)->setName("Solar Panels");
     plotVoltage->xAxis->setLabel("Seconds");
     plotVoltage->yAxis->setLabel("Volts");
     title = new QCPPlotTitle(plotVoltage, "Voltage");
@@ -70,6 +77,10 @@ GroundStation::GroundStation(QWidget *parent) :
     plotVoltage->plotLayout()->addElement(0, 0, title);
     plotVoltage->plotLayout()->setRowSpacing(0);
     plotVoltage->plotLayout()->setColumnSpacing(0);
+    plotVoltage->legend->setVisible(true);
+    plotVoltage->legend->setFont(QFont("Segoe UI symbol",7));
+    plotVoltage->legend->setIconSize(15, 10);
+
 
     plotPWM = new QCustomPlot();
     ui->plotLayout->addWidget(plotPWM, 1, 0);
