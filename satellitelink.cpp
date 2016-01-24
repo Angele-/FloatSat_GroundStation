@@ -12,15 +12,10 @@ SatelliteLink::SatelliteLink(QObject *parent, bool checkChecksum) : QObject(pare
         qInfo() << "Bind unsuccessful!\n";
         return;
     }
-    connect(&timer, SIGNAL(timeout()), this, SIGNAL(readReady()));
-    timer.start(0);
-    //connect(&socket, SIGNAL(readyRead()), this, SIGNAL(readReady()));
+    connect(&socket, SIGNAL(readyRead()), this, SIGNAL(readReady()));
 }
 
 PayloadSatellite SatelliteLink::read(){
-    if(!socket.hasPendingDatagrams())
-        return PayloadSatellite();
-
     QByteArray buffer(1023, 0x00);
     receivedBytes += socket.readDatagram(buffer.data(), buffer.size());
 
