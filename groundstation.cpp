@@ -97,6 +97,10 @@ GroundStation::GroundStation(QWidget *parent) :
 
     plotLight = new QCustomPlot();
     ui->plotLayout->addWidget(plotLight, 1, 1);
+    plotLight->yAxis->setScaleType(QCPAxis::stLogarithmic);
+    plotLight->yAxis->setScaleLogBase(10);
+    plotLight->yAxis->setSubTickCount(2);
+    plotLight->yAxis->setRange(1, 40000);
     plotLight->addGraph(); // black line
     plotLight->graph(0)->setPen(QPen(Qt::black));
     plotLight->xAxis->setLabel("Seconds");
@@ -245,7 +249,7 @@ void GroundStation::readFromLink(){
         key += PLOT_PUBLISH_INTERVAL;
         plotLight->graph(0)->addData(key, pl.light);
         plotLight->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-        plotLight->graph(0)->rescaleAxes();
+        plotLight->graph(0)->rescaleKeyAxis();
         plotLight->replot();
         break;
     }
