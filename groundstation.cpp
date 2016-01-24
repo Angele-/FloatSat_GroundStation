@@ -10,7 +10,7 @@
 
 #define PLOT_PUBLISH_INTERVAL 0.1 // seconds
 #define PLOT_VISIBLE_INTERVAL 7.5 // seconds
-#define PLOT_DATA_RATE_PUBLISH_INTERVAL 0.2 // seconds
+#define PLOT_DATA_RATE_PUBLISH_INTERVAL 0.1 // seconds
 #define PLOT_DATA_RATE_VISIBLE_INTERVAL 15 // seconds
 
 Ui::GroundStation *GroundStation::ui_static = NULL;
