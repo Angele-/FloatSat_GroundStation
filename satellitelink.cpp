@@ -12,10 +12,10 @@ SatelliteLink::SatelliteLink(QObject *parent, bool checkChecksum) : QObject(pare
         qInfo() << "Bind unsuccessful!\n";
         return;
     }
-    connect(&socket, SIGNAL(readyRead()), this, SLOT(readFromSocket()));
+    connect(&socket, SIGNAL(readyRead()), this, SIGNAL(readReady()));
 }
 
-void SatelliteLink::readFromSocket(){
+PayloadSatellite SatelliteLink::read(){
     QByteArray buffer(1023, 0x00);
     receivedBytes += socket.readDatagram(buffer.data(), buffer.size());
 
@@ -37,10 +37,10 @@ void SatelliteLink::readFromSocket(){
         checksum &= 0xFFFF;
     }
 
-    if((!checkChecksum || checksum == payload.checksum) && topics.contains(payload.topic)){
-        payloads.enqueue(payload);
-        emit readReady();
-    }
+    if((!checkChecksum || checksum == payload.checksum) && topics.contains(payload.topic))
+        return payload;
+    else
+        return PayloadSatellite();
 }
 
 void SatelliteLink::addTopic(PayloadType topicId){
@@ -92,13 +92,6 @@ int SatelliteLink::write(quint32 topicId, const Telecommand &telecommand){
     return write(topicId, buffer);
 }
 
-PayloadSatellite SatelliteLink::read(){
-    if(!payloads.size())
-        return PayloadSatellite();
-
-    return payloads.dequeue();
-}
-
 qint64 SatelliteLink::readAndResetReceivedBytes(){
     unsigned ret = receivedBytes;
     receivedBytes = 0;
@@ -113,8 +106,4 @@ qint64 SatelliteLink::readAndResetSentBytes(){
 
 bool SatelliteLink::isBound(){
     return bound;
-}
-
-bool SatelliteLink::isReadReady(){
-    return payloads.size();
 }

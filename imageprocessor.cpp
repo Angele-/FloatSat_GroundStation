@@ -26,7 +26,7 @@ void ImageProcessor::openSerialPort(){
         qDebug() << "Port: " << (*i).portName();
     }
     #ifdef Q_OS_WIN
-        serial->setPortName("COM9");
+        serial->setPortName("COM8");
     #else
         serial->setPortName("cu.FloatSat-10-SPPDev");
     #endif
