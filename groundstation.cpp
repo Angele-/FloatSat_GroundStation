@@ -243,10 +243,10 @@ void GroundStation::readFromLink(){
 
         static double key = 0;
         key += PLOT_PUBLISH_INTERVAL;
-        plotSpeed->graph(0)->addData(key, pl.light);
-        plotSpeed->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-        plotSpeed->graph(0)->rescaleAxes();
-        plotSpeed->replot();
+        plotLight->graph(0)->addData(key, pl.light);
+        plotLight->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotLight->graph(0)->rescaleAxes();
+        plotLight->replot();
         break;
     }
     case PayloadMeasurementsType:{
