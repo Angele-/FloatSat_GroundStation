@@ -4,6 +4,7 @@
 #include <QUdpSocket>
 #include <QQueue>
 #include <QSet>
+#include <QTimer>
 #include "payload.h"
 
 class SatelliteLink : public QObject
@@ -19,6 +20,7 @@ class SatelliteLink : public QObject
     QSet<quint32> topics;
     qint64 receivedBytes;
     qint64 sentBytes;
+    QTimer timer;
 signals:
     void readReady();
 
