@@ -17,14 +17,10 @@ class SatelliteLink : public QObject
     bool bound;
     bool checkChecksum;
     QSet<quint32> topics;
-    QQueue<PayloadSatellite> payloads;
     qint64 receivedBytes;
     qint64 sentBytes;
 signals:
     void readReady();
-
-private slots:
-    void readFromSocket();
 
 public:
     explicit SatelliteLink(QObject *parent = 0, bool checkChecksum = true);
@@ -35,7 +31,6 @@ public:
     qint64 readAndResetReceivedBytes();
     qint64 readAndResetSentBytes();
     bool isBound();
-    bool isReadReady();
 };
 
 #endif // SATELLITELINK_H

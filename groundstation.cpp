@@ -126,7 +126,7 @@ GroundStation::GroundStation(QWidget *parent) :
     plotDataRate->addGraph(); // black line
     plotDataRate->graph(0)->setPen(QPen(Qt::black));
     plotDataRate->xAxis->setLabel("Seconds");
-    plotDataRate->yAxis->setLabel("Bytes");
+    plotDataRate->yAxis->setLabel("Bytes / Second");
     title = new QCPPlotTitle(plotDataRate, "Data rate");
     title->setFont(ui->label_72->font());
     plotDataRate->plotLayout()->insertRow(0);
@@ -139,13 +139,13 @@ GroundStation::GroundStation(QWidget *parent) :
 
     QTimer *dataTimer = new QTimer();
     connect(dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    dataTimer->start(10);
+    dataTimer->start(75);
 }
 
 void GroundStation::doPlotDataRate(){
     static double key = 0;
     key += PLOT_DATA_RATE_PUBLISH_INTERVAL;
-    plotDataRate->graph(0)->addData(key, link->readAndResetReceivedBytes() + link->readAndResetSentBytes() + proc->readAndResetReceivedBytes());
+    plotDataRate->graph(0)->addData(key, (link->readAndResetReceivedBytes() + link->readAndResetSentBytes() + proc->readAndResetReceivedBytes()) * 1.0 / PLOT_DATA_RATE_PUBLISH_INTERVAL);
     plotDataRate->graph(0)->removeDataBefore(key - PLOT_DATA_RATE_VISIBLE_INTERVAL);
     plotDataRate->graph(0)->rescaleKeyAxis();
     plotDataRate->graph(0)->rescaleValueAxis(true);
