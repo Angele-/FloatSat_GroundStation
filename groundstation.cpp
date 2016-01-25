@@ -453,3 +453,8 @@ void GroundStation::on_lineEdit_d_returnPressed()
     Telecommand tc(command, 1, 2, 2);
     link->write(3001, tc);
 }
+
+void GroundStation::on_pushButton_Automatic_clicked()
+{
+    ui->pushButton_Automatic->setDown(true);
+}

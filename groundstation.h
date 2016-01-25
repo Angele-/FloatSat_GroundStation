@@ -68,6 +68,8 @@ private slots:
 
     void on_lineEdit_d_returnPressed();
 
+    void on_pushButton_Automatic_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     static void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
