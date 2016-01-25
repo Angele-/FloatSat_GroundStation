@@ -139,7 +139,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>290</y>
+      <y>280</y>
       <width>160</width>
       <height>130</height>
      </rect>
@@ -1309,7 +1309,7 @@
       <x>10</x>
       <y>30</y>
       <width>100</width>
-      <height>390</height>
+      <height>380</height>
      </rect>
     </property>
     <property name="font">
@@ -1471,7 +1471,7 @@
       <x>120</x>
       <y>180</y>
       <width>160</width>
-      <height>110</height>
+      <height>100</height>
      </rect>
     </property>
     <property name="font">
@@ -1542,13 +1542,31 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="lineEdit_2">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="lineEdit_3">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
