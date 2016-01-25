@@ -426,3 +426,30 @@ void GroundStation::on_pushButton_clearConsole_clicked()
     ui->debugConsole->clear();
     ui->logConsole->clear();
 }
+
+void GroundStation::on_lineEdit_p_returnPressed()
+{
+    QString str = ui->lineEdit_p->text();
+    float command = str.toFloat();
+
+    Telecommand tc(command, 1, 2, 1);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_lineEdit_i_returnPressed()
+{
+    QString str = ui->lineEdit_i->text();
+    float command = str.toFloat();
+
+    Telecommand tc(command, 1, 2, 3);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_lineEdit_d_returnPressed()
+{
+    QString str = ui->lineEdit_d->text();
+    float command = str.toFloat();
+
+    Telecommand tc(command, 1, 2, 2);
+    link->write(3001, tc);
+}
