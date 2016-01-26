@@ -29,3 +29,4 @@
 
 # Qt
 config.h
+*.user
