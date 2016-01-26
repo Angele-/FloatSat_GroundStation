@@ -37,6 +37,9 @@ GroundStation::GroundStation(QWidget *parent) :
     connect(proc, SIGNAL(setImgSizeLbl(QString)), this, SLOT(onSetImgSizeLbl(QString)));
     connect(proc, SIGNAL(setPicRecieveStatusMaximum(qint32)), this, SLOT(onSetPicRecieveStatusMaximum(qint32)));
     connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
+    connect(proc, SIGNAL(setConsoleText(QByteArray)), this, SLOT(onSetConsoleText(QByteArray)));
+    connect(proc, SIGNAL(setConsoleText(QString)), this, SLOT(onSetConsoleText(QString)));
+
     proc->init();
 
     plotCurrent = new QCustomPlot(this);
