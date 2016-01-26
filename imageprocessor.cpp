@@ -213,12 +213,12 @@ void ImageProcessor::readSerialImageColor(){
 
 void ImageProcessor::putPixelPair(){
 
-    int c1,c2,d,e;
+    //int c1,c2,d,e;
 
-    c1 = y1-16;
-    c1 = y2-16;
-    d = u - 128;
-    e = v - 128;
+    //c1 = y1-16;
+    //c2 = y2-16;
+    //d = u - 128;
+    //e = v - 128;
 
     y1 *= 255/(max-min);
     y2 *= 255/(max-min);
