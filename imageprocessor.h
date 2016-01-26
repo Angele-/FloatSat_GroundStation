@@ -48,6 +48,7 @@ private:
     QImage imageToDisplay;
     quint32 picRecieveStatusValue = 0;
     qint64 receivedBytes;
+    int skip;
 signals:
     void setPicRecieveStatusMaximum(qint32 maximum);
     void setPicRecieveStatusValue(qint32 value);

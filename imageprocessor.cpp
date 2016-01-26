@@ -7,6 +7,7 @@ ImageProcessor::ImageProcessor(QObject *parent) :
     serial = new QSerialPort(this);
     serialInfo = new QSerialPortInfo();
     receivedBytes = 0;
+    skip = 0;
 }
 
 void ImageProcessor::init(){
@@ -107,6 +108,7 @@ void ImageProcessor::readSerialImage(){
     QByteArray data = serial->readAll();
     receivedBytes += data.size();
     line.append(data);
+
     if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
         QString props = line.mid(line.indexOf("CAMERA_TX_START;")+16,10);
         QStringList d = props.split(";",  QString::SplitBehavior::SkipEmptyParts);
@@ -127,14 +129,14 @@ void ImageProcessor::readSerialImage(){
         //Length of a whole String containing YUV Data for a 160*120 Image including spacers
         emit setPicRecieveStatusMaximum(properties.Width * properties.Height);
         picRecieveStatusValue = 0;
+        rows = cols = 0;
         emit setPicRecieveStatusValue(picRecieveStatusValue);
         pixelCount = 0;
     }
 
     if(!sendToConsole){
         //End Condition
-
-        if(transmissionFinished && line.contains(";")){
+        if(line.contains(";$")){
             //Fill Image with Zeros and reset Everything
             for(quint16 x = rows; x < Image.rows; x++){
                 for(quint16 y = cols; y < Image.cols; y++){
@@ -143,7 +145,6 @@ void ImageProcessor::readSerialImage(){
                     Image.at<cv::Vec3b>(x, y)[2] = 0;
                 }
             }
-            DetectCircles(Image);
             cv::transpose(Image,Image);
             cv::flip(Image,Image, 1);
             imageToDisplay = QImage((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
@@ -151,57 +152,35 @@ void ImageProcessor::readSerialImage(){
             rows = cols = 0;
             picRecieveStatusValue = 0;
             emit setPicRecieveStatusValue(picRecieveStatusValue);
-            Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
             line = "";
-
             sendToConsole = true;
-            transmissionFinished = false;
-            qDebug() << "Console reenabled\n";
             propertiesRx = false;
-            return;
-        }
-        if(line.contains(";")){
-            //Fill Image with Zeros and reset Everything
-            for(quint16 x = rows; x < Image.rows; x++){
-                for(quint16 y = cols; y < Image.cols; y++){
-                    Image.at<cv::Vec3b>(x, y)[0] = 0;
-                    Image.at<cv::Vec3b>(x, y)[1] = 0;
-                    Image.at<cv::Vec3b>(x, y)[2] = 0;
-                }
-            }
-            DetectCircles(Image);
-            cv::transpose(Image,Image);
-            cv::flip(Image,Image, 1);
-            imageToDisplay = QImage((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
-            emit updatePicture();
-            rows = cols = 0;
-            picRecieveStatusValue = 0;
-            emit setPicRecieveStatusValue(picRecieveStatusValue);
-            Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
-            line = "";
             return;
         }
         //As long as theres data available, get 1 Pixel and put it into the picture
         while(line.length() > 2){
-            QString pxl = line.left(3);
-            line = line.mid(3);
+            //uchar x = line.left(1).toStdString().c_str()[0];
+            QString pxl = line.left(3-skip);
+            line = line.mid(3-skip);
             picRecieveStatusValue ++;
             emit setPicRecieveStatusValue(picRecieveStatusValue);
             Image.at<cv::Vec3b>(rows, cols)[0] = pxl.toInt();
             Image.at<cv::Vec3b>(rows, cols)[1] = pxl.toInt();
             Image.at<cv::Vec3b>(rows, cols)[2] = pxl.toInt();
+            if(pxl.toInt() > 255){
+                qDebug() << rows << " " << cols << ": " << pxl.toInt();
+                skip = 1;
+            }else{
+                skip = 0;
+            }
 
             if(rows == Image.rows - 1 && cols == Image.cols - 1){
-                DetectCircles(Image);
-                cv::transpose(Image,Image);
-                cv::flip(Image,Image, 1);
-                imageToDisplay = QImage((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
-                emit updatePicture();
-                rows = cols = 0;
-                picRecieveStatusValue = 0;
-                emit setPicRecieveStatusValue(picRecieveStatusValue);
-                line = "";
-                break;
+                //finish
+
+                rows = 119;
+                cols = 159;
+                line = ";$";
+                return;
             }else if(cols == Image.cols-1){
                 cols = 0;
                 rows++;
@@ -211,7 +190,7 @@ void ImageProcessor::readSerialImage(){
 
         }
     }else{
-       qDebug() << data;
+        emit setConsoleText(data);
     }
 
 }
