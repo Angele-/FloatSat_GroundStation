@@ -458,3 +458,19 @@ void GroundStation::on_pushButton_Automatic_clicked()
 {
     ui->pushButton_Automatic->setDown(true);
 }
+
+void GroundStation::onSetConsoleText(QString text){
+    ui->debugConsole->insertPlainText(text);
+    QScrollBar* scrollbar = ui->debugConsole->verticalScrollBar();
+    scrollbar->setValue(scrollbar->maximum());
+
+    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
+}
+
+void GroundStation::onSetConsoleText(QByteArray data){
+    ui->debugConsole->insertPlainText(data);
+    QScrollBar* scrollbar = ui->debugConsole->verticalScrollBar();
+    scrollbar->setValue(scrollbar->maximum());
+
+    if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
+}

@@ -32,6 +32,10 @@ private slots:
 
     void doPlotDataRate();
 
+    void onSetConsoleText(QString text);
+
+    void onSetConsoleText(QByteArray data);
+
     //Predefined Slots:
 
     void on_pushButton_Velocity_Mode_clicked();

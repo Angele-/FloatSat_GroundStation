@@ -31,7 +31,7 @@ private:
     void ProcessImageGray();
     void ProcessImageV();
     void DetectCircles(cv::Mat src);
-
+    void putPixelPair();
     cv::Mat Image;
     quint32 pixelCount = 0;
     QSerialPort *serial;
@@ -47,8 +47,13 @@ private:
     bool transmissionFinished = false;
     QImage imageToDisplay;
     quint32 picRecieveStatusValue = 0;
+    bool even = true;
+    int ybr = 0;
+    int skip = 0;
+    int y1,u,y2,v, max = 0;
+    int min = 255;
     qint64 receivedBytes;
-    int skip;
+
 signals:
     void setPicRecieveStatusMaximum(qint32 maximum);
     void setPicRecieveStatusValue(qint32 value);
@@ -57,8 +62,8 @@ signals:
     void setImgSizeLbl(QString text);
     void updatePicture();
 private slots:
-    void readSerialData();
     void readSerialImage();
+    void readSerialImageColor();
 
 };
 
