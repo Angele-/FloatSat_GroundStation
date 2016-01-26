@@ -40,7 +40,7 @@ private slots:
 
     void on_pushButton_Position_Mode_clicked();
 
-    void on_pushButton_RDV_Mode_clicked();
+    void on_pushButton_Acquire_Mode_clicked();
 
     void on_pushButton_Deployment_Mode_clicked();
 

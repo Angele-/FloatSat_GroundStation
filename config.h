@@ -1,7 +1,7 @@
 #ifndef CONFIG
 #define CONFIG
 
-#define COM_PORT "COM4"
+#define COM_PORT "COM16"
 
 #endif // CONFIG
 

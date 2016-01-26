@@ -307,9 +307,13 @@ void GroundStation::on_pushButton_Position_Mode_clicked()
     ui->pushButton_Position_Mode->setDown(true);
 }
 
-void GroundStation::on_pushButton_RDV_Mode_clicked()
+void GroundStation::on_pushButton_Acquire_Mode_clicked()
 {
-    ui->pushButton_RDV_Mode->setDown(true);
+    ui->pushButton_Acquire_Mode->setDown(true);
+
+    Telecommand tc(0, 1, 2, 8);
+    link->write(3001, tc);
+
 }
 
 void GroundStation::on_pushButton_Deployment_Mode_clicked()
