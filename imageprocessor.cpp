@@ -37,8 +37,8 @@ void ImageProcessor::openSerialPort(){
     for(i = ports.begin(); i != ports.end(); i++){
         qDebug() << "Port: " << (*i).portName();
     }
-    serial->setPortName("cu.FloatSat-10-SPPDev");
-    serial->setBaudRate(QSerialPort::Baud115200);
+    serial->setPortName(COM_PORT);
+    serial->setBaudRate(921600);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
     serial->setStopBits(QSerialPort::OneStop);

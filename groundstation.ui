@@ -1309,7 +1309,7 @@
       <x>10</x>
       <y>30</y>
       <width>100</width>
-      <height>390</height>
+      <height>350</height>
      </rect>
     </property>
     <property name="font">
@@ -1632,6 +1632,29 @@
     </property>
     <property name="text">
      <string>Clear console</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>390</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Symbol</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#cc0000; color:white</string>
+    </property>
+    <property name="text">
+     <string>STOP</string>
     </property>
    </widget>
   </widget>
