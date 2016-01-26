@@ -24,7 +24,8 @@ HEADERS  += groundstation.h \
     payload.h \
     basics.h \
     imageprocessor.h \
-    compass.h
+    compass.h \
+    config.h
 
 unix:SOURCES += qcustomplot.cpp
 unix:HEADERS += qcustomplot.h

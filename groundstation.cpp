@@ -2,6 +2,7 @@
 
 #include "groundstation.h"
 #include "ui_groundstation.h"
+#include "config.h"
 #include <QMessageBox>
 #include <QList>
 #include <QScrollBar>

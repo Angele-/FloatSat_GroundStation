@@ -1,4 +1,5 @@
 #include "imageprocessor.h"
+#include "config.h"
 #include <QDebug>
 
 ImageProcessor::ImageProcessor(QObject *parent) :
@@ -26,11 +27,7 @@ void ImageProcessor::openSerialPort(){
     for(i = ports.begin(); i != ports.end(); i++){
         qDebug() << "Port: " << (*i).portName();
     }
-    #ifdef Q_OS_WIN
-        serial->setPortName("COM13");
-    #else
-        serial->setPortName("cu.FloatSat-10-SPPDev");
-    #endif
+    serial->setPortName(COM_PORT);
     serial->setBaudRate(921600);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
