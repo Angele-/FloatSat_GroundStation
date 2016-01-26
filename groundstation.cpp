@@ -2,7 +2,6 @@
 
 #include "groundstation.h"
 #include "ui_groundstation.h"
-#include "config.h"
 #include <QMessageBox>
 #include <QList>
 #include <QScrollBar>
@@ -67,6 +66,7 @@ GroundStation::GroundStation(QWidget *parent) :
     plotVoltage->addGraph(); // blue line
     plotVoltage->graph(0)->setPen(QPen(Qt::blue));
     plotVoltage->graph(0)->setName("Batteries");
+    plotVoltage->yAxis->setRange(0, 14);
     plotVoltage->addGraph(); // red line
     plotVoltage->graph(1)->setPen(QPen(Qt::red));
     plotVoltage->graph(1)->setName("Solar Panels");
@@ -258,7 +258,7 @@ void GroundStation::readFromLink(){
     case PayloadMeasurementsType:{
         PayloadMeasurements pm(payload);
         ui->lcdBatteryCurrent->display(QString("%1").arg(pm.batteryCurrent, 6, 'f', 1, '0'));
-        ui->lcdBatteryVoltage->display(QString("%1").arg(pm.batteryVoltage, 6, 'f', 1, '0'));
+        ui->lcdBatteryVoltage->display(QString("%1").arg(pm.batteryVoltage/2000.0f, 6, 'f', 1, '0'));
         ui->lcdPanelVoltage->display(QString("%1").arg(pm.panelVoltage, 6, 'f', 1, '0'));
         ui->lcdPanelCurrent->display(QString("%1").arg(pm.panelCurrent, 6, 'f', 1, '0'));
 
@@ -274,14 +274,9 @@ void GroundStation::readFromLink(){
         plotCurrent->graph(1)->rescaleValueAxis(true);
         plotCurrent->replot();
 
-        plotVoltage->yAxis->setRange(0, plotVoltage->yAxis->range().upper * 0.975);
-        plotVoltage->graph(0)->addData(key, pm.batteryVoltage);
-        plotVoltage->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-        plotVoltage->graph(0)->rescaleValueAxis(true);
+        plotVoltage->graph(0)->addData(key, pm.batteryVoltage/2000.0f);
         plotVoltage->graph(1)->addData(key, pm.panelVoltage);
-        plotVoltage->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotVoltage->graph(1)->rescaleKeyAxis();
-        plotVoltage->graph(1)->rescaleValueAxis(true);
         plotVoltage->replot();
 
         break;

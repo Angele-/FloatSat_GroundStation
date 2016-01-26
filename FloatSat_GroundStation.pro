@@ -34,8 +34,6 @@ FORMS    += groundstation.ui
 
 CONFIG += console c++11
 
-
-
 unix:INCLUDEPATH += /usr/local/include
 unix:LIBS += -L/usr/local/lib \
      -lopencv_core \
