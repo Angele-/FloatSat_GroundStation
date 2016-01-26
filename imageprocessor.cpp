@@ -114,6 +114,7 @@ void ImageProcessor::readSerialData(){
 */
 void ImageProcessor::readSerialImageColor(){
     QByteArray data = serial->readAll();
+    receivedBytes += data.size();
     line.append(data);
 
     if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
@@ -295,6 +296,7 @@ void ImageProcessor::putPixelPair(){
 
 void ImageProcessor::readSerialImage(){
     QByteArray data = serial->readAll();
+    receivedBytes += data.size();
     line.append(data);
 
     if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
