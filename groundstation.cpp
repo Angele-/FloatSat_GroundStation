@@ -477,3 +477,9 @@ void GroundStation::onSetConsoleText(QByteArray data){
 
     if(ui->debugConsole->toPlainText().length() > 20000) ui->debugConsole->clear();
 }
+
+void GroundStation::on_pushButton_picture_clicked()
+{
+    Telecommand tc(1005, 1, 4, 0);
+    link->write(3001, tc);
+}

@@ -652,7 +652,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -1309,7 +1309,7 @@
       <x>10</x>
       <y>30</y>
       <width>100</width>
-      <height>350</height>
+      <height>330</height>
      </rect>
     </property>
     <property name="font">
@@ -1619,10 +1619,10 @@
    <widget class="QPushButton" name="pushButton_clearConsole">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>470</y>
-      <width>120</width>
-      <height>23</height>
+      <x>20</x>
+      <y>450</y>
+      <width>80</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="font">
@@ -1631,15 +1631,15 @@
      </font>
     </property>
     <property name="text">
-     <string>Clear console</string>
+     <string>Clear log</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>390</y>
-      <width>100</width>
+      <x>20</x>
+      <y>410</y>
+      <width>80</width>
       <height>30</height>
      </rect>
     </property>
@@ -1655,6 +1655,24 @@
     </property>
     <property name="text">
      <string>STOP</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_picture">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>370</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Symbol</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>Picture</string>
     </property>
    </widget>
   </widget>

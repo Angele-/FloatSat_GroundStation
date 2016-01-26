@@ -74,6 +74,8 @@ private slots:
 
     void on_pushButton_Automatic_clicked();
 
+    void on_pushButton_picture_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     static void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
