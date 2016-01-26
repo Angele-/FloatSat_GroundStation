@@ -1,5 +1,7 @@
 #include "imageprocessor.h"
+#include "config.h"
 #include <QDebug>
+
 
 ImageProcessor::ImageProcessor(QObject *parent) :
     QThread(parent)
