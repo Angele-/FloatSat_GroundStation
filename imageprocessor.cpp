@@ -12,7 +12,7 @@ ImageProcessor::ImageProcessor(QObject *parent) :
 }
 
 void ImageProcessor::init(){
-    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialImage()));
+    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialImageColor()));
     openSerialPort();
 }
 
@@ -156,7 +156,9 @@ void ImageProcessor::readSerialImageColor(){
                 }
             }
             cv::transpose(Image,Image);
+            cv::flip(Image,Image, -1);
             cv::flip(Image,Image, 1);
+
             imageToDisplay = QImage((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
             emit updatePicture();
             rows = cols = 0;
@@ -189,16 +191,16 @@ void ImageProcessor::readSerialImageColor(){
 
             switch(ybr){
             case 1:
-                v = pxl.toInt();
-                break;
-            case 2:
                 y1 = pxl.toInt();
                 break;
-            case 3:
+            case 2:
                 u = pxl.toInt();
                 break;
-            case 4:
+            case 3:
                 y2 = pxl.toInt();
+                break;
+            case 4:
+                v = pxl.toInt();
                 putPixelPair();
                 ybr = 0;
                 break;
@@ -216,34 +218,31 @@ void ImageProcessor::readSerialImageColor(){
 
 void ImageProcessor::putPixelPair(){
 
-    //int c1,c2,d,e;
-
-    //c1 = y1-16;
-    //c2 = y2-16;
-    //d = u - 128;
-    //e = v - 128;
-
-    y1 *= 255/(max-min);
-    y2 *= 255/(max-min);
-    u *= 255/(max-min);
-    v *= 255/(max-min);
-
+    if(y1 < 0) y1+=255;
+    if(y2 < 0) y2+=255;
+    if(u < 0) u+=255;
+    if(v < 0) v+=255;
 
     /*
-    if( v -128 < 0) v = 0;
-    else v = v-128;
-
-    if( u -128 < 0) u = 0;
-    else u = u -128;
+    int b = y1 + 1.4065 *                    (u-128);
+    int g = y1 - 0.3455 * (v-128) - 0.7169 * (u-128);
+    int r = y1 + 1.7790 * (v-128);
     */
-    int r = y1+1.4075*(v-128);
-    int g = y1-0.3455*(u-128) - (0.7169*(v-128));
-    int b = y1+1.779*(u-128);
-/*
-    r = 255*((298*c1 + 409*e + 128)>>8);
-    g = 255*((298*c1 + 100*d + 208*e +128)>>8);
-    b = 255*((298*c1 + 516*d + 128)>>8);
-*/
+
+    int b = y1 + 1.402 *                    (u-128);
+    int g = y1 - 0.34414 * (v-128) - 0.71414 * (u-128);
+    int r = y1 + 1.772 * (v-128);
+
+
+
+    if(r < 0) r = 0;
+    if(g < 0) g = 0;
+    if(b < 0) b = 0;
+    if(r > 255) r = 255;
+    if(g > 255) g = 255;
+    if(b > 255) b = 255;
+
+
 
     if(r < 0 || g < 0 || b < 0){
         qDebug() << r << " " << g << " " << b;
@@ -255,8 +254,8 @@ void ImageProcessor::putPixelPair(){
 
     if(rows == Image.rows - 1 && cols == Image.cols - 1){
         //finish
-        rows = 119;
-        cols = 159;
+        rows = properties.Height-1;
+        cols = properties.Width-1;
         line = ";$";
         return;
     }else if(cols == Image.cols-1){
@@ -266,17 +265,17 @@ void ImageProcessor::putPixelPair(){
         cols++;
     }
 
-    r = y2+1.4075*(v-128);
-    g = y2-0.3455*(u-128) - (0.7169*(v-128));
-    b = y2+1.779*(u-128);
-/*
-    r = 255*((298*c2 + 409*e + 128)>>8);
-    g = 255*((298*c2 + 100*d + 208*e +128)>>8);
-    b = 255*((298*c2 + 516*d + 128)>>8);
-*/
-    if(r < 0 || g < 0 || b < 0){
-        qDebug() << r << " " << g << " " << b;
-    }
+    b = y2 + 1.402 *                    (u-128);
+    g = y2 - 0.34414 * (v-128) - 0.71414 * (u-128);
+    r = y2 + 1.772 * (v-128);
+
+    if(r < 0) r = 0;
+    if(g < 0) g = 0;
+    if(b < 0) b = 0;
+    if(r > 255) r = 255;
+    if(g > 255) g = 255;
+    if(b > 255) b = 255;
+
 
     Image.at<cv::Vec3b>(rows, cols)[0] = r;
     Image.at<cv::Vec3b>(rows, cols)[1] = g;
@@ -284,8 +283,8 @@ void ImageProcessor::putPixelPair(){
 
     if(rows == Image.rows - 1 && cols == Image.cols - 1){
         //finish
-        rows = 119;
-        cols = 159;
+        rows = properties.Height-1;
+        cols = properties.Width-1;
         line = ";$";
         return;
     }else if(cols == Image.cols-1){
