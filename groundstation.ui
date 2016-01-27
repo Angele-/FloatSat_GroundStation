@@ -1309,7 +1309,7 @@
       <x>10</x>
       <y>30</y>
       <width>100</width>
-      <height>330</height>
+      <height>290</height>
      </rect>
     </property>
     <property name="font">
@@ -1338,7 +1338,7 @@
       <number>9</number>
      </property>
      <item>
-      <widget class="QPushButton" name="pushButton_Automatic">
+      <widget class="QPushButton" name="pushButton_Presentation">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -1351,12 +1351,12 @@
         </font>
        </property>
        <property name="text">
-        <string>Automatic</string>
+        <string>Presentation</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_Deployment_Mode">
+      <widget class="QPushButton" name="pushButton_Deploy_Mode">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -1372,12 +1372,12 @@
         </font>
        </property>
        <property name="text">
-        <string>Deployment</string>
+        <string>Deploy</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_Position_Mode">
+      <widget class="QPushButton" name="pushButton_Undeploy_Mode">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -1393,28 +1393,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Position</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_Standby_Mode">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI Symbol</family>
-         <pointsize>8</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Standby</string>
+        <string>Undeploy</string>
        </property>
       </widget>
      </item>
@@ -1435,7 +1414,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Acquire</string>
+        <string>Acquire Sun</string>
        </property>
       </widget>
      </item>
@@ -1457,27 +1436,6 @@
        </property>
        <property name="text">
         <string>Docking</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_Velocity_Mode">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI Symbol</family>
-         <pointsize>8</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Velocity</string>
        </property>
       </widget>
      </item>
@@ -1634,7 +1592,7 @@
      <string>Clear log</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_stop">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -1673,6 +1631,48 @@
     </property>
     <property name="text">
      <string>Picture</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_stop_burn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>330</y>
+      <width>80</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Stop burn</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_calibrate_gyro">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>420</y>
+      <width>161</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Symbol</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>Calibrate Gyro</string>
     </property>
    </widget>
   </widget>

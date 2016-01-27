@@ -37,15 +37,7 @@ private slots:
 
     //Predefined Slots:
 
-    void on_pushButton_Velocity_Mode_clicked();
-
-    void on_pushButton_Standby_Mode_clicked();
-
-    void on_pushButton_Position_Mode_clicked();
-
     void on_pushButton_Acquire_Mode_clicked();
-
-    void on_pushButton_Deployment_Mode_clicked();
 
     void on_pushButton_Docking_Mode_clicked();
 
@@ -71,9 +63,19 @@ private slots:
 
     void on_lineEdit_d_returnPressed();
 
-    void on_pushButton_Automatic_clicked();
-
     void on_pushButton_picture_clicked();
+
+    void on_pushButton_stop_clicked();
+
+    void on_pushButton_stop_burn_clicked();
+
+    void on_pushButton_calibrate_gyro_clicked();
+
+    void on_pushButton_Deploy_Mode_clicked();
+
+    void on_pushButton_Undeploy_Mode_clicked();
+
+    void on_pushButton_Presentation_clicked();
 
 public:
     explicit GroundStation(QWidget *parent = 0);

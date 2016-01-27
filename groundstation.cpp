@@ -1,5 +1,5 @@
 #include <qmath.h>
-
+#include <algorithm>
 #include "groundstation.h"
 #include "ui_groundstation.h"
 #include <QMessageBox>
@@ -47,27 +47,21 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->plotLayout->addWidget(plotCurrent, 0, 0);
     plotCurrent->addGraph(); // blue line
     plotCurrent->graph(0)->setPen(QPen(Qt::blue));
-    plotCurrent->graph(0)->setName("Batteries");
-    plotCurrent->addGraph(); // red line
-    plotCurrent->graph(1)->setPen(QPen(Qt::red));
-    plotCurrent->graph(1)->setName("Solar Panels");
-    plotCurrent->addGraph(); // green line
-    plotCurrent->graph(2)->setPen(QPen(Qt::green));
-    plotCurrent->graph(2)->setName("Servo 1");
-    plotCurrent->addGraph(); // black line
-    plotCurrent->graph(3)->setPen(QPen(Qt::black));
-    plotCurrent->graph(3)->setName("Servo 2");
+    //plotCurrent->graph(0)->setName("Battery Current");
+//    plotCurrent->addGraph(); // green line
+//    plotCurrent->graph(2)->setPen(QPen(Qt::darkGreen));
+//    plotCurrent->graph(2)->setName("Servo 1");
+//    plotCurrent->addGraph(); // black line
+//    plotCurrent->graph(3)->setPen(QPen(Qt::black));
+//    plotCurrent->graph(3)->setName("Servo 2");
     plotCurrent->xAxis->setLabel("Seconds");
     plotCurrent->yAxis->setLabel("Milliamperes");
-    QCPPlotTitle *title = new QCPPlotTitle(plotCurrent, "Current");
+    QCPPlotTitle *title = new QCPPlotTitle(plotCurrent, "Battery Current");
     title->setFont(ui->label_72->font());
     plotCurrent->plotLayout()->insertRow(0);
     plotCurrent->plotLayout()->addElement(0, 0, title);
     plotCurrent->plotLayout()->setRowSpacing(0);
     plotCurrent->plotLayout()->setColumnSpacing(0);
-    plotCurrent->legend->setVisible(true);
-    plotCurrent->legend->setFont(QFont(ui->label_72->font().family(),6));
-    plotCurrent->legend->setIconSize(15, 10);
 
     //plotCurrent->legend->rowCount()->
 
@@ -100,16 +94,19 @@ GroundStation::GroundStation(QWidget *parent) :
     plotMotorCurrents->graph(0)->setName("Motor");
     plotMotorCurrents->addGraph(); // red line
     plotMotorCurrents->graph(1)->setPen(QPen(Qt::red));
-    plotMotorCurrents->graph(1)->setName("Thermal knife 1");
-    plotMotorCurrents->addGraph(); // green line
-    plotMotorCurrents->graph(2)->setPen(QPen(Qt::green));
-    plotMotorCurrents->graph(2)->setName("Thermal knife 2");
-    plotMotorCurrents->addGraph(); // black line
-    plotMotorCurrents->graph(3)->setPen(QPen(Qt::black));
-    plotMotorCurrents->graph(3)->setName("Thermal knife 3");
+    plotMotorCurrents->graph(1)->setName("Solar Panels");
+//    plotMotorCurrents->addGraph(); // red line
+//    plotMotorCurrents->graph(1)->setPen(QPen(Qt::red));
+//    plotMotorCurrents->graph(1)->setName("Thermal knife 1");
+//    plotMotorCurrents->addGraph(); // green line
+//    plotMotorCurrents->graph(2)->setPen(QPen(Qt::darkGreen));
+//    plotMotorCurrents->graph(2)->setName("Thermal knife 2");
+//    plotMotorCurrents->addGraph(); // black line
+//    plotMotorCurrents->graph(3)->setPen(QPen(Qt::black));
+//    plotMotorCurrents->graph(3)->setName("Thermal knife 3");
     plotMotorCurrents->xAxis->setLabel("Seconds");
     plotMotorCurrents->yAxis->setLabel("Milliamperes");
-    title = new QCPPlotTitle(plotMotorCurrents, "Motor currents");
+    title = new QCPPlotTitle(plotMotorCurrents, "Currents");
     title->setFont(ui->label_72->font());
     plotMotorCurrents->plotLayout()->insertRow(0);
     plotMotorCurrents->plotLayout()->addElement(0, 0, title);
@@ -221,6 +218,10 @@ void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context
     console->verticalScrollBar()->setValue(console->verticalScrollBar()->maximum());
 }
 
+float static avgOfVector(const QVector<float> &vec){
+    return std::accumulate(vec.begin(), vec.end(), 0.0) / vec.size();
+}
+
 void GroundStation::readFromLink(){
     Payload payload = link->read();
     switch(payload.topic){
@@ -237,6 +238,12 @@ void GroundStation::readFromLink(){
         ui->lcdNumber_29->display(QString("%1").arg(psg.roll * 180.0f / M_PI, 6, 'f', 1, '0'));
         ui->lcdNumber_30->display(QString("%1").arg(psg.pitch * 180.0f / M_PI, 6, 'f', 1, '0'));
         ui->lcdNumber_31->display(QString("%1").arg(psg.yaw * 180.0f / M_PI, 6, 'f', 1, '0'));
+
+        static double key = 0;
+        key += PLOT_PUBLISH_INTERVAL;
+        plotSpeed->graph(0)->addData(key, psg.yaw * 180.0f / M_PI);
+        plotSpeed->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotSpeed->graph(0)->rescaleValueAxis(true);
         break;
     }
     case PayloadSensorXMType:{
@@ -259,49 +266,95 @@ void GroundStation::readFromLink(){
         break;
     }
     case PayloadMeasurementsType:{
-        PayloadMeasurements pm(payload);
-        ui->lcdBatteryCurrent->display(QString("%1").arg(pm.batteryCurrent, 6, 'f', 1, '0'));
-        ui->lcdBatteryVoltage->display(QString("%1").arg(pm.batteryVoltage/2000.0f, 6, 'f', 1, '0'));
-        ui->lcdPanelVoltage->display(QString("%1").arg(pm.panelVoltage, 6, 'f', 1, '0'));
-        ui->lcdPanelCurrent->display(QString("%1").arg(pm.panelCurrent, 6, 'f', 1, '0'));
 
+        PayloadMeasurements pm(payload);
+
+        static QVector<float> batteryCurrents;
+        static QVector<float> solarPanelCurrents;
+        static QVector<float> servo1Currents;
+        static QVector<float> servo2Currents;
+        static QVector<float> motorACurrents;
+        static QVector<float> motorBCurrents;
+        static QVector<float> motorCCurrents;
+        static QVector<float> motorDCurrents;
+
+        batteryCurrents.push_back(pm.batteryCurrent);
+        solarPanelCurrents.push_back(pm.panelCurrent);
+        servo1Currents.push_back(pm.servo1);
+        servo2Currents.push_back(pm.servo2);
+        motorACurrents.push_back(pm.motorACurrent);
+        motorBCurrents.push_back(pm.motorBCurrent);
+        motorCCurrents.push_back(pm.motorCCurrent);
+        motorDCurrents.push_back(pm.motorDCurrent);
+
+        if(batteryCurrents.size() > 20){
+            batteryCurrents.pop_front();
+        }
+        if(solarPanelCurrents.size() > 20){
+            solarPanelCurrents.pop_front();
+        }
+//        if(servo1Currents.size() > 5){
+//            servo1Currents.pop_front();
+//        }
+//        if(servo2Currents.size() > 5){
+//            servo2Currents.pop_front();
+//        }
+        if(motorACurrents.size() > 20){
+            motorACurrents.pop_front();
+        }
+//        if(motorBCurrents.size() > 20){
+//            motorBCurrents.pop_front();
+//        }
+//        if(motorCCurrents.size() > 20){
+//            motorCCurrents.pop_front();
+//        }
+//        if(motorDCurrents.size() > 20){
+//            motorDCurrents.pop_front();
+//        }
+
+        ui->lcdBatteryCurrent->display(QString("%1").arg(avgOfVector(batteryCurrents), 6, 'f', 1, '0'));
+        ui->lcdBatteryVoltage->display(QString("%1").arg(pm.batteryVoltage, 6, 'f', 1, '0'));
+        ui->lcdPanelVoltage->display(QString("%1").arg(pm.panelVoltage, 6, 'f', 1, '0'));
+        ui->lcdPanelCurrent->display(QString("%1").arg(avgOfVector(solarPanelCurrents), 6, 'f', 1, '0'));
         static double key = 0;
         key += PLOT_PUBLISH_INTERVAL;
-        plotCurrent->yAxis->setRange(0, plotCurrent->yAxis->range().upper * 0.975);
-        plotCurrent->graph(0)->addData(key, pm.batteryCurrent);
+        //plotCurrent->yAxis->setRange(0, plotCurrent->yAxis->range().upper * 0.975);
+        plotCurrent->graph(0)->addData(key, avgOfVector(batteryCurrents));
         plotCurrent->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotCurrent->graph(0)->rescaleValueAxis(true);
-        plotCurrent->graph(1)->addData(key, pm.panelCurrent);
-        plotCurrent->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-        plotCurrent->graph(1)->rescaleKeyAxis();
-        plotCurrent->graph(1)->rescaleValueAxis(true);
-        plotCurrent->graph(2)->addData(key, pm.servo1);
-        plotCurrent->graph(2)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-        plotCurrent->graph(2)->rescaleValueAxis(true);
-        plotCurrent->graph(3)->addData(key, pm.servo2);
-        plotCurrent->graph(3)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-        plotCurrent->graph(3)->rescaleValueAxis(true);
+        plotCurrent->graph(0)->rescaleKeyAxis();
+//        plotCurrent->graph(2)->addData(key,avgOfVector(servo1Currents));
+//        plotCurrent->graph(2)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+//        plotCurrent->graph(2)->rescaleValueAxis(true);
+//        plotCurrent->graph(3)->addData(key, avgOfVector(servo2Currents));
+//        plotCurrent->graph(3)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+//        plotCurrent->graph(3)->rescaleValueAxis(true);
         plotCurrent->replot();
 
-        plotVoltage->graph(0)->addData(key, pm.batteryVoltage/2000.0f);
+        plotVoltage->graph(0)->addData(key, pm.batteryVoltage);
         plotVoltage->graph(1)->addData(key, pm.panelVoltage);
         plotVoltage->graph(1)->rescaleKeyAxis();
         plotVoltage->replot();
 
-        plotMotorCurrents->graph(0)->addData(key, pm.motorACurrent);
+        plotMotorCurrents->yAxis->setRange(0, plotMotorCurrents->yAxis->range().upper * 0.975);
+        plotMotorCurrents->graph(0)->addData(key, avgOfVector(motorACurrents));
         plotMotorCurrents->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotMotorCurrents->graph(0)->rescaleValueAxis(true);
-        plotMotorCurrents->graph(1)->addData(key, pm.motorBCurrent);
+        plotMotorCurrents->graph(1)->addData(key, avgOfVector(solarPanelCurrents));
         plotMotorCurrents->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotMotorCurrents->graph(1)->rescaleKeyAxis();
         plotMotorCurrents->graph(1)->rescaleValueAxis(true);
-        plotMotorCurrents->graph(2)->addData(key, pm.motorCCurrent);
-        plotMotorCurrents->graph(2)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-        plotMotorCurrents->graph(2)->rescaleValueAxis(true);
-        plotMotorCurrents->graph(3)->addData(key, pm.motorDCurrent);
-        plotMotorCurrents->graph(3)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-        plotMotorCurrents->graph(3)->rescaleValueAxis(true);
-
-
+//        plotMotorCurrents->graph(1)->addData(key, avgOfVector(motorBCurrents));
+//        plotMotorCurrents->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+//        plotMotorCurrents->graph(1)->rescaleValueAxis(true);
+//        plotMotorCurrents->graph(2)->addData(key, avgOfVector(motorCCurrents));
+//        plotMotorCurrents->graph(2)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+//        plotMotorCurrents->graph(2)->rescaleValueAxis(true);
+//        plotMotorCurrents->graph(3)->addData(key, avgOfVector(motorDCurrents));
+//        plotMotorCurrents->graph(3)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+//        plotMotorCurrents->graph(3)->rescaleValueAxis(true);
+//        plotMotorCurrents->graph(1)->rescaleKeyAxis();
+        plotMotorCurrents->replot();
 
         break;
     }
@@ -320,21 +373,6 @@ GroundStation::~GroundStation()
     delete ui;
 }
 
-void GroundStation::on_pushButton_Velocity_Mode_clicked()
-{
-    ui->pushButton_Velocity_Mode->setDown(true);
-}
-
-void GroundStation::on_pushButton_Standby_Mode_clicked()
-{
-    ui->pushButton_Standby_Mode->setDown(true);
-}
-
-void GroundStation::on_pushButton_Position_Mode_clicked()
-{
-    ui->pushButton_Position_Mode->setDown(true);
-}
-
 void GroundStation::on_pushButton_Acquire_Mode_clicked()
 {
     ui->pushButton_Acquire_Mode->setDown(true);
@@ -342,11 +380,6 @@ void GroundStation::on_pushButton_Acquire_Mode_clicked()
     Telecommand tc(0, 1, 2, 8);
     link->write(3001, tc);
 
-}
-
-void GroundStation::on_pushButton_Deployment_Mode_clicked()
-{
-    ui->pushButton_Deployment_Mode->setDown(true);
 }
 
 void GroundStation::on_pushButton_Docking_Mode_clicked()
@@ -402,6 +435,7 @@ void GroundStation::on_lineEdit_Motor_speed_returnPressed()
 {
     QString str = ui->lineEdit_Motor_speed->text();
     float command = str.toFloat();
+    command *= M_PI / 180.0f;
 
     bool clockwise = ui->radioButton_Motor_Clockwise->isChecked();
 
@@ -482,11 +516,6 @@ void GroundStation::on_lineEdit_d_returnPressed()
     link->write(3001, tc);
 }
 
-void GroundStation::on_pushButton_Automatic_clicked()
-{
-    ui->pushButton_Automatic->setDown(true);
-}
-
 void GroundStation::onSetConsoleText(QString text){
     ui->debugConsole->insertPlainText(text);
     QScrollBar* scrollbar = ui->debugConsole->verticalScrollBar();
@@ -505,6 +534,55 @@ void GroundStation::onSetConsoleText(QByteArray data){
 
 void GroundStation::on_pushButton_picture_clicked()
 {
+    ui->pushButton_picture->setDown(true);
+
     Telecommand tc(1005, 1, 4, 0);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_pushButton_stop_clicked()
+{
+    ui->pushButton_Presentation->setDown(true);
+
+    Telecommand tc(0, 1, 2, 7);
+    link->write(3001, tc);
+
+    Telecommand tc2(1002, 1, 7, 0);
+    link->write(3001, tc2);
+}
+
+void GroundStation::on_pushButton_stop_burn_clicked()
+{
+    Telecommand tc(0, 1, 2, 9);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_pushButton_calibrate_gyro_clicked()
+{
+    Telecommand tc(1001, 1, 1, 0);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_pushButton_Deploy_Mode_clicked()
+{
+    ui->pushButton_Deploy_Mode->setDown(true);
+
+    Telecommand tc(1003, 1, 5, 0);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_pushButton_Undeploy_Mode_clicked()
+{
+    ui->pushButton_Undeploy_Mode->setDown(true);
+
+    Telecommand tc(1002, 1, 5, 0);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_pushButton_Presentation_clicked()
+{
+    ui->pushButton_Presentation->setDown(true);
+
+    Telecommand tc(1001, 1, 7, 0);
     link->write(3001, tc);
 }
