@@ -12,7 +12,7 @@ ImageProcessor::ImageProcessor(QObject *parent) :
 }
 
 void ImageProcessor::init(){
-    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialImageColor()));
+    connect(serial, SIGNAL(readyRead()), this, SLOT(readSerialImage()));
     openSerialPort();
 }
 

@@ -50,6 +50,12 @@ GroundStation::GroundStation(QWidget *parent) :
     plotCurrent->addGraph(); // red line
     plotCurrent->graph(1)->setPen(QPen(Qt::red));
     plotCurrent->graph(1)->setName("Solar Panels");
+    plotCurrent->addGraph(); // green line
+    plotCurrent->graph(2)->setPen(QPen(Qt::green));
+    plotCurrent->graph(2)->setName("Servo 1");
+    plotCurrent->addGraph(); // black line
+    plotCurrent->graph(3)->setPen(QPen(Qt::black));
+    plotCurrent->graph(3)->setName("Servo 2");
     plotCurrent->xAxis->setLabel("Seconds");
     plotCurrent->yAxis->setLabel("Milliamperes");
     QCPPlotTitle *title = new QCPPlotTitle(plotCurrent, "Current");
@@ -59,7 +65,7 @@ GroundStation::GroundStation(QWidget *parent) :
     plotCurrent->plotLayout()->setRowSpacing(0);
     plotCurrent->plotLayout()->setColumnSpacing(0);
     plotCurrent->legend->setVisible(true);
-    plotCurrent->legend->setFont(QFont(ui->label_72->font().family(),7));
+    plotCurrent->legend->setFont(QFont(ui->label_72->font().family(),6));
     plotCurrent->legend->setIconSize(15, 10);
 
     //plotCurrent->legend->rowCount()->
@@ -83,21 +89,34 @@ GroundStation::GroundStation(QWidget *parent) :
     plotVoltage->plotLayout()->setColumnSpacing(0);
     plotVoltage->legend->setVisible(true);
     plotVoltage->legend->setFont(QFont(ui->label_72->font().family(),7));
-    plotVoltage->legend->setIconSize(15, 10);
+    plotVoltage->legend->setIconSize(13, 8);
 
 
-    plotPWM = new QCustomPlot();
-    ui->plotLayout->addWidget(plotPWM, 1, 0);
-    plotPWM->addGraph(); // black line
-    plotPWM->graph(0)->setPen(QPen(Qt::black));
-    plotPWM->xAxis->setLabel("Seconds");
-    plotPWM->yAxis->setLabel("%");
-    title = new QCPPlotTitle(plotPWM, "Duty cycle");
+    plotMotorCurrents = new QCustomPlot();
+    ui->plotLayout->addWidget(plotMotorCurrents, 1, 0);
+    plotMotorCurrents->addGraph(); // blue line
+    plotMotorCurrents->graph(0)->setPen(QPen(Qt::blue));
+    plotMotorCurrents->graph(0)->setName("Motor");
+    plotMotorCurrents->addGraph(); // red line
+    plotMotorCurrents->graph(1)->setPen(QPen(Qt::red));
+    plotMotorCurrents->graph(1)->setName("Thermal knife 1");
+    plotMotorCurrents->addGraph(); // green line
+    plotMotorCurrents->graph(2)->setPen(QPen(Qt::green));
+    plotMotorCurrents->graph(2)->setName("Thermal knife 2");
+    plotMotorCurrents->addGraph(); // black line
+    plotMotorCurrents->graph(3)->setPen(QPen(Qt::black));
+    plotMotorCurrents->graph(3)->setName("Thermal knife 3");
+    plotMotorCurrents->xAxis->setLabel("Seconds");
+    plotMotorCurrents->yAxis->setLabel("Milliamperes");
+    title = new QCPPlotTitle(plotMotorCurrents, "Motor currents");
     title->setFont(ui->label_72->font());
-    plotPWM->plotLayout()->insertRow(0);
-    plotPWM->plotLayout()->addElement(0, 0, title);
-    plotPWM->plotLayout()->setRowSpacing(0);
-    plotPWM->plotLayout()->setColumnSpacing(0);
+    plotMotorCurrents->plotLayout()->insertRow(0);
+    plotMotorCurrents->plotLayout()->addElement(0, 0, title);
+    plotMotorCurrents->plotLayout()->setRowSpacing(0);
+    plotMotorCurrents->plotLayout()->setColumnSpacing(0);
+    plotMotorCurrents->legend->setVisible(true);
+    plotMotorCurrents->legend->setFont(QFont(ui->label_72->font().family(),6));
+    plotMotorCurrents->legend->setIconSize(13, 8);
 
     plotLight = new QCustomPlot();
     ui->plotLayout->addWidget(plotLight, 1, 1);
@@ -152,9 +171,6 @@ GroundStation::GroundStation(QWidget *parent) :
     connect(&dataRateTimer, SIGNAL(timeout()), this, SLOT(doPlotDataRate()));
     dataRateTimer.start(PLOT_DATA_RATE_PUBLISH_INTERVAL * 1000);
 
-    QTimer *dataTimer = new QTimer();
-    connect(dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    dataTimer->start(75);
 }
 
 void GroundStation::doPlotDataRate(){
@@ -171,23 +187,6 @@ void GroundStation::doPlotDataRate(){
     plotDataRate->replot();
 }
 
-void GroundStation::realtimeDataSlot(){
-    static double lastPointKey = 0;
-    double key = QDateTime::currentDateTime().toMSecsSinceEpoch()/1000.0;
-    if (key - lastPointKey > 0.010){
-        double value = qSin(key);
-        // add data to lines:
-        plotSpeed->graph(0)->addData(key, value);
-        // remove data of lines that's outside visible range:
-        plotSpeed->graph(0)->removeDataBefore(key-6.29);
-        // rescale value (vertical) axis to fit the current data:
-        plotSpeed->graph(0)->rescaleAxes();
-        lastPointKey = key;
-    }
-    // make key axis range scroll with the data (at a constant range size of 8):
-    //ui->customPlot->xAxis->setRange(key+0.25, 8, Qt::AlignRight);
-    plotSpeed->replot();
-}
 
 void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context, const QString &msg){
     QString str;
@@ -275,12 +274,33 @@ void GroundStation::readFromLink(){
         plotCurrent->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotCurrent->graph(1)->rescaleKeyAxis();
         plotCurrent->graph(1)->rescaleValueAxis(true);
+        plotCurrent->graph(2)->addData(key, pm.servo1);
+        plotCurrent->graph(2)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotCurrent->graph(2)->rescaleValueAxis(true);
+        plotCurrent->graph(3)->addData(key, pm.servo2);
+        plotCurrent->graph(3)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotCurrent->graph(3)->rescaleValueAxis(true);
         plotCurrent->replot();
 
         plotVoltage->graph(0)->addData(key, pm.batteryVoltage/2000.0f);
         plotVoltage->graph(1)->addData(key, pm.panelVoltage);
         plotVoltage->graph(1)->rescaleKeyAxis();
         plotVoltage->replot();
+
+        plotMotorCurrents->graph(0)->addData(key, pm.motorACurrent);
+        plotMotorCurrents->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotMotorCurrents->graph(0)->rescaleValueAxis(true);
+        plotMotorCurrents->graph(1)->addData(key, pm.motorBCurrent);
+        plotMotorCurrents->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotMotorCurrents->graph(1)->rescaleValueAxis(true);
+        plotMotorCurrents->graph(2)->addData(key, pm.motorCCurrent);
+        plotMotorCurrents->graph(2)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotMotorCurrents->graph(2)->rescaleValueAxis(true);
+        plotMotorCurrents->graph(3)->addData(key, pm.motorDCurrent);
+        plotMotorCurrents->graph(3)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
+        plotMotorCurrents->graph(3)->rescaleValueAxis(true);
+
+
 
         break;
     }

@@ -18,7 +18,6 @@ class GroundStation : public QMainWindow
     Q_OBJECT
 
 private slots:
-    void realtimeDataSlot(); // THIS IS A TEST
 
     void readFromLink();
 
@@ -95,7 +94,7 @@ private:
 
     QCustomPlot *plotCurrent;
     QCustomPlot *plotVoltage;
-    QCustomPlot *plotPWM;
+    QCustomPlot *plotMotorCurrents;
     QCustomPlot *plotLight;
     QCustomPlot *plotSpeed;
     QCustomPlot *plotDataRate;
