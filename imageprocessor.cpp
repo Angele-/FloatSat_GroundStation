@@ -9,6 +9,7 @@ ImageProcessor::ImageProcessor(QObject *parent) :
     serial = new QSerialPort(this);
     serialInfo = new QSerialPortInfo();
     receivedBytes = 0;
+    qInfo() << "Bufer size: " << serial->readBufferSize();
 }
 
 void ImageProcessor::init(){

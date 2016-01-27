@@ -3,11 +3,11 @@
 #include "payload.h"
 #include <QDebug>
 
-PayloadSatellite::PayloadSatellite() : checksum(0), senderNode(0), timestamp(0), senderThread(0), topic(0), ttl(0), userDataLen(0){
+Payload::Payload() : checksum(0), senderNode(0), timestamp(0), senderThread(0), topic(0), ttl(0), userDataLen(0){
     userData8[0] = 0;
 }
 
-PayloadSatellite::PayloadSatellite(const QByteArray &buffer) : checksum(0), senderNode(0), timestamp(0), senderThread(0), topic(0), ttl(0), userDataLen(0){
+Payload::Payload(const QByteArray &buffer) : checksum(0), senderNode(0), timestamp(0), senderThread(0), topic(0), ttl(0), userDataLen(0){
     userData8[0] = 0;
     if(buffer.size() < 1023)
         return;
@@ -23,7 +23,7 @@ PayloadSatellite::PayloadSatellite(const QByteArray &buffer) : checksum(0), send
     userData8[userDataLen] = 0x00;
 }
 
-PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(0.0), pitch(0.0), yaw(0.0){
+PayloadSensorFusion::PayloadSensorFusion(const Payload payload):roll(0.0), pitch(0.0), yaw(0.0){
     if(payload.userDataLen != sizeof(PayloadSensorFusion) || payload.topic != PayloadSensorFusionType)
         return;
 
@@ -32,7 +32,7 @@ PayloadSensorFusion::PayloadSensorFusion(const PayloadSatellite payload):roll(0.
     yaw = payload.userDataFloat[2];
 }
 
-PayloadSensorGyro::PayloadSensorGyro(const PayloadSatellite payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
+PayloadSensorGyro::PayloadSensorGyro(const Payload payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
     if(payload.userDataLen != sizeof(PayloadSensorGyro) || payload.topic != PayloadSensorGyroType)
         return;
 
@@ -41,7 +41,7 @@ PayloadSensorGyro::PayloadSensorGyro(const PayloadSatellite payload):roll(-qInf(
     yaw = payload.userDataFloat[2];
 }
 
-PayloadSensorXM::PayloadSensorXM(const PayloadSatellite payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
+PayloadSensorXM::PayloadSensorXM(const Payload payload):roll(-qInf()), pitch(-qInf()), yaw(-qInf()){
     if(payload.userDataLen != sizeof(PayloadSensorXM) || payload.topic != PayloadSensorXMType)
         return;
 
@@ -50,7 +50,7 @@ PayloadSensorXM::PayloadSensorXM(const PayloadSatellite payload):roll(-qInf()), 
     yaw = payload.userDataFloat[2];
 }
 
-PayloadMeasurements::PayloadMeasurements(const PayloadSatellite payload):batteryCurrent(-qInf()), motorACurrent(-qInf()), motorBCurrent(-qInf()), motorCCurrent(-qInf()), motorDCurrent(-qInf()),servo1(-qInf()), servo2(-qInf()), batteryVoltage(-qInf()), panelVoltage(-qInf()), panelCurrent(-qInf()){
+PayloadMeasurements::PayloadMeasurements(const Payload payload):batteryCurrent(-qInf()), motorACurrent(-qInf()), motorBCurrent(-qInf()), motorCCurrent(-qInf()), motorDCurrent(-qInf()),servo1(-qInf()), servo2(-qInf()), batteryVoltage(-qInf()), panelVoltage(-qInf()), panelCurrent(-qInf()){
     if(payload.userDataLen != sizeof(PayloadMeasurements) || payload.topic != PayloadMeasurementsType)
         return;
 
@@ -66,14 +66,22 @@ PayloadMeasurements::PayloadMeasurements(const PayloadSatellite payload):battery
     panelCurrent = payload.userDataFloat[9];
 }
 
-PayloadLight::PayloadLight(const PayloadSatellite payload):light(0){
+PayloadLight::PayloadLight(const Payload payload):light(0){
     if(payload.userDataLen != sizeof(PayloadLight) || payload.topic != PayloadLightType)
         return;
 
     light = payload.userData16[0];
 }
 
-PictureProperties::PictureProperties(const PayloadSatellite payload): Width(0), Height(0){
+PayloadOtherSatellite::PayloadOtherSatellite(const Payload payload): heading(0), mode(0){
+    if(payload.userDataLen != sizeof(PayloadOtherSatellite) || (payload.topic != PayloadOtherSatelliteTheirType && payload.topic != PayloadOtherSatelliteOurType))
+        return;
+
+    heading = payload.userDataFloat[0];
+    mode = payload.userData32[1];
+}
+
+PictureProperties::PictureProperties(const Payload payload): Width(0), Height(0){
 
     //qDebug() << "Act " << payload.userDataLen << " Exp " << sizeof(PictureProperties);
     if(payload.userDataLen != sizeof(PictureProperties) || payload.topic != PayloadCameraPropertiesType){
@@ -84,7 +92,7 @@ PictureProperties::PictureProperties(const PayloadSatellite payload): Width(0), 
     qDebug() << "W: " << Width << " H: " << Height << endl;
 }
 
-Pixel::Pixel(const PayloadSatellite payload): r(0), g(0), b(0){
+Pixel::Pixel(const Payload payload): r(0), g(0), b(0){
     qDebug() << "Act " << payload.userDataLen << " Exp " << sizeof(PictureProperties);
     if(payload.userDataLen != sizeof(Pixel) || payload.topic != PayloadCameraPixelType){
         return;
@@ -97,7 +105,7 @@ Pixel::Pixel(const PayloadSatellite payload): r(0), g(0), b(0){
     //qDebug() << "R " << r << " G " << g << " B " << b << endl;
 }
 
-PixelRow::PixelRow(const PayloadSatellite payload){
+PixelRow::PixelRow(const Payload payload){
     //qDebug() << "Act " << payload.userDataLen << " Exp " << sizeof(PixelRow);
 
     if(payload.userDataLen != sizeof(PixelRow) || payload.topic != PayloadCameraPixelType){

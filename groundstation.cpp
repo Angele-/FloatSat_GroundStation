@@ -30,6 +30,7 @@ GroundStation::GroundStation(QWidget *parent) :
     link->addTopic(PayloadCameraPropertiesType);
     link->addTopic(PayloadCameraPixelType);
     link->addTopic(PayloadMeasurementsType);
+    link->addTopic(PayloadOtherSatelliteTheirType);
     connect(link, SIGNAL(readReady()), this, SLOT(readFromLink()));
 
     proc = new ImageProcessor(this);        //Serial Image Reader
@@ -221,7 +222,7 @@ void GroundStation::logHandler(QtMsgType type, const QMessageLogContext& context
 }
 
 void GroundStation::readFromLink(){
-    PayloadSatellite payload = link->read();
+    Payload payload = link->read();
     switch(payload.topic){
     case PayloadSensorFusionType:{
         PayloadSensorFusion psd(payload);
@@ -303,6 +304,10 @@ void GroundStation::readFromLink(){
 
 
         break;
+    }
+    case PayloadOtherSatelliteTheirType:{
+        PayloadOtherSatellite pos(payload);
+        // TODO
     }
     default:
         break;

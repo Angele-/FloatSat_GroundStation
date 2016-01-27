@@ -29,7 +29,7 @@ public:
     void addTopic(PayloadType);
     int write(quint32 topicId, const QByteArray &data);
     int write(quint32 topicId, const Telecommand &telecommand);
-    PayloadSatellite read();
+    Payload read();
     qint64 readAndResetReceivedBytes();
     qint64 readAndResetSentBytes();
     bool isBound();
