@@ -15,7 +15,7 @@ SatelliteLink::SatelliteLink(QObject *parent, bool checkChecksum) : QObject(pare
     connect(&socket, SIGNAL(readyRead()), this, SIGNAL(readReady()));
 }
 
-PayloadSatellite SatelliteLink::read(){
+Payload SatelliteLink::read(){
     QByteArray buffer(1023, 0x00);
     receivedBytes += socket.readDatagram(buffer.data(), buffer.size());
 
@@ -24,7 +24,7 @@ PayloadSatellite SatelliteLink::read(){
 //            buffer.remove(i+1, 1);
 //    }
 
-    PayloadSatellite payload(buffer);
+    Payload payload(buffer);
 
     quint32 checksum = 0;
     for(int i = 2; i < 26 + payload.userDataLen; ++i){
@@ -40,7 +40,7 @@ PayloadSatellite SatelliteLink::read(){
     if((!checkChecksum || checksum == payload.checksum) && topics.contains(payload.topic))
         return payload;
     else
-        return PayloadSatellite();
+        return Payload();
 }
 
 void SatelliteLink::addTopic(PayloadType topicId){
