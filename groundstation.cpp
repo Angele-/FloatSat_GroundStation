@@ -611,3 +611,9 @@ void GroundStation::on_checkBox_clicked(bool checked)
 {
     proc->cont = checked;
 }
+
+void GroundStation::on_pushButton_burn_clicked()
+{
+    Telecommand tc(666, 1, 2, 10);
+    link->write(3001, tc);
+}
