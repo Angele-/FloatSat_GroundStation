@@ -2,6 +2,10 @@
 #include "config.h"
 #include <QDebug>
 
+#define MIN_Y 0
+#define MAX_Y 200
+#define MIN_R 15
+#define MAX_R 30
 
 ImageProcessor::ImageProcessor(QObject *parent) :
     QThread(parent)
@@ -19,7 +23,7 @@ void ImageProcessor::init(){
 
 
 void ImageProcessor::run(){
-/*
+    /*
     int numRead = 0, numReadTotal = 0;
     char buffer[50];
     qDebug() << "HEllo";
@@ -230,9 +234,9 @@ void ImageProcessor::putPixelPair(){
     int r = y1 + 1.7790 * (v-128);
     */
 
-    int b = y1 + 1.402 *                    (u-128);
-    int g = y1 - 0.34414 * (v-128) - 0.71414 * (u-128);
-    int r = y1 + 1.772 * (v-128);
+    int b = y1 + 1.402 *                    (v-128);
+    int g = y1 - 0.34414 * (u-128) - 0.71414 * (v-128);
+    int r = y1 + 1.772 * (u-128);
 
 
 
@@ -266,9 +270,9 @@ void ImageProcessor::putPixelPair(){
         cols++;
     }
 
-    b = y2 + 1.402 *                    (u-128);
-    g = y2 - 0.34414 * (v-128) - 0.71414 * (u-128);
-    r = y2 + 1.772 * (v-128);
+    b = y2 + 1.402 *                    (v-128);
+    g = y2 - 0.34414 * (u-128) - 0.71414 * (v-128);
+    r = y2 + 1.772 * (u-128);
 
     if(r < 0) r = 0;
     if(g < 0) g = 0;
@@ -337,6 +341,7 @@ void ImageProcessor::readSerialImage(){
                     Image.at<cv::Vec3b>(x, y)[2] = 0;
                 }
             }
+            DetectCircles(Image);
             cv::transpose(Image,Image);
             cv::flip(Image,Image, 1);
             imageToDisplay = QImage((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
@@ -442,14 +447,25 @@ void ImageProcessor::DetectCircles(cv::Mat src){
     std::vector<cv::Vec3f> circles;
 
     cv::HoughCircles( src_gray, circles, CV_HOUGH_GRADIENT, 1, 10, 80, 40, 0, 0);
-
     for(size_t i = 0; i < circles.size(); i++){
-        if(circles[i][2] > 15.0 && circles[i][2] < 20.0){
+        if(FilterCircle(circles[i])){
             cv::Point center(circles[i][0], circles[i][1]);
+
             cv::circle( src, center, circles[i][2], cv::Scalar(0,255,0), 3, 8, 0 );
-            qDebug() << "Center (x,y): " << circles[i][0] << circles[i][1] << " R: " << circles[i][2];
+
         }
+
     }
+}
+
+bool ImageProcessor::FilterCircle(cv::Vec3f circles){
+
+    if(circles[1] < MIN_Y || circles[1] > MAX_Y) return false;
+    if(circles[2] < MIN_R && circles[2] > MAX_R) return false;
+
+    qDebug() << "Center (x,y): " << circles[0] << circles[1] << " R: " << circles[2];
+
+    return true;
 
 }
 

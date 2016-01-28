@@ -244,6 +244,8 @@ void GroundStation::readFromLink(){
         plotSpeed->graph(0)->addData(key, psg.yaw * 180.0f / M_PI);
         plotSpeed->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotSpeed->graph(0)->rescaleValueAxis(true);
+        plotSpeed->graph(0)->rescaleKeyAxis();
+        plotSpeed->replot();
         break;
     }
     case PayloadSensorXMType:{

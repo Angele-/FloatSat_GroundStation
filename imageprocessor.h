@@ -32,6 +32,7 @@ private:
     void ProcessImageV();
     void DetectCircles(cv::Mat src);
     void putPixelPair();
+    bool FilterCircle(cv::Vec3f circles);
     cv::Mat Image;
     quint32 pixelCount = 0;
     QSerialPort *serial;
