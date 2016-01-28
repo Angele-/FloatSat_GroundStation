@@ -48,13 +48,6 @@ GroundStation::GroundStation(QWidget *parent) :
     ui->plotLayout->addWidget(plotCurrent, 0, 0);
     plotCurrent->addGraph(); // blue line
     plotCurrent->graph(0)->setPen(QPen(Qt::blue));
-    //plotCurrent->graph(0)->setName("Battery Current");
-//    plotCurrent->addGraph(); // green line
-//    plotCurrent->graph(2)->setPen(QPen(Qt::darkGreen));
-//    plotCurrent->graph(2)->setName("Servo 1");
-//    plotCurrent->addGraph(); // black line
-//    plotCurrent->graph(3)->setPen(QPen(Qt::black));
-//    plotCurrent->graph(3)->setName("Servo 2");
     plotCurrent->xAxis->setLabel("Seconds");
     plotCurrent->yAxis->setLabel("Milliamperes");
     QCPPlotTitle *title = new QCPPlotTitle(plotCurrent, "Battery Current");
@@ -63,8 +56,6 @@ GroundStation::GroundStation(QWidget *parent) :
     plotCurrent->plotLayout()->addElement(0, 0, title);
     plotCurrent->plotLayout()->setRowSpacing(0);
     plotCurrent->plotLayout()->setColumnSpacing(0);
-
-    //plotCurrent->legend->rowCount()->
 
     plotVoltage = new QCustomPlot();
     ui->plotLayout->addWidget(plotVoltage, 0, 1);
@@ -96,15 +87,6 @@ GroundStation::GroundStation(QWidget *parent) :
     plotMotorCurrents->addGraph(); // red line
     plotMotorCurrents->graph(1)->setPen(QPen(Qt::red));
     plotMotorCurrents->graph(1)->setName("Solar Panels");
-//    plotMotorCurrents->addGraph(); // red line
-//    plotMotorCurrents->graph(1)->setPen(QPen(Qt::red));
-//    plotMotorCurrents->graph(1)->setName("Thermal knife 1");
-//    plotMotorCurrents->addGraph(); // green line
-//    plotMotorCurrents->graph(2)->setPen(QPen(Qt::darkGreen));
-//    plotMotorCurrents->graph(2)->setName("Thermal knife 2");
-//    plotMotorCurrents->addGraph(); // black line
-//    plotMotorCurrents->graph(3)->setPen(QPen(Qt::black));
-//    plotMotorCurrents->graph(3)->setName("Thermal knife 3");
     plotMotorCurrents->xAxis->setLabel("Seconds");
     plotMotorCurrents->yAxis->setLabel("Milliamperes");
     title = new QCPPlotTitle(plotMotorCurrents, "Currents");
@@ -300,24 +282,9 @@ void GroundStation::readFromLink(){
         if(solarPanelCurrents.size() > 20){
             solarPanelCurrents.pop_front();
         }
-//        if(servo1Currents.size() > 5){
-//            servo1Currents.pop_front();
-//        }
-//        if(servo2Currents.size() > 5){
-//            servo2Currents.pop_front();
-//        }
         if(motorACurrents.size() > 20){
             motorACurrents.pop_front();
         }
-//        if(motorBCurrents.size() > 20){
-//            motorBCurrents.pop_front();
-//        }
-//        if(motorCCurrents.size() > 20){
-//            motorCCurrents.pop_front();
-//        }
-//        if(motorDCurrents.size() > 20){
-//            motorDCurrents.pop_front();
-//        }
 
         ui->lcdBatteryCurrent->display(QString("%1").arg(avgOfVector(batteryCurrents), 6, 'f', 1, '0'));
         ui->lcdBatteryVoltage->display(QString("%1").arg(pm.batteryVoltage, 6, 'f', 1, '0'));
@@ -325,17 +292,10 @@ void GroundStation::readFromLink(){
         ui->lcdPanelCurrent->display(QString("%1").arg(avgOfVector(solarPanelCurrents), 6, 'f', 1, '0'));
         static double key = 0;
         key += PLOT_PUBLISH_INTERVAL;
-        //plotCurrent->yAxis->setRange(0, plotCurrent->yAxis->range().upper * 0.975);
         plotCurrent->graph(0)->addData(key, avgOfVector(batteryCurrents));
         plotCurrent->graph(0)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotCurrent->graph(0)->rescaleValueAxis(true);
         plotCurrent->graph(0)->rescaleKeyAxis();
-//        plotCurrent->graph(2)->addData(key,avgOfVector(servo1Currents));
-//        plotCurrent->graph(2)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-//        plotCurrent->graph(2)->rescaleValueAxis(true);
-//        plotCurrent->graph(3)->addData(key, avgOfVector(servo2Currents));
-//        plotCurrent->graph(3)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-//        plotCurrent->graph(3)->rescaleValueAxis(true);
         plotCurrent->replot();
 
         plotVoltage->graph(0)->addData(key, pm.batteryVoltage);
@@ -351,16 +311,6 @@ void GroundStation::readFromLink(){
         plotMotorCurrents->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
         plotMotorCurrents->graph(1)->rescaleKeyAxis();
         plotMotorCurrents->graph(1)->rescaleValueAxis(true);
-//        plotMotorCurrents->graph(1)->addData(key, avgOfVector(motorBCurrents));
-//        plotMotorCurrents->graph(1)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-//        plotMotorCurrents->graph(1)->rescaleValueAxis(true);
-//        plotMotorCurrents->graph(2)->addData(key, avgOfVector(motorCCurrents));
-//        plotMotorCurrents->graph(2)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-//        plotMotorCurrents->graph(2)->rescaleValueAxis(true);
-//        plotMotorCurrents->graph(3)->addData(key, avgOfVector(motorDCurrents));
-//        plotMotorCurrents->graph(3)->removeDataBefore(key - PLOT_VISIBLE_INTERVAL);
-//        plotMotorCurrents->graph(3)->rescaleValueAxis(true);
-//        plotMotorCurrents->graph(1)->rescaleKeyAxis();
         plotMotorCurrents->replot();
 
         break;
