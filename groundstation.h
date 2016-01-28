@@ -18,6 +18,9 @@ class GroundStation : public QMainWindow
     Q_OBJECT
 
 private slots:
+    void onSendPicture();
+
+    void onSatelliteFound(int heading);
 
     void readFromLink();
 
@@ -76,6 +79,9 @@ private slots:
     void on_pushButton_Undeploy_Mode_clicked();
 
     void on_pushButton_Presentation_clicked();
+
+
+    void on_checkBox_clicked(bool checked);
 
 public:
     explicit GroundStation(QWidget *parent = 0);

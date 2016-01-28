@@ -75,6 +75,7 @@ struct PayloadMeasurements{
     float batteryVoltage;
     float panelVoltage;
     float panelCurrent;
+    float startPictures;
     PayloadMeasurements(const Payload payload);
 };
 

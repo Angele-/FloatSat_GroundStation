@@ -3,9 +3,9 @@
 #include <QDebug>
 
 #define MIN_Y 0
-#define MAX_Y 200
-#define MIN_R 15
-#define MAX_R 30
+#define MAX_Y 160
+#define MIN_R 11
+#define MAX_R 15
 
 ImageProcessor::ImageProcessor(QObject *parent) :
     QThread(parent)
@@ -306,12 +306,14 @@ void ImageProcessor::readSerialImage(){
     line.append(data);
 
     if(!propertiesRx && line.contains("CAMERA_TX_START;", Qt::CaseSensitive) && line.contains(";PROPS;", Qt::CaseSensitive)){
-        QString props = line.mid(line.indexOf("CAMERA_TX_START;")+16,10);
+        QString props = line.mid(line.indexOf("CAMERA_TX_START;")+16,14);
         QStringList d = props.split(";",  QString::SplitBehavior::SkipEmptyParts);
         properties.Height = d.at(0).toInt();
         properties.Width = d.at(1).toInt();
         imagesize = properties.Width * properties.Height;
         properties.type = d.at(2).toInt();
+        heading = d.at(3).toInt();
+        qDebug() << "H" << heading;
         if(properties.Height > 0 && properties.Width > 0){
             Image = cv::Mat::zeros(cv::Size(properties.Width, properties.Height), CV_8UC3);
             QString labelText = "Size: " + QString::number(properties.Height) + " x " + QString::number(properties.Width);
@@ -342,7 +344,7 @@ void ImageProcessor::readSerialImage(){
                 }
             }
             DetectCircles(Image);
-            cv::transpose(Image,Image);
+            //cv::transpose(Image,Image);
             cv::flip(Image,Image, 1);
             imageToDisplay = QImage((uchar*)Image.data, Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
             emit updatePicture();
@@ -445,23 +447,33 @@ void ImageProcessor::DetectCircles(cv::Mat src){
     cv::GaussianBlur( src_gray, src_gray, cv::Size(1, 1), 2, 2 );
 
     std::vector<cv::Vec3f> circles;
-
+    int circleCount = 0;
     cv::HoughCircles( src_gray, circles, CV_HOUGH_GRADIENT, 1, 10, 80, 40, 0, 0);
     for(size_t i = 0; i < circles.size(); i++){
         if(FilterCircle(circles[i])){
             cv::Point center(circles[i][0], circles[i][1]);
 
             cv::circle( src, center, circles[i][2], cv::Scalar(0,255,0), 3, 8, 0 );
-
+            circleCount++;
         }
 
+    }
+
+    if(circleCount >= 3){
+        emit satelliteFound(heading);
+        qDebug() << "Satellite found at " << heading << endl;
+    }else{
+        if(cont){
+            this->msleep(500);
+            emit sendPicture();
+        }
     }
 }
 
 bool ImageProcessor::FilterCircle(cv::Vec3f circles){
 
     if(circles[1] < MIN_Y || circles[1] > MAX_Y) return false;
-    if(circles[2] < MIN_R && circles[2] > MAX_R) return false;
+    if(circles[2] < MIN_R || circles[2] > MAX_R) return false;
 
     qDebug() << "Center (x,y): " << circles[0] << circles[1] << " R: " << circles[2];
 

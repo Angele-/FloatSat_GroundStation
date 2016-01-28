@@ -25,6 +25,7 @@ public:
     QImage getImage();
     cv::Mat getMat();
     qint64 readAndResetReceivedBytes();
+    bool cont = true;
 
 private:
     void openSerialPort();
@@ -54,6 +55,7 @@ private:
     int y1,u,y2,v, max = 0;
     int min = 255;
     qint64 receivedBytes;
+    int heading = 0;
 
 signals:
     void setPicRecieveStatusMaximum(qint32 maximum);
@@ -62,6 +64,8 @@ signals:
     void setConsoleText(QByteArray data);
     void setImgSizeLbl(QString text);
     void updatePicture();
+    void satelliteFound(int heading);
+    void sendPicture();
 private slots:
     void readSerialImage();
     void readSerialImageColor();

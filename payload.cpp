@@ -50,7 +50,7 @@ PayloadSensorXM::PayloadSensorXM(const Payload payload):roll(-qInf()), pitch(-qI
     yaw = payload.userDataFloat[2];
 }
 
-PayloadMeasurements::PayloadMeasurements(const Payload payload):batteryCurrent(-qInf()), motorACurrent(-qInf()), motorBCurrent(-qInf()), motorCCurrent(-qInf()), motorDCurrent(-qInf()),servo1(-qInf()), servo2(-qInf()), batteryVoltage(-qInf()), panelVoltage(-qInf()), panelCurrent(-qInf()){
+PayloadMeasurements::PayloadMeasurements(const Payload payload):batteryCurrent(-qInf()), motorACurrent(-qInf()), motorBCurrent(-qInf()), motorCCurrent(-qInf()), motorDCurrent(-qInf()),servo1(-qInf()), servo2(-qInf()), batteryVoltage(-qInf()), panelVoltage(-qInf()), panelCurrent(-qInf()), startPictures(-qInf()){
     if(payload.userDataLen != sizeof(PayloadMeasurements) || payload.topic != PayloadMeasurementsType)
         return;
 
@@ -64,6 +64,8 @@ PayloadMeasurements::PayloadMeasurements(const Payload payload):batteryCurrent(-
     batteryVoltage = payload.userDataFloat[7];
     panelVoltage = payload.userDataFloat[8];
     panelCurrent = payload.userDataFloat[9];
+    startPictures = payload.userDataFloat[10];
+
 }
 
 PayloadLight::PayloadLight(const Payload payload):light(0){

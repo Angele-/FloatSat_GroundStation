@@ -40,7 +40,8 @@ GroundStation::GroundStation(QWidget *parent) :
     connect(proc, SIGNAL(setPicRecieveStatusValue(qint32)), this, SLOT(onSetPicRecieveStatusValue(qint32)));
     connect(proc, SIGNAL(setConsoleText(QByteArray)), this, SLOT(onSetConsoleText(QByteArray)));
     connect(proc, SIGNAL(setConsoleText(QString)), this, SLOT(onSetConsoleText(QString)));
-
+    connect(proc, SIGNAL(satelliteFound(int)), this, SLOT(onSatelliteFound(int)));
+    connect(proc, SIGNAL(sendPicture()), this, SLOT(onSendPicture()));
     proc->init();
 
     plotCurrent = new QCustomPlot(this);
@@ -271,6 +272,10 @@ void GroundStation::readFromLink(){
 
         PayloadMeasurements pm(payload);
 
+        if(pm.startPictures == 1.0){
+            Telecommand tc(1005, 1, 4, 0);
+            link->write(3001, tc);
+        }
         static QVector<float> batteryCurrents;
         static QVector<float> solarPanelCurrents;
         static QVector<float> servo1Currents;
@@ -437,7 +442,7 @@ void GroundStation::on_lineEdit_Motor_speed_returnPressed()
 {
     QString str = ui->lineEdit_Motor_speed->text();
     float command = str.toFloat();
-    command *= M_PI / 180.0f;
+    //command *= M_PI / 180.0f;
 
     bool clockwise = ui->radioButton_Motor_Clockwise->isChecked();
 
@@ -470,6 +475,7 @@ void GroundStation::on_lineEdit_Speed_returnPressed()
 {
     QString str = ui->lineEdit_Speed->text();
     float command = str.toFloat();
+    command *= M_PI / 180.0f;
 
     Telecommand tc(command, 1, 2, 5);
     link->write(3001, tc);
@@ -587,4 +593,21 @@ void GroundStation::on_pushButton_Presentation_clicked()
 
     Telecommand tc(1001, 1, 7, 0);
     link->write(3001, tc);
+}
+
+void GroundStation::onSatelliteFound(int heading){
+    //get Heading
+    heading *= M_PI / 180.0f;
+    Telecommand tc(heading, 1, 2, 12);
+    link->write(3001, tc);
+}
+
+void GroundStation::onSendPicture(){
+    Telecommand tc(1005, 1, 4, 0);
+    link->write(3001, tc);
+}
+
+void GroundStation::on_checkBox_clicked(bool checked)
+{
+    proc->cont = checked;
 }
