@@ -83,6 +83,8 @@ private slots:
 
     void on_checkBox_clicked(bool checked);
 
+    void on_pushButton_burn_clicked();
+
 public:
     explicit GroundStation(QWidget *parent = 0);
     static void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
