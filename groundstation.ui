@@ -1309,7 +1309,7 @@
       <x>10</x>
       <y>30</y>
       <width>100</width>
-      <height>290</height>
+      <height>260</height>
      </rect>
     </property>
     <property name="font">
@@ -1578,7 +1578,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>450</y>
+      <y>460</y>
       <width>80</width>
       <height>30</height>
      </rect>
@@ -1596,7 +1596,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>410</y>
+      <y>420</y>
       <width>80</width>
       <height>30</height>
      </rect>
@@ -1619,7 +1619,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>370</y>
+      <y>380</y>
       <width>80</width>
       <height>30</height>
      </rect>
@@ -1637,7 +1637,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>330</y>
+      <y>340</y>
       <width>80</width>
       <height>31</height>
      </rect>
@@ -1689,6 +1689,19 @@
     </property>
     <property name="checked">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_burn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>300</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Burn</string>
     </property>
    </widget>
   </widget>
